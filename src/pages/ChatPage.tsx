@@ -15,7 +15,31 @@ const LANGUAGES = [
   { code: 'sw', label: 'SW' },
 ]
 
-const SESSION_KEY = 'calmbridge_messages'
+const SESSION_KEY = 'calmbridge_session'
+
+interface SessionData {
+  lang: string
+  messages: Message[]
+}
+
+function loadSession(currentLang: string): Message[] | null {
+  try {
+    const raw = sessionStorage.getItem(SESSION_KEY)
+    if (!raw) return null
+    const data = JSON.parse(raw) as SessionData
+    // 저장된 언어와 현재 언어가 다르면 복원하지 않음
+    if (data.lang !== currentLang) return null
+    return data.messages
+  } catch {
+    return null
+  }
+}
+
+function saveSession(lang: string, messages: Message[]) {
+  try {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify({ lang, messages }))
+  } catch {}
+}
 
 // Category 1: 즉각 알림 + 대화 차단 (Do No Harm 핵심)
 const MENTAL_HEALTH_CRISIS = [
@@ -45,13 +69,9 @@ export default function ChatPage() {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
 
-  const [messages, setMessages] = useState<Message[]>(() => {
-    try {
-      const saved = sessionStorage.getItem(SESSION_KEY)
-      if (saved) return JSON.parse(saved) as Message[]
-    } catch {}
-    return [{ role: 'assistant', content: t('pfa.greeting') }]
-  })
+  const [messages, setMessages] = useState<Message[]>(() =>
+    loadSession(i18n.language) ?? [{ role: 'assistant', content: t('pfa.greeting') }]
+  )
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
@@ -62,17 +82,15 @@ export default function ChatPage() {
   }, [messages])
 
   useEffect(() => {
-    try {
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify(messages))
-    } catch {}
-  }, [messages])
+    saveSession(i18n.language, messages)
+  }, [messages, i18n.language])
 
   function handleLanguageChange(code: string) {
     i18n.changeLanguage(code)
     const greeting = i18n.getFixedT(code)('pfa.greeting')
     const fresh = [{ role: 'assistant' as const, content: greeting }]
     setMessages(fresh)
-    try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(fresh)) } catch {}
+    saveSession(code, fresh)
   }
 
   async function sendMessage() {
