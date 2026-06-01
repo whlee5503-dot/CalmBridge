@@ -56,6 +56,18 @@ export default function ChatPage() {
     } catch {}
   }, [messages])
 
+  function handleLanguageChange(code: string) {
+    const greeting = i18n.getFixedT(code)('pfa.greeting')
+    setMessages(prev => {
+      const updated = [...prev]
+      if (updated.length > 0 && updated[0].role === 'assistant') {
+        updated[0] = { role: 'assistant', content: greeting }
+      }
+      return updated
+    })
+    i18n.changeLanguage(code)
+  }
+
   async function sendMessage() {
     const text = input.trim()
     if (!text || loading) return
@@ -113,7 +125,7 @@ export default function ChatPage() {
           {LANGUAGES.map(lang => (
             <button
               key={lang.code}
-              onClick={() => i18n.changeLanguage(lang.code)}
+              onClick={() => handleLanguageChange(lang.code)}
               className="text-xs font-medium px-2 py-1 rounded-md transition-all"
               style={i18n.language === lang.code
                 ? { backgroundColor: 'white', color: '#1a6b4a' }
