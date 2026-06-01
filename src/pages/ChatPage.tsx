@@ -17,18 +17,29 @@ const LANGUAGES = [
 
 const SESSION_KEY = 'calmbridge_messages'
 
-// 고위험 키워드 (Safety Filter — Do No Harm 핵심)
-const HIGH_RISK_KEYWORDS = [
-  'suicide', 'kill myself', 'end my life', 'want to die',
-  '자살', '죽고 싶', '죽고싶', '목숨을 끊',
-  'me suicider', 'mourir', 'me tuer',
-  'kujiua', 'kufa'
+// Category 1: 즉각 알림 + 대화 차단 (Do No Harm 핵심)
+const MENTAL_HEALTH_CRISIS = [
+  'suicide', 'kill myself', 'end my life', 'want to die', 'self-harm', 'self harm', 'hurt myself',
+  '자살', '죽고 싶', '죽고싶', '목숨을 끊', '자해',
+  'me suicider', 'me tuer', 'me blesser',
+  'kujiua', 'kujidhuru',
 ]
 
-function isHighRisk(text: string): boolean {
+// Category 2: 재난 키워드 — 알림 없이 AI가 PFA로 자연스럽게 대응
+const DISASTER_KEYWORDS = [
+  'tsunami', 'earthquake', 'flood', 'fire', 'hurricane', 'cyclone', 'landslide', 'explosion',
+  '해일', '지진', '홍수', '화재', '산사태', '폭발',
+  'tremblement', 'inondation', 'incendie', 'cyclone',
+  'tetemeko', 'mafuriko', 'moto',
+]
+
+function isMentalHealthCrisis(text: string): boolean {
   const lower = text.toLowerCase()
-  return HIGH_RISK_KEYWORDS.some(kw => lower.includes(kw))
+  return MENTAL_HEALTH_CRISIS.some(kw => lower.includes(kw))
 }
+
+// DISASTER_KEYWORDS: 재난 관련 메시지는 차단하지 않고 AI(PFA)가 직접 응대
+export { DISASTER_KEYWORDS }
 
 export default function ChatPage() {
   const { t, i18n } = useTranslation()
@@ -68,8 +79,8 @@ export default function ChatPage() {
     const text = input.trim()
     if (!text || loading) return
 
-    // Safety Filter 먼저 체크
-    if (isHighRisk(text)) {
+    // Safety Filter: 정신건강 위기만 차단, 재난 키워드는 AI로 통과
+    if (isMentalHealthCrisis(text)) {
       setShowAlert(true)
       setInput('')
       return
