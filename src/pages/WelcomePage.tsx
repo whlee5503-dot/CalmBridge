@@ -108,7 +108,7 @@ export default function WelcomePage() {
 
       {/* Suite badge */}
       <p style={{ marginTop: '1rem', fontSize: '0.68rem', color: '#d1d5db' }}>
-        EpiCalc Suite · Module 5
+        SoulCare Suite · Module 1
       </p>
 
     </div>
