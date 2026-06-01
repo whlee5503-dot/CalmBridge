@@ -8,6 +8,15 @@ interface Message {
   content: string
 }
 
+const LANGUAGES = [
+  { code: 'en', label: 'EN' },
+  { code: 'ko', label: '한' },
+  { code: 'fr', label: 'FR' },
+  { code: 'sw', label: 'SW' },
+]
+
+const SESSION_KEY = 'calmbridge_messages'
+
 // 고위험 키워드 (Safety Filter — Do No Harm 핵심)
 const HIGH_RISK_KEYWORDS = [
   'suicide', 'kill myself', 'end my life', 'want to die',
@@ -24,9 +33,14 @@ function isHighRisk(text: string): boolean {
 export default function ChatPage() {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
-  const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: t('pfa.greeting') }
-  ])
+
+  const [messages, setMessages] = useState<Message[]>(() => {
+    try {
+      const saved = sessionStorage.getItem(SESSION_KEY)
+      if (saved) return JSON.parse(saved) as Message[]
+    } catch {}
+    return [{ role: 'assistant', content: t('pfa.greeting') }]
+  })
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
@@ -34,6 +48,12 @@ export default function ChatPage() {
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(messages))
+    } catch {}
   }, [messages])
 
   async function sendMessage() {
@@ -87,12 +107,28 @@ export default function ChatPage() {
           <span className="text-lg">🕊</span>
           <span className="text-white font-medium">CalmBridge</span>
         </div>
-        <button
-          onClick={() => setShowAlert(true)}
-          className="ml-auto text-white opacity-80 hover:opacity-100"
-        >
-          <AlertTriangle size={20} />
-        </button>
+
+        {/* Language switcher */}
+        <div className="ml-auto flex items-center gap-1">
+          {LANGUAGES.map(lang => (
+            <button
+              key={lang.code}
+              onClick={() => i18n.changeLanguage(lang.code)}
+              className="text-xs font-medium px-2 py-1 rounded-md transition-all"
+              style={i18n.language === lang.code
+                ? { backgroundColor: 'white', color: '#1a6b4a' }
+                : { backgroundColor: 'transparent', color: 'rgba(255,255,255,0.7)' }}
+            >
+              {lang.label}
+            </button>
+          ))}
+          <button
+            onClick={() => setShowAlert(true)}
+            className="text-white opacity-80 hover:opacity-100 ml-1 p-1"
+          >
+            <AlertTriangle size={18} />
+          </button>
+        </div>
       </header>
 
       {/* High Risk Alert */}
