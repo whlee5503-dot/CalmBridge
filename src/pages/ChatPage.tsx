@@ -57,15 +57,11 @@ export default function ChatPage() {
   }, [messages])
 
   function handleLanguageChange(code: string) {
-    const greeting = i18n.getFixedT(code)('pfa.greeting')
-    setMessages(prev => {
-      const updated = [...prev]
-      if (updated.length > 0 && updated[0].role === 'assistant') {
-        updated[0] = { role: 'assistant', content: greeting }
-      }
-      return updated
-    })
     i18n.changeLanguage(code)
+    const greeting = i18n.getFixedT(code)('pfa.greeting')
+    const fresh = [{ role: 'assistant' as const, content: greeting }]
+    setMessages(fresh)
+    try { sessionStorage.setItem(SESSION_KEY, JSON.stringify(fresh)) } catch {}
   }
 
   async function sendMessage() {
