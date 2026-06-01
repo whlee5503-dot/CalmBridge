@@ -1,0 +1,14 @@
+{
+  "app_name": "CalmBridge",
+  "tagline": "Huko peke yako.",
+  "start": "Anza",
+  "language": "Lugha",
+  "disclaimer": "CalmBridge ni zana ya msaada, si mbadala wa msaada wa kitaalamu.",
+  "emergency": "Msaada wa Dharura",
+  "emergency_msg": "Ukiwa katika hatari ya haraka, wasiliana na huduma za dharura sasa.",
+  "send": "Tuma",
+  "placeholder": "Andika ujumbe wako...",
+  "pfa": {
+    "greeting": "Habari. Niko hapa nawe. Unaweza kuniambia kinachoendelea?"
+  }
+}

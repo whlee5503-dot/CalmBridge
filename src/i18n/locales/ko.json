@@ -1,0 +1,14 @@
+{
+  "app_name": "캄브릿지",
+  "tagline": "당신은 혼자가 아닙니다.",
+  "start": "시작하기",
+  "language": "언어",
+  "disclaimer": "CalmBridge는 전문가를 대체하지 않는 지원 도구입니다.",
+  "emergency": "긴급 도움",
+  "emergency_msg": "지금 즉각적인 위험에 처해 있다면, 지금 바로 긴급 서비스에 연락하세요.",
+  "send": "전송",
+  "placeholder": "메시지를 입력하세요...",
+  "pfa": {
+    "greeting": "안녕하세요. 저는 여기 있습니다. 지금 무슨 일이 있는지 말씀해 주시겠어요?"
+  }
+}

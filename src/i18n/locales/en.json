@@ -1,0 +1,14 @@
+{
+  "app_name": "CalmBridge",
+  "tagline": "You are not alone.",
+  "start": "Start",
+  "language": "Language",
+  "disclaimer": "CalmBridge is a support tool, not a substitute for professional help.",
+  "emergency": "Emergency Help",
+  "emergency_msg": "If you are in immediate danger, please contact emergency services now.",
+  "send": "Send",
+  "placeholder": "Type your message...",
+  "pfa": {
+    "greeting": "Hello. I'm here with you. Can you tell me what's happening right now?"
+  }
+}

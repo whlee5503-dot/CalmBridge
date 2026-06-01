@@ -1,0 +1,14 @@
+{
+  "app_name": "CalmBridge",
+  "tagline": "Vous n'êtes pas seul(e).",
+  "start": "Commencer",
+  "language": "Langue",
+  "disclaimer": "CalmBridge est un outil de soutien, pas un substitut à l'aide professionnelle.",
+  "emergency": "Aide d'urgence",
+  "emergency_msg": "Si vous êtes en danger immédiat, contactez les services d'urgence maintenant.",
+  "send": "Envoyer",
+  "placeholder": "Écrivez votre message...",
+  "pfa": {
+    "greeting": "Bonjour. Je suis là avec vous. Pouvez-vous me dire ce qui se passe?"
+  }
+}
