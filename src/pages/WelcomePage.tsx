@@ -7,7 +7,7 @@ type Situation = 'disaster' | 'conflict' | 'loss' | 'isolation' | 'other'
 type Religion = 'christianity' | 'islam' | 'buddhism' | 'hinduism' | 'judaism' | 'secular' | 'none'
 
 const SITUATIONS: { id: Situation; emoji: string }[] = [
-  { id: 'disaster',   emoji: '��' },
+  { id: 'disaster',   emoji: '🌊' },
   { id: 'conflict',   emoji: '🕊️' },
   { id: 'loss',       emoji: '💔' },
   { id: 'isolation',  emoji: '🌑' },
@@ -97,7 +97,7 @@ export default function WelcomePage() {
           </>
         )}
 
-        {/* Step 2: Situation */}
+        {/* Step 2: Situation — 2열 그리드 */}
         {step === 2 && (
           <>
             <p style={{ fontSize: '0.75rem', fontWeight: 500, color: '#9ca3af',
@@ -105,19 +105,26 @@ export default function WelcomePage() {
               marginBottom: '1rem', textAlign: 'center' }}>
               {t('onboarding.step_situation')}
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '0.5rem',
+            }}>
               {SITUATIONS.map(s => (
                 <button key={s.id} onClick={() => setSituation(s.id)} style={{
-                  display: 'flex', alignItems: 'center', gap: '0.75rem',
-                  padding: '0.75rem 1rem', borderRadius: '12px', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  gap: '0.4rem',
+                  padding: '0.75rem 0.5rem', borderRadius: '12px', cursor: 'pointer',
                   border: situation === s.id ? `2px solid ${G}` : '2px solid #e5e7eb',
                   backgroundColor: situation === s.id ? '#e8f5f0' : 'white',
-                  fontSize: '0.9rem', fontWeight: 500,
+                  fontSize: '0.85rem', fontWeight: 500,
                   color: situation === s.id ? G : '#374151',
-                  transition: 'all 0.15s', textAlign: 'left',
+                  transition: 'all 0.15s', textAlign: 'center',
+                  // 마지막 항목(other)이 홀수면 2열 전체 차지
+                  gridColumn: s.id === 'other' ? 'span 2' : 'span 1',
                 }}>
-                  <span style={{ fontSize: '1.25rem' }}>{s.emoji}</span>
-                  {t(`onboarding.situation_${s.id}`)}
+                  <span style={{ fontSize: '1.1rem' }}>{s.emoji}</span>
+                  <span>{t(`onboarding.situation_${s.id}`)}</span>
                 </button>
               ))}
             </div>
@@ -126,7 +133,8 @@ export default function WelcomePage() {
               disabled={!situation}
               style={{
                 width: '100%', marginTop: '1.25rem', padding: '0.875rem',
-                borderRadius: '12px', border: 'none', cursor: situation ? 'pointer' : 'not-allowed',
+                borderRadius: '12px', border: 'none',
+                cursor: situation ? 'pointer' : 'not-allowed',
                 backgroundColor: situation ? G : '#e5e7eb',
                 color: situation ? 'white' : '#9ca3af',
                 fontSize: '1rem', fontWeight: 600, transition: 'all 0.15s',
@@ -147,18 +155,23 @@ export default function WelcomePage() {
             <p style={{ fontSize: '0.78rem', color: '#9ca3af', textAlign: 'center', marginBottom: '1rem' }}>
               {t('onboarding.religion_prompt')}
             </p>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center' }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '0.5rem',
+            }}>
               {RELIGIONS.map(r => (
                 <button key={r.id} onClick={() => setReligion(r.id)} style={{
-                  display: 'flex', alignItems: 'center', gap: '0.4rem',
-                  padding: '0.5rem 0.875rem', borderRadius: '999px', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  gap: '0.4rem',
+                  padding: '0.625rem 0.5rem', borderRadius: '10px', cursor: 'pointer',
                   border: religion === r.id ? `2px solid ${G}` : '2px solid #e5e7eb',
                   backgroundColor: religion === r.id ? G : 'white',
                   color: religion === r.id ? 'white' : '#374151',
                   fontSize: '0.82rem', fontWeight: 500, transition: 'all 0.15s',
                 }}>
                   <span>{r.emoji}</span>
-                  {t(r.key)}
+                  <span>{t(r.key)}</span>
                 </button>
               ))}
             </div>
@@ -182,14 +195,12 @@ export default function WelcomePage() {
 
       {/* Emergency button */}
       <div style={{ width: '100%', maxWidth: '360px' }}>
-        <button
-          onClick={() => alert(t('emergency_msg'))}
-          style={{
-            width: '100%', padding: '0.875rem', borderRadius: '14px',
-            backgroundColor: 'white', color: '#dc2626',
-            fontSize: '0.95rem', fontWeight: 500,
-            border: '1.5px solid #fca5a5', cursor: 'pointer',
-          }}>
+        <button onClick={() => alert(t('emergency_msg'))} style={{
+          width: '100%', padding: '0.875rem', borderRadius: '14px',
+          backgroundColor: 'white', color: '#dc2626',
+          fontSize: '0.95rem', fontWeight: 500,
+          border: '1.5px solid #fca5a5', cursor: 'pointer',
+        }}>
           🆘 {t('emergency')}
         </button>
       </div>
