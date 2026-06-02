@@ -179,11 +179,38 @@ export default function ChatPage() {
 
       {showAlert && (
         <div className="mx-4 mt-4 p-4 rounded-2xl border-2 border-red-400 bg-red-50">
-          <p className="text-red-700 font-medium text-sm mb-1">🆘 {t('emergency')}</p>
-          <p className="text-red-600 text-sm">{t('emergency_msg')}</p>
-          <button onClick={() => setShowAlert(false)} className="mt-3 text-xs text-red-500 underline">
-            닫기 / Close
-          </button>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-red-700 font-semibold text-sm">🆘 {t('emergency')}</p>
+            <button onClick={() => setShowAlert(false)} className="text-red-400 text-lg leading-none">✕</button>
+          </div>
+          <p className="text-red-600 text-xs mb-3">{t('emergency_msg')}</p>
+          <div className="flex flex-col gap-2">
+            {i18n.language === 'ko' && (
+              <a href="tel:1393"
+                className="flex items-center justify-between px-3 py-2 rounded-xl bg-red-600 text-white text-sm font-medium">
+                <span>🇰🇷 자살예방상담전화</span>
+                <span className="font-bold">1393</span>
+              </a>
+            )}
+            {i18n.language === 'fr' && (
+              <a href="tel:3114"
+                className="flex items-center justify-between px-3 py-2 rounded-xl bg-red-600 text-white text-sm font-medium">
+                <span>🇫🇷 Prévention Suicide</span>
+                <span className="font-bold">3114</span>
+              </a>
+            )}
+            <a href="sms:741741&body=HOME"
+              className="flex items-center justify-between px-3 py-2 rounded-xl bg-red-500 text-white text-sm font-medium">
+              <span>💬 Crisis Text Line</span>
+              <span className="font-bold">Text HOME → 741741</span>
+            </a>
+            <a href="https://www.iasp.info/resources/Crisis_Centres/"
+              target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-between px-3 py-2 rounded-xl bg-white border border-red-300 text-red-600 text-sm font-medium">
+              <span>🌐 International Resources</span>
+              <span>→</span>
+            </a>
+          </div>
         </div>
       )}
 
