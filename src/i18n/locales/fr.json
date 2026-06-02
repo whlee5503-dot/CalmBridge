@@ -31,5 +31,18 @@
     "errorNetwork": "Erreur réseau. Vérifiez votre connexion.",
     "errorGeneric": "Saisie vocale échouée. Veuillez taper à la place.",
     "errorStart": "Impossible de démarrer le microphone."
+  },
+  "onboarding": {
+    "step_language": "Choisissez votre langue",
+    "step_situation": "Que traversez-vous?",
+    "step_religion": "Souhaitez-vous un réconfort spirituel?",
+    "skip": "Passer",
+    "next": "Suivant",
+    "situation_disaster": "Catastrophe naturelle",
+    "situation_conflict": "Guerre ou conflit",
+    "situation_loss": "Perte ou deuil",
+    "situation_isolation": "Isolement ou solitude",
+    "situation_other": "Autre chose",
+    "religion_prompt": "Optionnel. Cela nous aide à offrir un réconfort adapté."
   }
 }

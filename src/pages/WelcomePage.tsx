@@ -1,116 +1,206 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import LanguageSelector from '../components/LanguageSelector'
 
+type Situation = 'disaster' | 'conflict' | 'loss' | 'isolation' | 'other'
+type Religion = 'christianity' | 'islam' | 'buddhism' | 'hinduism' | 'judaism' | 'secular' | 'none'
+
+const SITUATIONS: { id: Situation; emoji: string }[] = [
+  { id: 'disaster',   emoji: '��' },
+  { id: 'conflict',   emoji: '🕊️' },
+  { id: 'loss',       emoji: '💔' },
+  { id: 'isolation',  emoji: '🌑' },
+  { id: 'other',      emoji: '💬' },
+]
+
+const RELIGIONS: { id: Religion; emoji: string; key: string }[] = [
+  { id: 'christianity', emoji: '✝️',  key: 'spiritual.christianity' },
+  { id: 'islam',        emoji: '☪️',  key: 'spiritual.islam' },
+  { id: 'buddhism',     emoji: '☸️',  key: 'spiritual.buddhism' },
+  { id: 'hinduism',     emoji: '🕉️',  key: 'spiritual.hinduism' },
+  { id: 'judaism',      emoji: '✡️',  key: 'spiritual.judaism' },
+  { id: 'secular',      emoji: '🌿',  key: 'spiritual.secular' },
+]
+
+const G = '#1a6b4a'
+
 export default function WelcomePage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const [step, setStep] = useState<1 | 2 | 3>(1)
+  const [situation, setSituation] = useState<Situation | null>(null)
+  const [religion, setReligion] = useState<Religion>('none')
+
+  function goToChat() {
+    navigate('/chat', { state: { situation, religion } })
+  }
 
   return (
     <div style={{
-      minHeight: '100dvh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
+      minHeight: '100dvh', display: 'flex', flexDirection: 'column',
+      alignItems: 'center', justifyContent: 'center',
       padding: '2rem 1.5rem',
       background: 'linear-gradient(160deg, #e8f5f0 0%, #f0f9f5 50%, #f9fafb 100%)',
     }}>
 
-      {/* Logo block */}
-      <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+      {/* Logo */}
+      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
         <div style={{
-          width: '88px', height: '88px',
-          borderRadius: '50%',
-          backgroundColor: '#1a6b4a',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          margin: '0 auto 1.25rem',
+          width: '72px', height: '72px', borderRadius: '50%',
+          backgroundColor: G, display: 'flex', alignItems: 'center',
+          justifyContent: 'center', margin: '0 auto 1rem',
           boxShadow: '0 4px 24px rgba(26,107,74,0.18)',
         }}>
-          <span style={{ fontSize: '2.2rem', lineHeight: 1 }}>🕊️</span>
+          <span style={{ fontSize: '1.8rem' }}>🕊️</span>
         </div>
-        <h1 style={{
-          fontSize: '2rem', fontWeight: 600,
-          color: '#1a6b4a', letterSpacing: '-0.5px',
-          marginBottom: '0.4rem',
-        }}>
+        <h1 style={{ fontSize: '1.75rem', fontWeight: 600, color: G, marginBottom: '0.25rem' }}>
           CalmBridge
         </h1>
-        <p style={{ color: '#6b7280', fontSize: '1rem' }}>
-          {t('tagline')}
-        </p>
+        <p style={{ color: '#6b7280', fontSize: '0.95rem' }}>{t('tagline')}</p>
+      </div>
+
+      {/* Step indicator */}
+      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
+        {[1, 2, 3].map(s => (
+          <div key={s} style={{
+            width: s === step ? '24px' : '8px', height: '8px',
+            borderRadius: '4px', transition: 'width 0.3s',
+            backgroundColor: s === step ? G : '#d1fae5',
+          }} />
+        ))}
       </div>
 
       {/* Card */}
       <div style={{
-        width: '100%', maxWidth: '360px',
-        backgroundColor: 'white',
-        borderRadius: '20px',
-        padding: '1.75rem 1.5rem',
-        boxShadow: '0 2px 16px rgba(0,0,0,0.07)',
-        marginBottom: '1.5rem',
+        width: '100%', maxWidth: '360px', backgroundColor: 'white',
+        borderRadius: '20px', padding: '1.75rem 1.5rem',
+        boxShadow: '0 2px 16px rgba(0,0,0,0.07)', marginBottom: '1rem',
       }}>
-        <p style={{
-          fontSize: '0.75rem', fontWeight: 500,
-          color: '#9ca3af', textTransform: 'uppercase',
-          letterSpacing: '0.08em', marginBottom: '0.875rem',
-          textAlign: 'center',
-        }}>
-          {t('language')}
-        </p>
-        <LanguageSelector />
+
+        {/* Step 1: Language */}
+        {step === 1 && (
+          <>
+            <p style={{ fontSize: '0.75rem', fontWeight: 500, color: '#9ca3af',
+              textTransform: 'uppercase', letterSpacing: '0.08em',
+              marginBottom: '1rem', textAlign: 'center' }}>
+              {t('onboarding.step_language')}
+            </p>
+            <LanguageSelector />
+            <button onClick={() => setStep(2)} style={{
+              width: '100%', marginTop: '1.25rem', padding: '0.875rem',
+              borderRadius: '12px', backgroundColor: G, color: 'white',
+              fontSize: '1rem', fontWeight: 600, border: 'none', cursor: 'pointer',
+            }}>
+              {t('onboarding.next')} →
+            </button>
+          </>
+        )}
+
+        {/* Step 2: Situation */}
+        {step === 2 && (
+          <>
+            <p style={{ fontSize: '0.75rem', fontWeight: 500, color: '#9ca3af',
+              textTransform: 'uppercase', letterSpacing: '0.08em',
+              marginBottom: '1rem', textAlign: 'center' }}>
+              {t('onboarding.step_situation')}
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
+              {SITUATIONS.map(s => (
+                <button key={s.id} onClick={() => setSituation(s.id)} style={{
+                  display: 'flex', alignItems: 'center', gap: '0.75rem',
+                  padding: '0.75rem 1rem', borderRadius: '12px', cursor: 'pointer',
+                  border: situation === s.id ? `2px solid ${G}` : '2px solid #e5e7eb',
+                  backgroundColor: situation === s.id ? '#e8f5f0' : 'white',
+                  fontSize: '0.9rem', fontWeight: 500,
+                  color: situation === s.id ? G : '#374151',
+                  transition: 'all 0.15s', textAlign: 'left',
+                }}>
+                  <span style={{ fontSize: '1.25rem' }}>{s.emoji}</span>
+                  {t(`onboarding.situation_${s.id}`)}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => setStep(3)}
+              disabled={!situation}
+              style={{
+                width: '100%', marginTop: '1.25rem', padding: '0.875rem',
+                borderRadius: '12px', border: 'none', cursor: situation ? 'pointer' : 'not-allowed',
+                backgroundColor: situation ? G : '#e5e7eb',
+                color: situation ? 'white' : '#9ca3af',
+                fontSize: '1rem', fontWeight: 600, transition: 'all 0.15s',
+              }}>
+              {t('onboarding.next')} →
+            </button>
+          </>
+        )}
+
+        {/* Step 3: Religion */}
+        {step === 3 && (
+          <>
+            <p style={{ fontSize: '0.75rem', fontWeight: 500, color: '#9ca3af',
+              textTransform: 'uppercase', letterSpacing: '0.08em',
+              marginBottom: '0.5rem', textAlign: 'center' }}>
+              {t('onboarding.step_religion')}
+            </p>
+            <p style={{ fontSize: '0.78rem', color: '#9ca3af', textAlign: 'center', marginBottom: '1rem' }}>
+              {t('onboarding.religion_prompt')}
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center' }}>
+              {RELIGIONS.map(r => (
+                <button key={r.id} onClick={() => setReligion(r.id)} style={{
+                  display: 'flex', alignItems: 'center', gap: '0.4rem',
+                  padding: '0.5rem 0.875rem', borderRadius: '999px', cursor: 'pointer',
+                  border: religion === r.id ? `2px solid ${G}` : '2px solid #e5e7eb',
+                  backgroundColor: religion === r.id ? G : 'white',
+                  color: religion === r.id ? 'white' : '#374151',
+                  fontSize: '0.82rem', fontWeight: 500, transition: 'all 0.15s',
+                }}>
+                  <span>{r.emoji}</span>
+                  {t(r.key)}
+                </button>
+              ))}
+            </div>
+            <button onClick={goToChat} style={{
+              width: '100%', marginTop: '1.25rem', padding: '0.875rem',
+              borderRadius: '12px', backgroundColor: G, color: 'white',
+              fontSize: '1rem', fontWeight: 600, border: 'none', cursor: 'pointer',
+            }}>
+              {t('start')} →
+            </button>
+            <button onClick={goToChat} style={{
+              width: '100%', marginTop: '0.5rem', padding: '0.625rem',
+              borderRadius: '12px', backgroundColor: 'transparent', color: '#9ca3af',
+              fontSize: '0.85rem', border: 'none', cursor: 'pointer',
+            }}>
+              {t('onboarding.skip')}
+            </button>
+          </>
+        )}
       </div>
 
-      {/* Start button */}
-      <div style={{ width: '100%', maxWidth: '360px', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-        <button
-          onClick={() => navigate('/chat')}
-          style={{
-            width: '100%', padding: '1rem',
-            borderRadius: '14px',
-            backgroundColor: '#1a6b4a', color: 'white',
-            fontSize: '1.05rem', fontWeight: 600,
-            border: 'none', cursor: 'pointer',
-            boxShadow: '0 2px 12px rgba(26,107,74,0.25)',
-            transition: 'opacity 0.15s',
-          }}
-          onMouseOver={e => (e.currentTarget.style.opacity = '0.9')}
-          onMouseOut={e => (e.currentTarget.style.opacity = '1')}
-        >
-          {t('start')} →
-        </button>
-
+      {/* Emergency button */}
+      <div style={{ width: '100%', maxWidth: '360px' }}>
         <button
           onClick={() => alert(t('emergency_msg'))}
           style={{
-            width: '100%', padding: '0.875rem',
-            borderRadius: '14px',
-            backgroundColor: 'white',
-            color: '#dc2626', fontSize: '0.95rem', fontWeight: 500,
+            width: '100%', padding: '0.875rem', borderRadius: '14px',
+            backgroundColor: 'white', color: '#dc2626',
+            fontSize: '0.95rem', fontWeight: 500,
             border: '1.5px solid #fca5a5', cursor: 'pointer',
-            transition: 'background-color 0.15s',
-          }}
-          onMouseOver={e => (e.currentTarget.style.backgroundColor = '#fff5f5')}
-          onMouseOut={e => (e.currentTarget.style.backgroundColor = 'white')}
-        >
+          }}>
           🆘 {t('emergency')}
         </button>
       </div>
 
-      {/* Disclaimer */}
-      <p style={{
-        marginTop: '2rem',
-        textAlign: 'center', fontSize: '0.72rem',
-        color: '#9ca3af', maxWidth: '300px', lineHeight: 1.6,
-      }}>
+      <p style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.72rem',
+        color: '#9ca3af', maxWidth: '300px', lineHeight: 1.6 }}>
         {t('disclaimer')}
       </p>
-
-      {/* Suite badge */}
-      <p style={{ marginTop: '1rem', fontSize: '0.68rem', color: '#d1d5db' }}>
+      <p style={{ marginTop: '0.75rem', fontSize: '0.68rem', color: '#d1d5db' }}>
         SoulCare Suite · Module 1
       </p>
-
     </div>
   )
 }

@@ -31,5 +31,18 @@
     "errorNetwork": "Hitilafu ya mtandao. Angalia muunganisho wako.",
     "errorGeneric": "Ingizo la sauti limeshindwa. Tafadhali andika.",
     "errorStart": "Haikuweza kuanza kipaza sauti."
+  },
+  "onboarding": {
+    "step_language": "Chagua lugha yako",
+    "step_situation": "Unakabiliwa na nini?",
+    "step_religion": "Ungependa faraja ya kiroho?",
+    "skip": "Ruka",
+    "next": "Endelea",
+    "situation_disaster": "Maafa ya asili",
+    "situation_conflict": "Vita au mgogoro",
+    "situation_loss": "Kupoteza au huzuni",
+    "situation_isolation": "Kutengwa au upweke",
+    "situation_other": "Kingine",
+    "religion_prompt": "Hiari. Inasaidia kutoa faraja inayofaa."
   }
 }

@@ -31,5 +31,18 @@
     "errorNetwork": "Network error. Check your connection.",
     "errorGeneric": "Voice input failed. Please type instead.",
     "errorStart": "Could not start microphone."
+  },
+  "onboarding": {
+    "step_language": "Choose your language",
+    "step_situation": "What are you going through?",
+    "step_religion": "Would you like spiritual comfort?",
+    "skip": "Skip",
+    "next": "Next",
+    "situation_disaster": "Natural disaster",
+    "situation_conflict": "War or conflict",
+    "situation_loss": "Loss or grief",
+    "situation_isolation": "Isolation or loneliness",
+    "situation_other": "Something else",
+    "religion_prompt": "This is optional and helps us offer relevant comfort."
   }
 }
