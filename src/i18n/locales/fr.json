@@ -10,5 +10,26 @@
   "placeholder": "Écrivez votre message...",
   "pfa": {
     "greeting": "Bonjour. Je suis là avec vous. Pouvez-vous me dire ce qui se passe?"
+  },
+  "spiritual": {
+    "title": "Réconfort spirituel & réflexif",
+    "subtitle": "Choisissez une tradition qui vous touche pour un moment de réconfort.",
+    "clear": "Choisir autre chose",
+    "christianity": "Christianisme",
+    "islam": "Islam",
+    "buddhism": "Bouddhisme",
+    "hinduism": "Hindouisme",
+    "judaism": "Judaïsme",
+    "secular": "Non-religieux"
+  },
+  "voice": {
+    "startListening": "Parlez votre message",
+    "stopListening": "Arrêter l'enregistrement",
+    "errorNoSpeech": "Aucune parole détectée. Veuillez réessayer.",
+    "errorNoMic": "Microphone non disponible.",
+    "errorPermission": "Autorisation microphone refusée.",
+    "errorNetwork": "Erreur réseau. Vérifiez votre connexion.",
+    "errorGeneric": "Saisie vocale échouée. Veuillez taper à la place.",
+    "errorStart": "Impossible de démarrer le microphone."
   }
 }

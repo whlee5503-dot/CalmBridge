@@ -10,5 +10,26 @@
   "placeholder": "Andika ujumbe wako...",
   "pfa": {
     "greeting": "Habari. Niko hapa nawe. Unaweza kuniambia kinachoendelea?"
+  },
+  "spiritual": {
+    "title": "Faraja ya Kiroho na Kutafakari",
+    "subtitle": "Chagua mila inayokugusa kwa dakika ya faraja.",
+    "clear": "Chagua nyingine",
+    "christianity": "Ukristo",
+    "islam": "Uislamu",
+    "buddhism": "Ubudha",
+    "hinduism": "Uhindu",
+    "judaism": "Uyahudi",
+    "secular": "Bila dini"
+  },
+  "voice": {
+    "startListening": "Sema ujumbe wako",
+    "stopListening": "Simamisha kurekodi",
+    "errorNoSpeech": "Hakuna sauti iliyogunduliwa. Tafadhali jaribu tena.",
+    "errorNoMic": "Kipaza sauti hakipatikani.",
+    "errorPermission": "Ruhusa ya kipaza sauti imekataliwa.",
+    "errorNetwork": "Hitilafu ya mtandao. Angalia muunganisho wako.",
+    "errorGeneric": "Ingizo la sauti limeshindwa. Tafadhali andika.",
+    "errorStart": "Haikuweza kuanza kipaza sauti."
   }
 }

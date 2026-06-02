@@ -10,5 +10,26 @@
   "placeholder": "Type your message...",
   "pfa": {
     "greeting": "Hello. I'm here with you. Can you tell me what's happening right now?"
+  },
+  "spiritual": {
+    "title": "Spiritual & Reflective Comfort",
+    "subtitle": "Choose a tradition that resonates with you for a moment of comfort.",
+    "clear": "Choose another",
+    "christianity": "Christianity",
+    "islam": "Islam",
+    "buddhism": "Buddhism",
+    "hinduism": "Hinduism",
+    "judaism": "Judaism",
+    "secular": "Non-religious"
+  },
+  "voice": {
+    "startListening": "Speak your message",
+    "stopListening": "Stop recording",
+    "errorNoSpeech": "No speech detected. Please try again.",
+    "errorNoMic": "Microphone not available.",
+    "errorPermission": "Microphone permission denied.",
+    "errorNetwork": "Network error. Check your connection.",
+    "errorGeneric": "Voice input failed. Please type instead.",
+    "errorStart": "Could not start microphone."
   }
 }

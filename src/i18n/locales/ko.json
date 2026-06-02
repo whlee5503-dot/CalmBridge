@@ -10,5 +10,26 @@
   "placeholder": "메시지를 입력하세요...",
   "pfa": {
     "greeting": "안녕하세요. 저는 여기 있습니다. 지금 무슨 일이 있는지 말씀해 주시겠어요?"
+  },
+  "spiritual": {
+    "title": "영적·성찰적 위로",
+    "subtitle": "위로가 될 전통을 선택해 잠시 쉬어가세요.",
+    "clear": "다시 선택",
+    "christianity": "기독교",
+    "islam": "이슬람",
+    "buddhism": "불교",
+    "hinduism": "힌두교",
+    "judaism": "유대교",
+    "secular": "비종교"
+  },
+  "voice": {
+    "startListening": "말씀을 입력하세요",
+    "stopListening": "녹음 중지",
+    "errorNoSpeech": "음성이 감지되지 않았습니다. 다시 시도해주세요.",
+    "errorNoMic": "마이크를 사용할 수 없습니다.",
+    "errorPermission": "마이크 사용 권한이 거부되었습니다.",
+    "errorNetwork": "네트워크 오류가 발생했습니다.",
+    "errorGeneric": "음성 입력에 실패했습니다. 텍스트로 입력해주세요.",
+    "errorStart": "마이크를 시작할 수 없습니다."
   }
 }
