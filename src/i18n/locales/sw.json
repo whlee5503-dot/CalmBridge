@@ -9,7 +9,11 @@
   "send": "Tuma",
   "placeholder": "Andika ujumbe wako...",
   "pfa": {
-    "greeting": "Habari. Niko hapa nawe. Unaweza kuniambia kinachoendelea?"
+    "greeting": "Habari. Niko hapa nawe. Unaweza kuniambia kinachoendelea?",
+    "greeting_disaster": "Naelewa umepitia jambo la kutisha. Niko hapa nawe. Je, uko mahali salama sasa hivi?",
+    "greeting_conflict": "Ninakusikia. Unakabiliwa na hali ngumu sana. Niko hapa. Unaweza kuniambia uko wapi?",
+    "greeting_loss": "Pole sana kwa unachopitia. Huzuni ni mzigo mzito kubeba. Niko hapa kukusikia.",
+    "greeting_isolation": "Nafurahi uliwasiliana. Huhitaji kukabili hili peke yako. Ni nini kinachokusumbua hivi karibuni?"
   },
   "spiritual": {
     "title": "Faraja ya Kiroho na Kutafakari",

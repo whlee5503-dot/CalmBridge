@@ -9,7 +9,11 @@
   "send": "Envoyer",
   "placeholder": "Écrivez votre message...",
   "pfa": {
-    "greeting": "Bonjour. Je suis là avec vous. Pouvez-vous me dire ce qui se passe?"
+    "greeting": "Bonjour. Je suis là avec vous. Pouvez-vous me dire ce qui se passe?",
+    "greeting_disaster": "Vous avez vécu quelque chose de terrifiant. Je suis là avec vous. Êtes-vous en sécurité maintenant?",
+    "greeting_conflict": "Ce que vous traversez semble incroyablement difficile. Je suis là. Pouvez-vous me dire où vous êtes?",
+    "greeting_loss": "Je suis vraiment désolé pour ce que vous traversez. Le deuil est l'une des choses les plus lourdes. Je suis là pour écouter.",
+    "greeting_isolation": "Je suis content que vous ayez contacté. Vous n'avez pas à faire face à cela seul. Qu'est-ce qui vous pèse?"
   },
   "spiritual": {
     "title": "Réconfort spirituel & réflexif",

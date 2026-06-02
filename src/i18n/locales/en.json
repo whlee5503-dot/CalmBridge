@@ -9,7 +9,11 @@
   "send": "Send",
   "placeholder": "Type your message...",
   "pfa": {
-    "greeting": "Hello. I'm here with you. Can you tell me what's happening right now?"
+    "greeting": "Hello. I'm here with you. Can you tell me what's happening right now?",
+    "greeting_disaster": "I hear that you've been through something frightening. I'm here with you. Are you in a safe place right now?",
+    "greeting_conflict": "I'm here with you. What you're facing sounds incredibly difficult. Can you tell me where you are right now?",
+    "greeting_loss": "I'm so sorry for what you're going through. Grief is one of the hardest things we carry. I'm here to listen.",
+    "greeting_isolation": "I'm glad you reached out. You don't have to face this alone. What's been weighing on you lately?"
   },
   "spiritual": {
     "title": "Spiritual & Reflective Comfort",

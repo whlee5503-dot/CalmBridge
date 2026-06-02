@@ -12,10 +12,9 @@ interface Message {
 
 interface RequestBody {
   messages: Message[];
-  language?: string; // "en" | "ko" | "fr" | "sw"
+  language?: string;
+  situation?: string; // "disaster" | "conflict" | "loss" | "isolation" | "other"
 }
-
-// ── Safety Filters ────────────────────────────────────────────────────────────
 
 const MENTAL_HEALTH_CRISIS_KEYWORDS: Record<string, string[]> = {
   en: ["suicide", "kill myself", "end my life", "want to die", "self-harm", "cut myself", "overdose", "no reason to live"],
@@ -31,36 +30,17 @@ const DISASTER_CRISIS_KEYWORDS: Record<string, string[]> = {
   sw: ["tetemeko", "mafuriko", "kimbunga", "tsunami", "moto", "mkimbizi", "uokoaji"],
 };
 
-function detectCrisisType(
-  text: string,
-  lang: string
-): "mental_health" | "disaster" | "none" {
+function detectCrisisType(text: string, lang: string): "mental_health" | "disaster" | "none" {
   const normalizedText = text.toLowerCase();
   const effectiveLang = lang in MENTAL_HEALTH_CRISIS_KEYWORDS ? lang : "en";
-
-  const mentalKeywords = [
-    ...(MENTAL_HEALTH_CRISIS_KEYWORDS[effectiveLang] ?? []),
-    ...(MENTAL_HEALTH_CRISIS_KEYWORDS["en"] ?? []),
-  ];
-  const disasterKeywords = [
-    ...(DISASTER_CRISIS_KEYWORDS[effectiveLang] ?? []),
-    ...(DISASTER_CRISIS_KEYWORDS["en"] ?? []),
-  ];
-
-  if (mentalKeywords.some((kw) => normalizedText.includes(kw))) {
-    return "mental_health";
-  }
-  if (disasterKeywords.some((kw) => normalizedText.includes(kw))) {
-    return "disaster";
-  }
+  const mentalKeywords = [...(MENTAL_HEALTH_CRISIS_KEYWORDS[effectiveLang] ?? []), ...(MENTAL_HEALTH_CRISIS_KEYWORDS["en"] ?? [])];
+  const disasterKeywords = [...(DISASTER_CRISIS_KEYWORDS[effectiveLang] ?? []), ...(DISASTER_CRISIS_KEYWORDS["en"] ?? [])];
+  if (mentalKeywords.some((kw) => normalizedText.includes(kw))) return "mental_health";
+  if (disasterKeywords.some((kw) => normalizedText.includes(kw))) return "disaster";
   return "none";
 }
 
-// ── WHO PFA System Prompts ────────────────────────────────────────────────────
-// Based on: WHO Psychological First Aid Field Guide (2011)
-// Framework: Look → Listen → Link
-
-function buildSystemPrompt(language: string, crisisType: string): string {
+function buildSystemPrompt(language: string, crisisType: string, situation?: string): string {
   const langName: Record<string, string> = {
     en: "English",
     ko: "Korean (한국어)",
@@ -68,14 +48,24 @@ function buildSystemPrompt(language: string, crisisType: string): string {
     sw: "Swahili (Kiswahili)",
   };
 
+  const situationContext: Record<string, string> = {
+    disaster:  "The user is a natural disaster survivor (earthquake, flood, etc.).",
+    conflict:  "The user is affected by war or violent conflict.",
+    loss:      "The user is experiencing grief or significant loss.",
+    isolation: "The user is experiencing isolation or loneliness.",
+    other:     "The user is going through a difficult situation.",
+  };
+
   const responseLanguage = langName[language] ?? "English";
+  const situationNote = situation && situationContext[situation]
+    ? `\n## USER CONTEXT\n${situationContext[situation]}\nAdapt your tone and responses accordingly from the very first message.`
+    : "";
 
   const coreIdentity = `You are CalmBridge, a compassionate AI companion trained in WHO Psychological First Aid (PFA).
 You MUST respond ONLY in ${responseLanguage}.
 You are NOT a therapist or psychiatrist. You do NOT diagnose or prescribe.
-Your role is to provide immediate emotional support following the WHO PFA framework.`;
+Your role is to provide immediate emotional support following the WHO PFA framework.${situationNote}`;
 
-  // ── LOOK: Observe and assess the situation
   const lookModule = `
 ## LOOK (Observe & Assess)
 Before responding, silently assess:
@@ -90,89 +80,57 @@ Adapt your response tone accordingly:
 - Overwhelmed → structured, gentle reassurance
 - Stable but stressed → supportive listening, normalizing reactions`;
 
-  // ── LISTEN: Active listening without pressure
   const listenModule = `
 ## LISTEN (Active, Compassionate Listening)
-Core listening principles:
-1. **Presence over solutions**: Be present before offering advice. Acknowledge feelings first.
-2. **No pressure**: Never push people to talk about what happened. Follow their lead.
-3. **Validation**: Normalize reactions. ("It's natural to feel this way after what you've been through.")
-4. **Avoid harmful phrases**:
-   - ❌ "I know how you feel"
-   - ❌ "Everything happens for a reason"
-   - ❌ "You should be grateful"
-   - ❌ "Stay strong / Don't cry"
+1. Presence over solutions: Acknowledge feelings first.
+2. No pressure: Never push people to talk about what happened.
+3. Validation: Normalize reactions.
+4. Avoid harmful phrases:
+   - ❌ "I know how you feel" / "Everything happens for a reason" / "Stay strong"
    - ✅ "I hear you. That sounds incredibly hard."
    - ✅ "Your feelings make complete sense."
-   - ✅ "You don't have to go through this alone."
-5. **Grounding when overwhelmed**: If someone seems dissociated or panicked, gently offer grounding:
-   ("Can you take a slow breath with me? Notice 3 things you can see right now.")`;
+5. Grounding when overwhelmed: offer breathing or 3-senses grounding technique.`;
 
-  // ── LINK: Connect to support
   const linkModule = `
 ## LINK (Connect to Support & Resources)
-Gradually introduce practical support:
-1. **Basic needs first**: Help identify immediate needs (safety, water, shelter, contact with loved ones).
-2. **Social support**: Gently encourage connection with trusted people in their life.
-3. **Professional referral** (when appropriate, not forceful):
-   - For mental health crisis → crisis lines, mental health professionals
-   - For disaster survivors → local emergency services, humanitarian organizations
-4. **Self-care reminders**: Sleep, eating, small comforting routines.
-5. **Hope without false promises**: Acknowledge pain while gently pointing toward resilience.`;
+1. Basic needs first: safety, water, shelter, contact with loved ones.
+2. Gently encourage connection with trusted people.
+3. Professional referral when appropriate (not forceful).
+4. Self-care reminders: sleep, eating, small comforting routines.
+5. Hope without false promises.`;
 
-  // Crisis-specific overlays
   let crisisOverlay = "";
-
   if (crisisType === "mental_health") {
     crisisOverlay = `
 ## ⚠️ MENTAL HEALTH CRISIS PROTOCOL
-This conversation may involve risk of self-harm or suicide.
-MANDATORY STEPS:
 1. Acknowledge their pain directly and without judgment.
-2. Ask gently but clearly: "Are you thinking about hurting yourself?"
-3. Do NOT leave them feeling judged or dismissed.
-4. Provide crisis resources naturally within your response:
-   - International: International Association for Suicide Prevention: https://www.iasp.info/resources/Crisis_Centres/
+2. Ask gently: "Are you thinking about hurting yourself?"
+3. Provide crisis resources:
+   - International: https://www.iasp.info/resources/Crisis_Centres/
    - Crisis Text Line (US/UK/IE/CA): Text HOME to 741741
    - Korea: 자살예방상담전화 1393 (24시간)
-   - France: 3114 (Numéro National Prévention Suicide)
-5. Stay calm. Your steadiness is healing.`;
+   - France: 3114`;
   }
-
   if (crisisType === "disaster") {
     crisisOverlay = `
 ## ⚠️ DISASTER SURVIVOR PROTOCOL
-This person may be experiencing acute trauma from a disaster event.
-MANDATORY STEPS:
-1. First, acknowledge their immediate safety concern.
-2. Provide brief, clear, actionable information if they need it.
+1. Acknowledge immediate safety concern first.
+2. Provide brief, clear, actionable information.
 3. Validate the enormity of what they've experienced.
-4. Focus on immediate practical needs before emotional processing.
-5. Connect to: Local emergency services, Red Cross/Red Crescent, UNHCR (if refugee context).
-6. Remember: Many reactions (shock, numbness, anger) are NORMAL responses to abnormal events.`;
+4. Connect to: Local emergency services, Red Cross/Red Crescent, UNHCR.`;
   }
 
   const responseGuidelines = `
 ## RESPONSE GUIDELINES
-- Length: 3-5 sentences for simple support; longer only when genuinely needed.
+- Length: 3-5 sentences for simple support.
 - Tone: Warm, calm, unhurried. Like a trusted friend with training.
-- Structure: Acknowledge → Validate → Gently explore or support → (Link if appropriate)
-- End with: An open question or gentle invitation to continue sharing.
-- NEVER end with a list of tasks. Human warmth first.`;
+- Structure: Acknowledge → Validate → Gently explore → (Link if appropriate)
+- End with an open question or gentle invitation.
+- NEVER end with a list of tasks.`;
 
-  return [
-    coreIdentity,
-    lookModule,
-    listenModule,
-    linkModule,
-    crisisOverlay,
-    responseGuidelines,
-  ]
-    .filter(Boolean)
-    .join("\n");
+  return [coreIdentity, lookModule, listenModule, linkModule, crisisOverlay, responseGuidelines]
+    .filter(Boolean).join("\n");
 }
-
-// ── Main Handler ──────────────────────────────────────────────────────────────
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const corsHeaders = {
@@ -181,84 +139,52 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     "Access-Control-Allow-Headers": "Content-Type",
   };
 
-  if (request.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
-  }
+  if (request.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
     const body: RequestBody = await request.json();
-    const { messages, language = "en" } = body;
+    const { messages, language = "en", situation } = body;
 
     if (!messages || !Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: "Invalid messages format" }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
-    // Detect crisis from the latest user message
-    const lastUserMessage =
-      messages.filter((m) => m.role === "user").pop()?.content ?? "";
+    const lastUserMessage = messages.filter((m) => m.role === "user").pop()?.content ?? "";
     const crisisType = detectCrisisType(lastUserMessage, language);
-
-    // Build PFA-enhanced system prompt
-    const systemPrompt = buildSystemPrompt(language, crisisType);
-
-    // Filter out any existing system messages; inject ours
+    const systemPrompt = buildSystemPrompt(language, crisisType, situation);
     const cleanedMessages = messages.filter((m) => m.role !== "system");
+    const openAIMessages: Message[] = [{ role: "system", content: systemPrompt }, ...cleanedMessages];
 
-    const openAIMessages: Message[] = [
-      { role: "system", content: systemPrompt },
-      ...cleanedMessages,
-    ];
-
-    const openAIResponse = await fetch(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${env.OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: "gpt-4o-mini",
-          messages: openAIMessages,
-          max_tokens: 600,
-          temperature: 0.75,
-          presence_penalty: 0.3, // reduce repetition
-          frequency_penalty: 0.2,
-        }),
-      }
-    );
+    const openAIResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${env.OPENAI_API_KEY}` },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: openAIMessages,
+        max_tokens: 600,
+        temperature: 0.75,
+        presence_penalty: 0.3,
+        frequency_penalty: 0.2,
+      }),
+    });
 
     if (!openAIResponse.ok) {
       const errorData = await openAIResponse.json();
-      throw new Error(
-        `OpenAI API error: ${JSON.stringify(errorData)}`
-      );
+      throw new Error(`OpenAI API error: ${JSON.stringify(errorData)}`);
     }
 
     const data = await openAIResponse.json();
     const reply = data.choices?.[0]?.message?.content ?? "";
 
-    return new Response(
-      JSON.stringify({
-        reply,
-        crisisType, // expose to frontend for conditional UI (e.g. show crisis banner)
-        language,
-      }),
-      {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
-    );
+    return new Response(JSON.stringify({ reply, crisisType, language }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.error("CalmBridge API error:", error);
-    return new Response(
-      JSON.stringify({ error: "Internal server error", reply: "" }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      }
-    );
+    return new Response(JSON.stringify({ error: "Internal server error", reply: "" }), {
+      status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   }
 };

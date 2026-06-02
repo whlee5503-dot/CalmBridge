@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Send, ArrowLeft, AlertTriangle, Sparkles } from 'lucide-react'
 import VoiceInput from '../components/VoiceInput'
 import SpiritualComfort from '../components/SpiritualComfort'
@@ -8,6 +8,11 @@ import SpiritualComfort from '../components/SpiritualComfort'
 interface Message {
   role: 'user' | 'assistant'
   content: string
+}
+
+interface OnboardingState {
+  situation?: string
+  religion?: string
 }
 
 const LANGUAGES = [
@@ -31,9 +36,7 @@ function loadSession(currentLang: string): Message[] | null {
     const data = JSON.parse(raw) as SessionData
     if (data.lang !== currentLang) return null
     return data.messages
-  } catch {
-    return null
-  }
+  } catch { return null }
 }
 
 function saveSession(lang: string, messages: Message[]) {
@@ -52,28 +55,42 @@ const MENTAL_HEALTH_CRISIS = [
 const DISASTER_KEYWORDS = [
   'tsunami', 'earthquake', 'flood', 'fire', 'hurricane', 'cyclone', 'landslide', 'explosion',
   '해일', '지진', '홍수', '화재', '산사태', '폭발',
-  'tremblement', 'inondation', 'incendie', 'cyclone',
+  'tremblement', 'inondation', 'incendie',
   'tetemeko', 'mafuriko', 'moto',
 ]
 
 function isMentalHealthCrisis(text: string): boolean {
-  const lower = text.toLowerCase()
-  return MENTAL_HEALTH_CRISIS.some(kw => lower.includes(kw))
+  return MENTAL_HEALTH_CRISIS.some(kw => text.toLowerCase().includes(kw))
 }
 
 export { DISASTER_KEYWORDS }
 
+// 상황별 첫 인사말
+function getGreeting(t: (key: string) => string, situation?: string): string {
+  const greetings: Record<string, string> = {
+    disaster:  t('pfa.greeting_disaster'),
+    conflict:  t('pfa.greeting_conflict'),
+    loss:      t('pfa.greeting_loss'),
+    isolation: t('pfa.greeting_isolation'),
+  }
+  return (situation && greetings[situation]) ? greetings[situation] : t('pfa.greeting')
+}
+
 export default function ChatPage() {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
+  const location = useLocation()
+  const { situation, religion } = (location.state as OnboardingState) ?? {}
 
-  const [messages, setMessages] = useState<Message[]>(() =>
-    loadSession(i18n.language) ?? [{ role: 'assistant', content: t('pfa.greeting') }]
-  )
+  const [messages, setMessages] = useState<Message[]>(() => {
+    const saved = loadSession(i18n.language)
+    if (saved) return saved
+    return [{ role: 'assistant', content: getGreeting(t, situation) }]
+  })
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
-  const [showSpiritual, setShowSpiritual] = useState(false)
+  const [showSpiritual, setShowSpiritual] = useState(religion !== 'none' && !!religion)
   const bottomRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -86,7 +103,7 @@ export default function ChatPage() {
 
   function handleLanguageChange(code: string) {
     i18n.changeLanguage(code)
-    const greeting = i18n.getFixedT(code)('pfa.greeting')
+    const greeting = getGreeting(i18n.getFixedT(code), situation)
     const fresh = [{ role: 'assistant' as const, content: greeting }]
     setMessages(fresh)
     saveSession(code, fresh)
@@ -115,15 +132,13 @@ export default function ChatPage() {
         body: JSON.stringify({
           messages: updated,
           language: i18n.language,
+          situation, // onboarding에서 전달된 상황
         }),
       })
       const data = await res.json() as { reply: string }
       setMessages(prev => [...prev, { role: 'assistant', content: data.reply }])
     } catch {
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: t('disclaimer')
-      }])
+      setMessages(prev => [...prev, { role: 'assistant', content: t('disclaimer') }])
     } finally {
       setLoading(false)
     }
@@ -147,21 +162,16 @@ export default function ChatPage() {
         </div>
         <div className="ml-auto flex items-center gap-1">
           {LANGUAGES.map(lang => (
-            <button
-              key={lang.code}
-              onClick={() => handleLanguageChange(lang.code)}
+            <button key={lang.code} onClick={() => handleLanguageChange(lang.code)}
               className="text-xs font-medium px-2 py-1 rounded-md transition-all"
               style={i18n.language === lang.code
                 ? { backgroundColor: 'white', color: '#1a6b4a' }
-                : { backgroundColor: 'transparent', color: 'rgba(255,255,255,0.7)' }}
-            >
+                : { backgroundColor: 'transparent', color: 'rgba(255,255,255,0.7)' }}>
               {lang.label}
             </button>
           ))}
-          <button
-            onClick={() => setShowAlert(true)}
-            className="text-white opacity-80 hover:opacity-100 ml-1 p-1"
-          >
+          <button onClick={() => setShowAlert(true)}
+            className="text-white opacity-80 hover:opacity-100 ml-1 p-1">
             <AlertTriangle size={18} />
           </button>
         </div>
@@ -183,8 +193,7 @@ export default function ChatPage() {
           className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full transition-all"
           style={showSpiritual
             ? { backgroundColor: '#1a6b4a', color: 'white' }
-            : { backgroundColor: '#e8f5f0', color: '#1a6b4a' }}
-        >
+            : { backgroundColor: '#e8f5f0', color: '#1a6b4a' }}>
           <Sparkles size={13} />
           {t('spiritual.title', 'Spiritual Comfort')}
         </button>
@@ -199,13 +208,10 @@ export default function ChatPage() {
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div
-              className="max-w-xs px-4 py-3 rounded-2xl text-sm leading-relaxed"
+            <div className="max-w-xs px-4 py-3 rounded-2xl text-sm leading-relaxed"
               style={msg.role === 'user'
                 ? { backgroundColor: '#1a6b4a', color: 'white', borderBottomRightRadius: '4px' }
-                : { backgroundColor: 'white', color: '#1f2937',
-                    border: '1px solid #e5e7eb', borderBottomLeftRadius: '4px' }}
-            >
+                : { backgroundColor: 'white', color: '#1f2937', border: '1px solid #e5e7eb', borderBottomLeftRadius: '4px' }}>
               {msg.content}
             </div>
           </div>
@@ -223,22 +229,16 @@ export default function ChatPage() {
       </div>
 
       <div className="flex gap-2 px-4 py-3 border-t border-gray-100 bg-white">
-        <input
-          type="text"
-          value={input}
+        <input type="text" value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && sendMessage()}
           placeholder={t('placeholder')}
           className="flex-1 px-4 py-3 rounded-2xl border border-gray-200 text-sm focus:outline-none focus:border-green-400"
-          style={{ backgroundColor: '#f9fafb' }}
-        />
+          style={{ backgroundColor: '#f9fafb' }} />
         <VoiceInput onTranscript={handleVoiceTranscript} disabled={loading} />
-        <button
-          onClick={sendMessage}
-          disabled={!input.trim() || loading}
+        <button onClick={sendMessage} disabled={!input.trim() || loading}
           className="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform active:scale-95 disabled:opacity-40"
-          style={{ backgroundColor: '#1a6b4a' }}
-        >
+          style={{ backgroundColor: '#1a6b4a' }}>
           <Send size={18} color="white" />
         </button>
       </div>
