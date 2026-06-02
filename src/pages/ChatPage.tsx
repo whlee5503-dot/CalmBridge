@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { Send, ArrowLeft, AlertTriangle } from 'lucide-react'
+import { Send, ArrowLeft, AlertTriangle, Sparkles } from 'lucide-react'
+import VoiceInput from '../components/VoiceInput'
+import SpiritualComfort from '../components/SpiritualComfort'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -27,7 +29,6 @@ function loadSession(currentLang: string): Message[] | null {
     const raw = sessionStorage.getItem(SESSION_KEY)
     if (!raw) return null
     const data = JSON.parse(raw) as SessionData
-    // 저장된 언어와 현재 언어가 다르면 복원하지 않음
     if (data.lang !== currentLang) return null
     return data.messages
   } catch {
@@ -41,7 +42,6 @@ function saveSession(lang: string, messages: Message[]) {
   } catch {}
 }
 
-// Category 1: 즉각 알림 + 대화 차단 (Do No Harm 핵심)
 const MENTAL_HEALTH_CRISIS = [
   'suicide', 'kill myself', 'end my life', 'want to die', 'self-harm', 'self harm', 'hurt myself',
   '자살', '죽고 싶', '죽고싶', '목숨을 끊', '자해',
@@ -49,7 +49,6 @@ const MENTAL_HEALTH_CRISIS = [
   'kujiua', 'kujidhuru',
 ]
 
-// Category 2: 재난 키워드 — 알림 없이 AI가 PFA로 자연스럽게 대응
 const DISASTER_KEYWORDS = [
   'tsunami', 'earthquake', 'flood', 'fire', 'hurricane', 'cyclone', 'landslide', 'explosion',
   '해일', '지진', '홍수', '화재', '산사태', '폭발',
@@ -62,7 +61,6 @@ function isMentalHealthCrisis(text: string): boolean {
   return MENTAL_HEALTH_CRISIS.some(kw => lower.includes(kw))
 }
 
-// DISASTER_KEYWORDS: 재난 관련 메시지는 차단하지 않고 AI(PFA)가 직접 응대
 export { DISASTER_KEYWORDS }
 
 export default function ChatPage() {
@@ -75,6 +73,7 @@ export default function ChatPage() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
+  const [showSpiritual, setShowSpiritual] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -97,7 +96,6 @@ export default function ChatPage() {
     const text = input.trim()
     if (!text || loading) return
 
-    // Safety Filter: 정신건강 위기만 차단, 재난 키워드는 AI로 통과
     if (isMentalHealthCrisis(text)) {
       setShowAlert(true)
       setInput('')
@@ -131,10 +129,13 @@ export default function ChatPage() {
     }
   }
 
+  function handleVoiceTranscript(text: string) {
+    setInput(prev => prev ? `${prev} ${text}` : text)
+  }
+
   return (
     <div className="min-h-dvh flex flex-col" style={{ maxWidth: '480px', margin: '0 auto' }}>
 
-      {/* Header */}
       <header className="flex items-center gap-3 px-4 py-3 border-b border-gray-100"
               style={{ backgroundColor: '#1a6b4a' }}>
         <button onClick={() => navigate('/')} className="text-white p-1">
@@ -144,8 +145,6 @@ export default function ChatPage() {
           <span className="text-lg">🕊</span>
           <span className="text-white font-medium">CalmBridge</span>
         </div>
-
-        {/* Language switcher */}
         <div className="ml-auto flex items-center gap-1">
           {LANGUAGES.map(lang => (
             <button
@@ -168,25 +167,38 @@ export default function ChatPage() {
         </div>
       </header>
 
-      {/* High Risk Alert */}
       {showAlert && (
         <div className="mx-4 mt-4 p-4 rounded-2xl border-2 border-red-400 bg-red-50">
           <p className="text-red-700 font-medium text-sm mb-1">🆘 {t('emergency')}</p>
           <p className="text-red-600 text-sm">{t('emergency_msg')}</p>
-          <button
-            onClick={() => setShowAlert(false)}
-            className="mt-3 text-xs text-red-500 underline"
-          >
+          <button onClick={() => setShowAlert(false)} className="mt-3 text-xs text-red-500 underline">
             닫기 / Close
           </button>
         </div>
       )}
 
-      {/* Messages */}
+      <div className="px-4 pt-3">
+        <button
+          onClick={() => setShowSpiritual(prev => !prev)}
+          className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full transition-all"
+          style={showSpiritual
+            ? { backgroundColor: '#1a6b4a', color: 'white' }
+            : { backgroundColor: '#e8f5f0', color: '#1a6b4a' }}
+        >
+          <Sparkles size={13} />
+          {t('spiritual.title', 'Spiritual Comfort')}
+        </button>
+      </div>
+
+      {showSpiritual && (
+        <div className="px-4 pt-3">
+          <SpiritualComfort onClose={() => setShowSpiritual(false)} />
+        </div>
+      )}
+
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
         {messages.map((msg, i) => (
-          <div key={i}
-               className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+          <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div
               className="max-w-xs px-4 py-3 rounded-2xl text-sm leading-relaxed"
               style={msg.role === 'user'
@@ -198,23 +210,18 @@ export default function ChatPage() {
             </div>
           </div>
         ))}
-
         {loading && (
           <div className="flex justify-start">
-            <div className="px-4 py-3 rounded-2xl bg-white border border-gray-200 text-sm text-gray-400">
-              ···
-            </div>
+            <div className="px-4 py-3 rounded-2xl bg-white border border-gray-200 text-sm text-gray-400">···</div>
           </div>
         )}
         <div ref={bottomRef} />
       </div>
 
-      {/* Disclaimer bar */}
       <div className="px-4 py-1 text-center" style={{ backgroundColor: '#e8f5f0' }}>
         <p className="text-xs text-gray-400">{t('disclaimer')}</p>
       </div>
 
-      {/* Input */}
       <div className="flex gap-2 px-4 py-3 border-t border-gray-100 bg-white">
         <input
           type="text"
@@ -222,15 +229,14 @@ export default function ChatPage() {
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && sendMessage()}
           placeholder={t('placeholder')}
-          className="flex-1 px-4 py-3 rounded-2xl border border-gray-200 text-sm
-                     focus:outline-none focus:border-green-400"
+          className="flex-1 px-4 py-3 rounded-2xl border border-gray-200 text-sm focus:outline-none focus:border-green-400"
           style={{ backgroundColor: '#f9fafb' }}
         />
+        <VoiceInput onTranscript={handleVoiceTranscript} disabled={loading} />
         <button
           onClick={sendMessage}
           disabled={!input.trim() || loading}
-          className="w-12 h-12 rounded-2xl flex items-center justify-center
-                     transition-transform active:scale-95 disabled:opacity-40"
+          className="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform active:scale-95 disabled:opacity-40"
           style={{ backgroundColor: '#1a6b4a' }}
         >
           <Send size={18} color="white" />
