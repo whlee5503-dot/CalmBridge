@@ -264,7 +264,7 @@ export default function ChatPage() {
         </div>
       )}
 
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 flex flex-col justify-end">
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className="max-w-xs px-4 py-3 rounded-2xl text-sm leading-relaxed"
