@@ -257,14 +257,12 @@ export default function ChatPage() {
           {t('spiritual.title', 'Spiritual Comfort')}
         </button>
       </div>
-
-      {showSpiritual && (
-        <div className="px-4 pt-3">
-          <SpiritualComfort onClose={() => setShowSpiritual(false)} />
-        </div>
-      )}
-
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 flex flex-col justify-end">
+        {showSpiritual && (
+          <div className="mb-2">
+            <SpiritualComfort onClose={() => setShowSpiritual(false)} />
+          </div>
+        )}
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className="max-w-xs px-4 py-3 rounded-2xl text-sm leading-relaxed"
