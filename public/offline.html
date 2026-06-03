@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1e3a5f" />
+  <title>CalmBridge — Offline</title>
+  <style>
+    /* ── Design tokens ── */
+    :root {
+      --bg:        #0f1c2e;
+      --surface:   #162236;
+      --border:    rgba(255,255,255,0.07);
+      --text:      #e2eaf5;
+      --muted:     #8faabe;
+      --accent:    #4fa3d1;
+      --accent2:   #7ec8a4;
+      --warn:      #f4a261;
+      --red:       #e76f51;
+      --card-bg:   rgba(255,255,255,0.04);
+      --radius:    16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      overflow: hidden;
+    }
+
+    /* ── Background texture ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(79,163,209,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 90%, rgba(126,200,164,0.10) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Stars ── */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
+      opacity: 0;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; }
+      50% { opacity: var(--max-opacity, 0.6); }
+    }
+
+    /* ── Main card ── */
+    .card {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 32px 64px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04) inset;
+      animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Dove icon ── */
+    .dove {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 0.75rem;
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-6px); }
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      font-style: italic;
+    }
+
+    .tagline {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 500;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
+      margin: 0 auto 1.75rem;
+      width: 80%;
+    }
+
+    /* ── Offline notice ── */
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--warn);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.7); }
+    }
+    .status-label {
+      font-size: 0.75rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--warn);
+    }
+
+    /* ── Message ── */
+    .message {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .message strong {
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    /* ── Crisis resources (always available) ── */
+    .crisis-section {
+      background: rgba(231,111,81,0.08);
+      border: 1px solid rgba(231,111,81,0.2);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.25rem 1rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    .crisis-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .crisis-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .crisis-list li {
+      font-size: 0.85rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      color: var(--muted);
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .crisis-list a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .crisis-list a:hover { text-decoration: underline; }
+    .flag { font-size: 0.95rem; }
+
+    /* ── Retry button ── */
+    .retry-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      border: 1px solid rgba(79,163,209,0.35);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      letter-spacing: 0.06em;
+      padding: 0.65rem 1.5rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.1s;
+      margin-bottom: 1.25rem;
+    }
+    .retry-btn:hover {
+      background: rgba(79,163,209,0.1);
+      border-color: var(--accent);
+    }
+    .retry-btn:active { transform: scale(0.97); }
+    .retry-icon {
+      display: inline-block;
+      transition: transform 0.4s;
+    }
+    .retry-btn:hover .retry-icon { transform: rotate(180deg); }
+
+    /* ── Comfort quote ── */
+    .quote-section {
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+    }
+    .quote-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      margin-bottom: 0.6rem;
+      display: block;
+      opacity: 0.7;
+    }
+    blockquote {
+      font-style: italic;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: var(--accent2);
+      margin-bottom: 0.4rem;
+    }
+    .quote-source {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      opacity: 0.7;
+    }
+
+    /* ── Language switcher ── */
+    .lang-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .lang-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      letter-spacing: 0.06em;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .lang-btn:hover, .lang-btn.active {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    @media (max-width: 400px) {
+      .card { padding: 2rem 1.25rem; }
+      h1 { font-size: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="stars" id="stars-container"></div>
+
+<!-- Main card -->
+<div class="card" role="main">
+  <span class="dove" aria-hidden="true">🕊️</span>
+  <h1 id="title">CalmBridge</h1>
+  <p class="tagline" id="tagline">A calm presence</p>
+
+  <div class="divider"></div>
+
+  <div class="status-row">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="status-label" id="status-label">Offline</span>
+  </div>
+
+  <p class="message" id="message">
+    You're currently offline. <strong>You are not alone.</strong><br />
+    When your connection returns, CalmBridge will be here for you.
+  </p>
+
+  <!-- Crisis resources — always rendered in HTML, no network needed -->
+  <div class="crisis-section" role="region" aria-label="Crisis resources">
+    <div class="crisis-title">
+      <span aria-hidden="true">🆘</span>
+      <span id="crisis-title">If you need immediate help</span>
+    </div>
+    <ul class="crisis-list" id="crisis-list">
+      <li><span class="flag">🌍</span> IASP: <a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank" rel="noopener">iasp.info</a></li>
+      <li><span class="flag">🇰🇷</span> Korea: <a href="tel:1393">1393</a> &mdash; 자살예방상담전화</li>
+      <li><span class="flag">🇫🇷</span> France: <a href="tel:3114">3114</a> &mdash; Prévention Suicide</li>
+      <li><span class="flag">🇺🇸</span> US / CA: <a href="tel:988">988</a> &mdash; Crisis Lifeline</li>
+      <li><span class="flag">💬</span> Text: <a href="sms:741741">HOME → 741741</a></li>
+    </ul>
+  </div>
+
+  <!-- Retry -->
+  <button class="retry-btn" onclick="retryConnection()" id="retry-btn">
+    <span class="retry-icon" aria-hidden="true">↻</span>
+    <span id="retry-label">Try reconnecting</span>
+  </button>
+
+  <!-- Comfort quote -->
+  <div class="quote-section">
+    <span class="quote-label" id="quote-label">A moment of comfort</span>
+    <blockquote id="quote-text">
+      "You don't have to have it all figured out to move forward."
+    </blockquote>
+    <p class="quote-source" id="quote-source">— A reminder for hard days</p>
+  </div>
+
+  <!-- Language switcher -->
+  <div class="lang-row" role="navigation" aria-label="Language">
+    <button class="lang-btn active" onclick="setLang('en')" lang="en">English</button>
+    <button class="lang-btn" onclick="setLang('ko')" lang="ko">한국어</button>
+    <button class="lang-btn" onclick="setLang('fr')" lang="fr">Français</button>
+    <button class="lang-btn" onclick="setLang('sw')" lang="sw">Kiswahili</button>
+  </div>
+</div>
+
+<script>
+  // ── Stars ──────────────────────────────────────────────────────────────────
+  (function createStars() {
+    const container = document.getElementById('stars-container');
+    const count = 80;
+    for (let i = 0; i < count; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      const size = Math.random() * 2 + 0.5;
+      star.style.cssText = `
+        left: ${Math.random() * 100}%;
+        top: ${Math.random() * 100}%;
+        width: ${size}px;
+        height: ${size}px;
+        --dur: ${(Math.random() * 4 + 2).toFixed(1)}s;
+        --delay: ${(Math.random() * 5).toFixed(1)}s;
+        --max-opacity: ${(Math.random() * 0.5 + 0.2).toFixed(2)};
+      `;
+      container.appendChild(star);
+    }
+  })();
+
+  // ── i18n strings ───────────────────────────────────────────────────────────
+  const STRINGS = {
+    en: {
+      title: "CalmBridge",
+      tagline: "A calm presence",
+      statusLabel: "Offline",
+      message: `You're currently offline. <strong>You are not alone.</strong><br />When your connection returns, CalmBridge will be here for you.`,
+      crisisTitle: "If you need immediate help",
+      retryLabel: "Try reconnecting",
+      quoteLabel: "A moment of comfort",
+      quoteText: '"You don\'t have to have it all figured out to move forward."',
+      quoteSource: "— A reminder for hard days",
+    },
+    ko: {
+      title: "캄브릿지",
+      tagline: "고요한 동반자",
+      statusLabel: "오프라인",
+      message: `현재 오프라인 상태입니다. <strong>당신은 혼자가 아닙니다.</strong><br />연결이 복구되면 CalmBridge가 다시 함께할 것입니다.`,
+      crisisTitle: "즉각적인 도움이 필요하시면",
+      retryLabel: "재연결 시도",
+      quoteLabel: "잠시 위로를 전합니다",
+      quoteText: '"나아가기 위해 모든 것을 이해할 필요는 없습니다."',
+      quoteSource: "— 힘든 날을 위한 위로",
+    },
+    fr: {
+      title: "CalmBridge",
+      tagline: "Une présence apaisante",
+      statusLabel: "Hors ligne",
+      message: `Vous êtes actuellement hors ligne. <strong>Vous n'êtes pas seul(e).</strong><br />Quand votre connexion revient, CalmBridge sera là pour vous.`,
+      crisisTitle: "Si vous avez besoin d'aide immédiate",
+      retryLabel: "Réessayer la connexion",
+      quoteLabel: "Un moment de réconfort",
+      quoteText: '"Vous n\'avez pas besoin d\'avoir tout compris pour avancer."',
+      quoteSource: "— Un rappel pour les jours difficiles",
+    },
+    sw: {
+      title: "CalmBridge",
+      tagline: "Uwepo wa utulivu",
+      statusLabel: "Nje ya mtandao",
+      message: `Kwa sasa huna mtandao. <strong>Huko peke yako.</strong><br />Mtandao utakaporudi, CalmBridge itakuwepo nawe.`,
+      crisisTitle: "Ukihitaji msaada wa haraka",
+      retryLabel: "Jaribu kuunganisha tena",
+      quoteLabel: "Dakika ya faraja",
+      quoteText: '"Huhitaji kuelewa kila kitu ili kusonga mbele."',
+      quoteSource: "— Ukumbusho kwa siku ngumu",
+    },
+  };
+
+  let currentLang = 'en';
+
+  // Auto-detect language from browser or localStorage
+  (function detectLang() {
+    const stored = localStorage.getItem('calmbridge_lang');
+    const browser = navigator.language?.slice(0, 2);
+    const lang = stored || browser;
+    if (['en', 'ko', 'fr', 'sw'].includes(lang)) {
+      currentLang = lang;
+    }
+  })();
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('lang') === lang);
+    });
+    applyStrings();
+  }
+
+  function applyStrings() {
+    const s = STRINGS[currentLang] || STRINGS.en;
+    document.getElementById('title').textContent        = s.title;
+    document.getElementById('tagline').textContent      = s.tagline;
+    document.getElementById('status-label').textContent = s.statusLabel;
+    document.getElementById('message').innerHTML        = s.message;
+    document.getElementById('crisis-title').textContent = s.crisisTitle;
+    document.getElementById('retry-label').textContent  = s.retryLabel;
+    document.getElementById('quote-label').textContent  = s.quoteLabel;
+    document.getElementById('quote-text').textContent   = s.quoteText;
+    document.getElementById('quote-source').textContent = s.quoteSource;
+    document.documentElement.lang = currentLang;
+  }
+
+  // ── Retry ──────────────────────────────────────────────────────────────────
+  function retryConnection() {
+    if (navigator.onLine) {
+      window.location.href = '/';
+    } else {
+      const btn = document.getElementById('retry-btn');
+      btn.style.borderColor = 'rgba(231,111,81,0.5)';
+      btn.style.color = '#e76f51';
+      setTimeout(() => {
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }, 1500);
+    }
+  }
+
+  // Auto-redirect when back online
+  window.addEventListener('online', () => {
+    setTimeout(() => { window.location.href = '/'; }, 800);
+  });
+
+  // Init
+  applyStrings();
+  setLang(currentLang);
+</script>
+</body>
+</html>

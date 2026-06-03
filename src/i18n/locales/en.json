@@ -48,5 +48,6 @@
     "situation_isolation": "Isolation or loneliness",
     "situation_other": "Something else",
     "religion_prompt": "This is optional and helps us offer relevant comfort."
-  }
+  },
+  "offline_banner": "You are offline — responses may be limited."
 }

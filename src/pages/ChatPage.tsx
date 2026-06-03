@@ -92,6 +92,18 @@ export default function ChatPage() {
   const [showAlert, setShowAlert] = useState(false)
   const [showSpiritual, setShowSpiritual] = useState(religion !== 'none' && !!religion)
   const bottomRef = useRef<HTMLDivElement>(null)
+  const [isOffline, setIsOffline] = useState(!navigator.onLine)
+
+  useEffect(() => {
+    const handleOnline  = () => setIsOffline(false)
+    const handleOffline = () => setIsOffline(true)
+    window.addEventListener('online',  handleOnline)
+    window.addEventListener('offline', handleOffline)
+    return () => {
+      window.removeEventListener('online',  handleOnline)
+      window.removeEventListener('offline', handleOffline)
+    }
+  }, [])
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -135,7 +147,8 @@ export default function ChatPage() {
           situation, // onboarding에서 전달된 상황
         }),
       })
-      const data = await res.json() as { reply: string }
+      const data = await res.json() as { reply: string; offline?: boolean }
+      if (data.offline) setIsOffline(true)
       setMessages(prev => [...prev, { role: 'assistant', content: data.reply }])
     } catch {
       setMessages(prev => [...prev, { role: 'assistant', content: t('disclaimer') }])
@@ -177,6 +190,14 @@ export default function ChatPage() {
         </div>
       </header>
 
+      {isOffline && (
+        <div className="flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium"
+          style={{ backgroundColor: '#fef3c7', color: '#92400e' }}>
+          <span>⚠️</span>
+          <span>{t('offline_banner', 'You are offline — responses may be limited.')}</span>
+        </div>
+      )}
+      
       {showAlert && (
         <div className="mx-4 mt-4 p-4 rounded-2xl border-2 border-red-400 bg-red-50">
           <div className="flex items-center justify-between mb-2">

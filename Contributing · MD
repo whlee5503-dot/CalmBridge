@@ -1,0 +1,198 @@
+# Contributing to CalmBridge 🕊️
+
+Thank you for considering a contribution to CalmBridge. This project exists to provide immediate emotional support to people in distress — survivors of disasters, people in mental health crises, and anyone who needs a calm, non-judgmental presence. Every contribution, however small, has the potential to help someone in a vulnerable moment.
+
+Please read this guide carefully before contributing. Our standards are shaped not only by software best practices but by **trauma-informed, culturally sensitive** principles that we hold to a high standard.
+
+---
+
+## Table of Contents
+
+1. [Code of Conduct](#code-of-conduct)
+2. [How to Contribute](#how-to-contribute)
+3. [Development Setup](#development-setup)
+4. [Contribution Types](#contribution-types)
+   - [Translations](#translations)
+   - [Spiritual & Cultural Comfort Texts](#spiritual--cultural-comfort-texts)
+   - [Safety Filter Keywords](#safety-filter-keywords)
+   - [Accessibility Improvements](#accessibility-improvements)
+   - [Bug Fixes & Features](#bug-fixes--features)
+5. [Trauma-Informed Guidelines](#trauma-informed-guidelines)
+6. [Review Process](#review-process)
+7. [Reporting Issues](#reporting-issues)
+
+---
+
+## Code of Conduct
+
+CalmBridge is a safe space — for users **and** contributors. We expect all participants to:
+
+- Communicate with empathy and respect
+- Assume good intent before criticizing
+- Respect lived experience — contributors who share personal knowledge of crisis, trauma, or marginalization bring irreplaceable value
+- Never shame, diminish, or dismiss concerns about safety, mental health, or cultural sensitivity
+
+Violations may result in removal from the project. Report concerns to the maintainers via a private GitHub issue or email.
+
+---
+
+## How to Contribute
+
+1. **Fork** the repository and create a branch: `git checkout -b feat/your-feature`
+2. Make your changes following the guidelines below
+3. Run tests and linting: `npm run lint && npm run test`
+4. Submit a **Pull Request** with a clear description of what and why
+5. Be responsive to reviewer feedback — reviews may raise trauma-informed or cultural concerns that require dialogue
+
+For substantial changes (new languages, new traditions, architectural changes), **open a GitHub Issue first** to discuss before writing code.
+
+---
+
+## Development Setup
+
+```bash
+# Prerequisites: Node.js 18+, a Cloudflare account, OpenAI API key
+
+git clone https://github.com/whlee5503-dot/CalmBridge.git
+cd CalmBridge
+npm install
+
+cp .env.example .env.local
+# Edit .env.local: add OPENAI_API_KEY=sk-...
+
+npm run dev
+# Runs at http://localhost:5173 (Vite) + http://localhost:8788 (Cloudflare Pages Functions)
+```
+
+---
+
+## Contribution Types
+
+### Translations
+
+CalmBridge currently supports **English (`en`), Korean (`ko`), French (`fr`), and Swahili (`sw`)**.
+
+**Adding a new language:**
+
+1. Create `src/i18n/{lang}.json` — copy `en.json` as a template
+2. Translate all keys. **Do not machine-translate** safety-critical strings (crisis resources, error messages, WHO PFA responses). Involve native speakers.
+3. Add the BCP-47 locale to `LANG_TO_LOCALE` in `VoiceInput.tsx`
+4. Add the language name to `langName` in `chat.ts`
+5. Add crisis keywords in the new language to `MENTAL_HEALTH_CRISIS_KEYWORDS` and `DISASTER_CRISIS_KEYWORDS` in `chat.ts` — this is **safety-critical** and must be reviewed by a native speaker
+6. Add the language button to `ChatPage.tsx`
+
+**Translation quality standards:**
+
+- **Context matters**: Phrases like "I hear you" carry emotional warmth that literal translation often loses. Work with the *feeling*, not just the words.
+- **Localize crisis resources**: Replace international defaults with locally appropriate hotlines when known (e.g., `1393` for Korea, `3114` for France).
+- **Register**: Use warm, accessible, non-clinical language. Avoid terms that carry stigma in the target culture.
+- Do not translate `spiritual` comfort texts without cultural consultation (see below).
+
+---
+
+### Spiritual & Cultural Comfort Texts
+
+The spiritual comfort module (`SpiritualComfort.tsx`) offers opt-in tradition-specific texts. This is one of the most sensitive areas of the project.
+
+**Requirements for adding or modifying comfort texts:**
+
+1. **Community review is mandatory.** Any new text representing a religious or cultural tradition must be reviewed by at least one person who identifies with that tradition and has relevant cultural knowledge. Maintainers will not merge spiritual content without this.
+2. **Sources must be accurate.** Quote references (scripture, tradition) must be verifiable. Do not paraphrase sacred texts in ways that distort meaning.
+3. **Reflections must be pastoral, not prescriptive.** The reflection text should hold space, not instruct. Avoid "you should", "you must", "God wants you to". Prefer "you are not alone", "there is room for this pain".
+4. **No tradition is ranked.** All traditions receive the same quality and length of content. Secular/non-religious receives equal respect.
+5. **Adding a new tradition:** Open a GitHub Issue first. Describe the tradition, proposed texts (in at least English), and your connection to or consultation with the community. Maintainers will coordinate review.
+
+---
+
+### Safety Filter Keywords
+
+The safety filter in `chat.ts` detects mental health crisis and disaster keywords to activate appropriate AI protocols.
+
+**This is safety-critical code. Guidelines:**
+
+- **Never remove existing keywords** without strong justification and maintainer approval.
+- New keywords must be provided by **native speakers with relevant context** — idioms, euphemisms, and indirect expressions of suicidal ideation vary enormously across languages and cultures.
+- Test additions against the full conversation flow, not just keyword matching.
+- Do not add keywords so broadly that they trigger false positives on casual conversation — this creates alert fatigue.
+- Keyword PRs must include: the keyword, language, source/rationale, and any relevant cultural context.
+
+---
+
+### Accessibility Improvements
+
+CalmBridge targets **WCAG 2.1 AA**. We especially value contributions that improve the experience for:
+
+- Screen reader users (ARIA live regions, focus management)
+- Users on low-end devices (performance, bundle size)
+- Users with motor impairments (keyboard navigation, touch targets ≥ 44×44px)
+- Users in low-bandwidth environments (PWA offline behavior, lazy loading)
+
+When filing accessibility issues, please include: browser, assistive technology (if any), and steps to reproduce.
+
+---
+
+### Bug Fixes & Features
+
+- For bugs: include browser, OS, language setting, and steps to reproduce.
+- For features: open an Issue first. Features that change the AI behavior, the safety filter, or the PFA framework implementation require maintainer discussion before implementation.
+- All new components must include ARIA labels and keyboard support.
+- All new i18n strings must be added to **all four language files** simultaneously.
+
+---
+
+## Trauma-Informed Guidelines
+
+CalmBridge serves people in acute distress. Every contribution — code, copy, design — must be evaluated through a trauma-informed lens.
+
+**Core principles for contributors:**
+
+| Principle | What it means in practice |
+|---|---|
+| **Safety first** | Never ship a change that could reduce the visibility or effectiveness of crisis resources |
+| **No pressure** | UI changes must never push or rush the user — no countdown timers on sensitive screens, no aggressive retry prompts |
+| **Validation over advice** | AI prompt changes must preserve the "acknowledge before advising" structure |
+| **No harmful platitudes** | Avoid "stay strong", "everything happens for a reason", "others have it worse" in any language |
+| **Shame-free language** | Error messages, fallback text, and offline content must never imply fault or weakness |
+| **Opt-in sensitivity** | Features like spiritual comfort must remain entirely opt-in — never assumed |
+
+When in doubt, ask: *"Would this feel safe and respectful to someone in their worst moment?"*
+
+---
+
+## Review Process
+
+Pull requests go through at minimum:
+
+1. **Automated**: ESLint, TypeScript check, Vite build
+2. **Maintainer review**: Code quality, architecture, i18n completeness
+3. **Sensitivity review** (for safety filter, spiritual content, AI prompt changes): A second human reviewer with relevant expertise
+
+PRs that touch crisis resources, AI behavior, spiritual content, or safety filters may take longer to review. This is by design — we err on the side of care.
+
+We will always provide constructive, respectful feedback. We may close PRs that conflict with the project's trauma-informed principles, but we will explain why and suggest alternatives where possible.
+
+---
+
+## Reporting Issues
+
+- **Bugs**: Use GitHub Issues with the `bug` label. Include browser, OS, language setting, reproduction steps.
+- **Safety concerns** (e.g., a crisis keyword is missing, a response could harm someone): Use the `critical-safety` label or contact maintainers privately. These are treated with the highest urgency.
+- **Accessibility issues**: Use the `a11y` label.
+- **Cultural sensitivity concerns**: Use the `cultural-review` label. We take these seriously and will engage in dialogue.
+
+---
+
+## A Note on Who Uses CalmBridge
+
+The people who may use CalmBridge include:
+
+- A survivor who just lost their home in a disaster
+- A person who has never spoken to a mental health professional and doesn't know how to start
+- Someone who is the only speaker of their language in a refugee camp
+- A person in acute suicidal crisis who can't bring themselves to call a hotline
+
+Your contributions reach them. Hold that reality with care.
+
+---
+
+*CalmBridge — a calm presence when it matters most.*
