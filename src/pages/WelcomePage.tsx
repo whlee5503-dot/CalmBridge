@@ -73,10 +73,9 @@ export default function WelcomePage() {
 
       {/* Card */}
       <div style={{
-        minHeight: '100dvh', display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center',
-        padding: '2rem 1.5rem',
-        background: 'linear-gradient(160deg, #e8f5f0 0%, #f0f9f5 50%, #f9fafb 100%)',
+        width: '100%', maxWidth: '360px', backgroundColor: 'white',
+        borderRadius: '20px', padding: '1.75rem 1.5rem',
+        boxShadow: '0 2px 16px rgba(0,0,0,0.07)', marginBottom: '1rem',
       }}>
 
         {/* Step 1: Language */}
