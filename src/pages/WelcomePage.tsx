@@ -72,7 +72,7 @@ export default function WelcomePage() {
       </div>
 
       {/* Card */}
-      <main style={{
+      <div style={{
         minHeight: '100dvh', display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
         padding: '2rem 1.5rem',
@@ -213,6 +213,6 @@ export default function WelcomePage() {
       <p style={{ marginTop: '0.75rem', fontSize: '0.68rem', color: '#d1d5db' }}>
         SoulCare Suite · Module 1
       </p>
-      </main>
+    </div>
   )
 }
