@@ -72,16 +72,17 @@ export default function WelcomePage() {
       </div>
 
       {/* Card */}
-      <div style={{
-        width: '100%', maxWidth: '360px', backgroundColor: 'white',
-        borderRadius: '20px', padding: '1.75rem 1.5rem',
-        boxShadow: '0 2px 16px rgba(0,0,0,0.07)', marginBottom: '1rem',
+      <main style={{
+        minHeight: '100dvh', display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center',
+        padding: '2rem 1.5rem',
+        background: 'linear-gradient(160deg, #e8f5f0 0%, #f0f9f5 50%, #f9fafb 100%)',
       }}>
 
         {/* Step 1: Language */}
         {step === 1 && (
           <>
-            <p style={{ fontSize: '0.75rem', fontWeight: 500, color: '#9ca3af',
+            <p style={{ fontSize: '0.75rem', fontWeight: 500, color: '#6b7280',
               textTransform: 'uppercase', letterSpacing: '0.08em',
               marginBottom: '1rem', textAlign: 'center' }}>
               {t('onboarding.step_language')}
@@ -147,12 +148,12 @@ export default function WelcomePage() {
         {/* Step 3: Religion */}
         {step === 3 && (
           <>
-            <p style={{ fontSize: '0.75rem', fontWeight: 500, color: '#9ca3af',
+            <p style={{ fontSize: '0.75rem', fontWeight: 500, color: '#6b7280',
               textTransform: 'uppercase', letterSpacing: '0.08em',
               marginBottom: '0.5rem', textAlign: 'center' }}>
               {t('onboarding.step_religion')}
             </p>
-            <p style={{ fontSize: '0.78rem', color: '#9ca3af', textAlign: 'center', marginBottom: '1rem' }}>
+            <p style={{ fontSize: '0.78rem', color: '#6b7280', textAlign: 'center', marginBottom: '1rem' }}>
               {t('onboarding.religion_prompt')}
             </p>
             <div style={{
@@ -206,12 +207,12 @@ export default function WelcomePage() {
       </div>
 
       <p style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.72rem',
-        color: '#9ca3af', maxWidth: '300px', lineHeight: 1.6 }}>
+        color: '#6b7280', maxWidth: '300px', lineHeight: 1.6 }}>
         {t('disclaimer')}
       </p>
       <p style={{ marginTop: '0.75rem', fontSize: '0.68rem', color: '#d1d5db' }}>
         SoulCare Suite · Module 1
       </p>
-    </div>
+      </main>
   )
 }
