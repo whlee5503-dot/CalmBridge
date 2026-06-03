@@ -257,7 +257,7 @@ export default function ChatPage() {
           {t('spiritual.title', 'Spiritual Comfort')}
         </button>
       </div>
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 flex flex-col justify-end">
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
         {showSpiritual && (
           <div className="mb-2">
             <SpiritualComfort onClose={() => setShowSpiritual(false)} />
