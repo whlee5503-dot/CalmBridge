@@ -50,4 +50,6 @@
     "religion_prompt": "Optionnel. Cela nous aide à offrir un réconfort adapté."
   },
   "offline_banner": "Vous êtes hors ligne — les réponses peuvent être limitées."
+,
+  "offline_queued": "Votre message a été sauvegardé et sera envoyé à la reconnexion. 🕊️"
 }

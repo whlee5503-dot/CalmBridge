@@ -151,7 +151,18 @@ export default function ChatPage() {
       if (data.offline) setIsOffline(true)
       setMessages(prev => [...prev, { role: 'assistant', content: data.reply }])
     } catch {
-      setMessages(prev => [...prev, { role: 'assistant', content: t('disclaimer') }])
+      if (!navigator.onLine) {
+        import('../lib/offlineQueue').then(async ({ enqueue, registerSync }) => {
+          await enqueue({ messages: updated, language: i18n.language, situation })
+          await registerSync()
+        })
+        setMessages(prev => [...prev, {
+          role: 'assistant',
+          content: t('offline_queued', 'Your message has been saved and will be sent when you reconnect. 🕊️'),
+        }])
+      } else {
+        setMessages(prev => [...prev, { role: 'assistant', content: t('disclaimer') }])
+      }
     } finally {
       setLoading(false)
     }
