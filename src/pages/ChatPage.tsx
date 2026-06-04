@@ -173,11 +173,11 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="min-h-dvh flex flex-col" style={{ maxWidth: '480px', margin: '0 auto' }}>
+    <main className="min-h-dvh flex flex-col" style={{ maxWidth: '480px', margin: '0 auto' }}>
 
       <header className="flex items-center gap-3 px-4 py-3 border-b border-gray-100"
               style={{ backgroundColor: '#1a6b4a' }}>
-        <button onClick={() => navigate('/')} className="text-white p-1">
+        <button onClick={() => navigate('/')} className="text-white p-1" aria-label="Go back">
           <ArrowLeft size={20} />
         </button>
         <div className="flex items-center gap-2">
@@ -187,14 +187,14 @@ export default function ChatPage() {
         <div className="ml-auto flex items-center gap-1">
           {LANGUAGES.map(lang => (
             <button key={lang.code} onClick={() => handleLanguageChange(lang.code)}
-              className="text-xs font-medium px-2 py-1 rounded-md transition-all"
+              className="text-xs font-medium px-3 py-2 rounded-md transition-all min-w-[36px]"
               style={i18n.language === lang.code
                 ? { backgroundColor: 'white', color: '#1a6b4a' }
-                : { backgroundColor: 'transparent', color: 'rgba(255,255,255,0.7)' }}>
+                : { backgroundColor: 'transparent', color: 'rgba(255,255,255,0.9)' }}>
               {lang.label}
             </button>
           ))}
-          <button onClick={() => setShowAlert(true)}
+          <button onClick={() => setShowAlert(true)} aria-label="Emergency help"
             className="text-white opacity-80 hover:opacity-100 ml-1 p-1">
             <AlertTriangle size={18} />
           </button>
@@ -282,7 +282,7 @@ export default function ChatPage() {
       </div>
 
       <div className="px-4 py-1 text-center" style={{ backgroundColor: '#e8f5f0' }}>
-        <p className="text-xs text-gray-400">{t('disclaimer')}</p>
+        <p className="text-xs text-gray-500">{t('disclaimer')}</p>
       </div>
 
       <div className="flex gap-2 px-4 py-3 border-t border-gray-100 bg-white">
@@ -293,13 +293,13 @@ export default function ChatPage() {
           className="flex-1 px-4 py-3 rounded-2xl border border-gray-200 text-sm focus:outline-none focus:border-green-400"
           style={{ backgroundColor: '#f9fafb' }} />
         <VoiceInput onTranscript={handleVoiceTranscript} disabled={loading} />
-        <button onClick={sendMessage} disabled={!input.trim() || loading}
+        <button onClick={sendMessage} disabled={!input.trim() || loading} aria-label="Send message"
           className="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform active:scale-95 disabled:opacity-40"
           style={{ backgroundColor: '#1a6b4a' }}>
           <Send size={18} color="white" />
         </button>
       </div>
 
-    </div>
+    </main>
   )
 }
