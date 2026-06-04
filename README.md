@@ -8,6 +8,8 @@
 [![WHO PFA](https://img.shields.io/badge/WHO-PFA%20Aligned-lightblue)](https://www.who.int/publications/i/item/9789241548205)
 [![Languages](https://img.shields.io/badge/Languages-EN%20%7C%20KO%20%7C%20FR%20%7C%20SW-orange)](src/i18n)
 [![PWA](https://img.shields.io/badge/PWA-Ready-purple)](vite.config.ts)
+[![Live](https://img.shields.io/badge/Live-calmbridge.pages.dev-brightgreen)](https://calmbridge.pages.dev)
+[![Lighthouse](https://img.shields.io/badge/Lighthouse-97%2F95%2F100%2F100-green)](https://calmbridge.pages.dev)
 
 ---
 
@@ -39,6 +41,8 @@ According to the WHO, **1 in 4 people** will experience a mental health conditio
 | 🌐 **4 Languages** | English, Korean (한국어), French (Français), Swahili (Kiswahili) |
 | 🕊️ **Spiritual Comfort** | Optional module with tradition-specific comforting texts (6 traditions) |
 | 🎤 **Voice Input** | Web Speech API for hands-free input — critical for trauma survivors |
+| 📴 **Offline Queue** | Messages saved to IndexedDB and auto-sent on reconnect |
+| 🔔 **Offline Banner** | Real-time connectivity status with warm fallback messages |
 | 📱 **PWA / Offline** | Installable, works with limited connectivity |
 | ♿ **Accessible** | ARIA labels, keyboard navigation, screen reader support |
 
@@ -51,7 +55,8 @@ Frontend      React 19 + Vite + TypeScript + Tailwind CSS v4
 Backend       Cloudflare Pages Functions (Edge, serverless)
 AI            OpenAI GPT-4o-mini (WHO PFA system prompt)
 i18n          i18next (EN / KO / FR / SW)
-PWA           vite-plugin-pwa
+PWA           vite-plugin-pwa + Workbox (offline-first)
+Offline       IndexedDB Background Sync (message queue)
 ```
 
 ---
@@ -65,7 +70,9 @@ CalmBridge/
 │       └── chat.ts          # Cloudflare Pages Function (WHO PFA prompt + safety filter)
 ├── src/
 │   ├── components/
-│   │   ├── ChatPage.tsx      # Main chat interface
+│   │   ├── ChatPage.tsx      # Main chat interface (offline-aware)
+│   ├── lib/
+│   │   └── offlineQueue.ts  # IndexedDB Background Sync queue
 │   │   ├── SpiritualComfort.tsx  # Spiritual comfort module
 │   │   └── VoiceInput.tsx    # Web Speech API voice input
 │   ├── i18n/
@@ -218,6 +225,17 @@ CalmBridge is designed to meet [DPGA Standard](https://digitalpublicgoods.net/st
 | Data Privacy | ✅ (no PII stored; stateless API) |
 | Adherence to Standards | ✅ (WHO PFA, WCAG 2.1, i18n) |
 | No Harmful Tracking | ✅ |
+
+---
+
+## 📊 Lighthouse Scores
+
+Measured on production ([calmbridge.pages.dev](https://calmbridge.pages.dev)):
+
+| Page | Performance | Accessibility | Best Practices | SEO |
+|---|---|---|---|---|
+| Welcome (/) | 98 | 96 | 100 | 100 |
+| Chat (/chat) | 97 | 95 | 100 | 100 |
 
 ---
 

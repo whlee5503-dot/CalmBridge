@@ -1,7 +1,7 @@
 {
   "name": "calmbridge",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -36,5 +36,21 @@
     "vite": "^8.0.10",
     "vite-plugin-pwa": "^1.3.0",
     "workbox-window": "^7.4.1"
-  }
+  },
+  "description": "Multilingual AI-powered Psychological First Aid chatbot — WHO PFA aligned, DPGA candidate",
+  "homepage": "https://calmbridge.pages.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/whlee5503-dot/CalmBridge.git"
+  },
+  "keywords": [
+    "mental-health",
+    "psychological-first-aid",
+    "WHO-PFA",
+    "multilingual",
+    "PWA",
+    "DPGA"
+  ],
+  "license": "MIT",
+  "author": "CalmBridge Contributors"
 }
