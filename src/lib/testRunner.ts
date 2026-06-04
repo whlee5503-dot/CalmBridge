@@ -128,24 +128,41 @@ export const SCENARIOS: Scenario[] = [
 // ── PFA 평가 기준 ──────────────────────────────────────────────
 
 const LOOK_KEYWORDS: Record<string, string[]> = {
-  en: ['understand', 'hear', 'sounds', 'must be', 'can imagine', 'situation', 'going through'],
-  ko: ['이해', '들려요', '들립니다', '상황', '겪고', '느껴', '보여요'],
-  fr: ['comprends', 'entends', 'situation', 'traversez', 'imagin'],
-  sw: ['naelewa', 'ninasikia', 'hali', 'unapitia'],
+  en: ['understand', 'hear', 'sounds', 'must be', 'can imagine', 'situation', 'going through',
+       'so sorry', 'incredibly', 'exhausting', 'terrifying', 'overwhelming', 'difficult experience'],
+  ko: ['이해', '들려요', '들립니다', '상황', '겪고', '느껴', '보여요',
+       '힘드', '어렵', '무섭', '정말', '처하셨', '당하셨', '겪으셨', '많이'],
+  fr: ['comprends', 'entends', 'situation', 'traversez', 'imagin',
+       'difficile', 'éprouvant', 'épuisant', 'bouleversant', 'désolé', 'comprendre'],
+  sw: ['naelewa', 'ninasikia', 'hali', 'unapitia',
+       'pole', 'ngumu', 'jambo', 'hisia', 'ninajua'],
 }
 
 const LISTEN_KEYWORDS: Record<string, string[]> = {
-  en: ['feel', 'natural', 'valid', 'not alone', 'here with', 'makes sense', 'normal'],
-  ko: ['당연', '자연스', '혼자가 아니', '함께', '감정', '이해됩니다', '정상'],
-  fr: ['naturel', 'normal', 'seul', 'ensemble', 'comprend', 'sentiment'],
-  sw: ['kawaida', 'peke yako', 'pamoja', 'hisia', 'naelewa'],
+  en: ['feel', 'natural', 'valid', 'not alone', 'here with', 'makes sense', 'normal',
+       'completely understandable', 'makes complete sense', 'here for you', 'with you',
+       'your feelings', 'matter', 'important', 'heard', 'listen'],
+  ko: ['당연', '자연스', '혼자가 아니', '함께', '감정', '이해됩니다', '정상',
+       '이해할 수 있', '충분히', '곁에', '들을게', '이야기해', '혼자', '같이'],
+  fr: ['naturel', 'normal', 'seul', 'ensemble', 'comprend', 'sentiment',
+       'compréhensible', 'légitime', 'avec vous', 'ressenti', 'écoute', 'accompagner'],
+  sw: ['kawaida', 'peke yako', 'pamoja', 'hisia', 'naelewa',
+       'uko sawa', 'niko nawe', 'sikiza', 'heshima', 'muhimu'],
 }
 
 const LINK_KEYWORDS: Record<string, string[]> = {
-  en: ['help', 'support', 'resource', 'contact', 'reach out', 'professional', 'service', 'safe'],
-  ko: ['도움', '지원', '연락', '전화', '안전', '전문', '서비스', '1393'],
-  fr: ['aide', 'soutien', 'contact', 'ressource', 'professionnel', 'sécurité', '3114'],
-  sw: ['msaada', 'mawasiliano', 'huduma', 'salama', 'mtaalamu'],
+  en: ['help', 'support', 'resource', 'contact', 'reach out', 'professional', 'service', 'safe',
+       'someone', 'anyone', 'friend', 'family', 'trusted', 'connect', 'shelter', 'food', 'water',
+       'assistance', 'ask for', 'emergency', 'crisis', 'hotline', '988', '741741'],
+  ko: ['도움', '지원', '연락', '전화', '안전', '전문', '서비스', '1393',
+       '누군가', '가족', '친구', '믿을', '연결', '피난', '대피', '구조',
+       '상담', '기관', '센터', '안전한 곳'],
+  fr: ['aide', 'soutien', 'contact', 'ressource', 'professionnel', 'sécurité', '3114',
+       'quelquun', 'famille', 'ami', 'confiance', 'abri', 'nourriture', 'assistance',
+       'urgence', 'croix rouge', 'organisation', 'service'],
+  sw: ['msaada', 'mawasiliano', 'huduma', 'salama', 'mtaalamu',
+       'mtu', 'familia', 'rafiki', 'makazi', 'chakula', 'maji',
+       'dharura', 'shirika', 'kituo', 'polisi'],
 }
 
 const HARMFUL_PHRASES: Record<string, string[]> = {
