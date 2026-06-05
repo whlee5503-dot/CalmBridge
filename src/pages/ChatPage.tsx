@@ -142,7 +142,7 @@ export default function ChatPage() {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: updated, language: i18n.language, situation }),
+        body: JSON.stringify({ messages: updated, language: i18n.language, situation, religion: selectedReligion }),
       })
       const data = await res.json() as { reply: string; offline?: boolean }
       if (data.offline) setIsOffline(true)
