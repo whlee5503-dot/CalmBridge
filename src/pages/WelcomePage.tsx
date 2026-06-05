@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import LanguageSelector from '../components/LanguageSelector'
 
 type Situation = 'disaster' | 'conflict' | 'loss' | 'isolation' | 'other'
@@ -26,7 +26,9 @@ const RELIGIONS: { id: Religion; emoji: string; key: string }[] = [
 export default function WelcomePage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const [step, setStep] = useState<1 | 2 | 3>(1)
+  const location = useLocation()
+  const initialStep = (location.state as { step?: number })?.step ?? 1
+  const [step, setStep] = useState<1 | 2 | 3>(initialStep as 1 | 2 | 3)
   const [situation, setSituation] = useState<Situation | null>(null)
   const [religion, setReligion] = useState<Religion>('none')
 

@@ -14,6 +14,7 @@ interface Message {
 interface OnboardingState {
   situation?: string
   religion?: string
+  step?: number
 }
 
 const LANGUAGES = [
@@ -95,10 +96,6 @@ export default function ChatPage() {
   const [isOffline, setIsOffline] = useState(!navigator.onLine)
 
   useEffect(() => {
-    if (religion && religion !== 'none') setShowSpiritual(true)
-  }, [religion])
-
-  useEffect(() => {
     const handleOnline  = () => setIsOffline(false)
     const handleOffline = () => setIsOffline(true)
     window.addEventListener('online',  handleOnline)
@@ -176,38 +173,44 @@ export default function ChatPage() {
     setInput(prev => prev ? `${prev} ${text}` : text)
   }
 
+  function handleBack() {
+    navigate('/', { state: { situation, religion, step: 3 } })
+  }
+
   return (
     <main className="min-h-dvh flex flex-col" style={{ maxWidth: '480px', margin: '0 auto' }}>
 
       {/* Header */}
-      <header className="flex items-center gap-3 px-4 py-3 border-b border-gray-100"
+      <header className="flex items-center gap-2 px-3 py-3 border-b border-gray-100"
               style={{ backgroundColor: '#1a6b4a' }}>
-        <button onClick={() => navigate('/')} className="text-white p-1" aria-label="Go back">
+        <button onClick={handleBack} className="text-white p-1" aria-label="Go back">
           <ArrowLeft size={20} />
         </button>
-        <div className="flex items-center gap-2">
-          <span className="text-lg">🕊</span>
-          <span className="text-white font-medium">CalmBridge</span>
+        <div className="flex items-center gap-1.5">
+          <span className="text-base">🕊</span>
+          <span className="text-white font-medium text-sm">CalmBridge</span>
         </div>
-        <div className="ml-auto flex items-center gap-1">
+        <div className="ml-auto flex items-center gap-0.5">
           {LANGUAGES.map(lang => (
             <button key={lang.code} onClick={() => handleLanguageChange(lang.code)}
-              className="text-xs font-medium px-3 py-2 rounded-md transition-all min-w-[36px]"
-              style={i18n.language === lang.code
-                ? { backgroundColor: 'white', color: '#1a6b4a' }
-                : { backgroundColor: 'transparent', color: 'rgba(255,255,255,0.9)' }}>
+              className="font-medium px-2 py-1.5 rounded-md transition-all"
+              style={{
+                fontSize: '0.8rem',
+                minWidth: '32px',
+                ...(i18n.language === lang.code
+                  ? { backgroundColor: 'white', color: '#1a6b4a' }
+                  : { backgroundColor: 'transparent', color: 'rgba(255,255,255,0.9)' })
+              }}>
               {lang.label}
             </button>
           ))}
-          {/* 영적위로 버튼 */}
           <button onClick={() => setShowSpiritual(true)} aria-label="Spiritual comfort"
-            className="text-white opacity-80 hover:opacity-100 ml-1 p-1">
-            <Sparkles size={18} />
+            className="text-white opacity-80 hover:opacity-100 p-1.5">
+            <Sparkles size={16} />
           </button>
-          {/* 긴급 버튼 */}
           <button onClick={() => setShowAlert(true)} aria-label="Emergency help"
-            className="text-white opacity-80 hover:opacity-100 p-1">
-            <AlertTriangle size={18} />
+            className="text-white opacity-80 hover:opacity-100 p-1.5">
+            <AlertTriangle size={16} />
           </button>
           <ThemeToggle />
         </div>
@@ -275,8 +278,8 @@ export default function ChatPage() {
         ))}
         {loading && (
           <div className="flex justify-start">
-            <div className="px-4 py-3 text-sm text-gray-400"
-              style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: '12px 12px 12px 0' }}>
+            <div className="px-4 py-3 text-sm"
+              style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: '12px 12px 12px 0', color: 'var(--color-text-muted)' }}>
               ···
             </div>
           </div>
