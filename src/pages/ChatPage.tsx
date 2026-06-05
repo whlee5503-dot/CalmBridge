@@ -1,10 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Send, ArrowLeft, AlertTriangle, Sparkles } from 'lucide-react'
+import { Send, ArrowLeft, AlertTriangle, Sparkles, X } from 'lucide-react'
 import VoiceInput from '../components/VoiceInput'
 import SpiritualComfort from '../components/SpiritualComfort'
-
 import ThemeToggle from '../components/ThemeToggle'
 
 interface Message {
@@ -67,7 +66,6 @@ function isMentalHealthCrisis(text: string): boolean {
 
 export { DISASTER_KEYWORDS }
 
-// 상황별 첫 인사말
 function getGreeting(t: (key: string) => string, situation?: string): string {
   const greetings: Record<string, string> = {
     disaster:  t('pfa.greeting_disaster'),
@@ -92,9 +90,13 @@ export default function ChatPage() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
-  const [showSpiritual, setShowSpiritual] = useState(religion !== 'none' && !!religion)
+  const [showSpiritual, setShowSpiritual] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
   const [isOffline, setIsOffline] = useState(!navigator.onLine)
+
+  useEffect(() => {
+    if (religion && religion !== 'none') setShowSpiritual(true)
+  }, [religion])
 
   useEffect(() => {
     const handleOnline  = () => setIsOffline(false)
@@ -146,7 +148,7 @@ export default function ChatPage() {
         body: JSON.stringify({
           messages: updated,
           language: i18n.language,
-          situation, // onboarding에서 전달된 상황
+          situation,
         }),
       })
       const data = await res.json() as { reply: string; offline?: boolean }
@@ -177,6 +179,7 @@ export default function ChatPage() {
   return (
     <main className="min-h-dvh flex flex-col" style={{ maxWidth: '480px', margin: '0 auto' }}>
 
+      {/* Header */}
       <header className="flex items-center gap-3 px-4 py-3 border-b border-gray-100"
               style={{ backgroundColor: '#1a6b4a' }}>
         <button onClick={() => navigate('/')} className="text-white p-1" aria-label="Go back">
@@ -196,14 +199,21 @@ export default function ChatPage() {
               {lang.label}
             </button>
           ))}
-          <button onClick={() => setShowAlert(true)} aria-label="Emergency help"
+          {/* 영적위로 버튼 */}
+          <button onClick={() => setShowSpiritual(true)} aria-label="Spiritual comfort"
             className="text-white opacity-80 hover:opacity-100 ml-1 p-1">
+            <Sparkles size={18} />
+          </button>
+          {/* 긴급 버튼 */}
+          <button onClick={() => setShowAlert(true)} aria-label="Emergency help"
+            className="text-white opacity-80 hover:opacity-100 p-1">
             <AlertTriangle size={18} />
           </button>
           <ThemeToggle />
         </div>
       </header>
 
+      {/* 오프라인 배너 */}
       {isOffline && (
         <div className="flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium"
           style={{ backgroundColor: '#fef3c7', color: '#92400e' }}>
@@ -211,7 +221,8 @@ export default function ChatPage() {
           <span>{t('offline_banner', 'You are offline — responses may be limited.')}</span>
         </div>
       )}
-      
+
+      {/* 긴급 배너 */}
       {showAlert && (
         <div className="mx-4 mt-4 p-4 rounded-2xl border-2 border-red-400 bg-red-50">
           <div className="flex items-center justify-between mb-2">
@@ -249,59 +260,88 @@ export default function ChatPage() {
         </div>
       )}
 
-      <div className="px-4 pt-3">
-        <button
-          onClick={() => setShowSpiritual(prev => !prev)}
-          className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full transition-all"
-          style={showSpiritual
-            ? { backgroundColor: '#1a6b4a', color: 'white' }
-            : { backgroundColor: '#e8f5f0', color: '#1a6b4a' }}>
-          <Sparkles size={13} />
-          {t('spiritual.title', 'Spiritual Comfort')}
-        </button>
-      </div>
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
-        {showSpiritual && (
-          <div className="mb-2">
-            <SpiritualComfort onClose={() => setShowSpiritual(false)} />
-          </div>
-        )}
+      {/* 채팅 영역 */}
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3"
+        style={{ backgroundColor: 'var(--color-bg)' }}>
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className="max-w-xs px-4 py-3 rounded-2xl text-sm leading-relaxed"
+            <div className="max-w-xs px-4 py-3 text-sm leading-relaxed"
               style={msg.role === 'user'
-                ? { backgroundColor: '#1a6b4a', color: 'white', borderBottomRightRadius: '4px' }
-                : { backgroundColor: 'white', color: '#1f2937', border: '1px solid #e5e7eb', borderBottomLeftRadius: '4px' }}>
+                ? { backgroundColor: '#1a6b4a', color: 'white', borderRadius: '12px 12px 0 12px' }
+                : { backgroundColor: 'var(--color-surface)', color: 'var(--color-text)', border: '1px solid var(--color-border)', borderRadius: '12px 12px 12px 0' }}>
               {msg.content}
             </div>
           </div>
         ))}
         {loading && (
           <div className="flex justify-start">
-            <div className="px-4 py-3 rounded-2xl bg-white border border-gray-200 text-sm text-gray-400">···</div>
+            <div className="px-4 py-3 text-sm text-gray-400"
+              style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: '12px 12px 12px 0' }}>
+              ···
+            </div>
           </div>
         )}
         <div ref={bottomRef} />
       </div>
 
-      <div className="px-4 py-1 text-center" style={{ backgroundColor: '#e8f5f0' }}>
-        <p className="text-xs text-gray-500">{t('disclaimer')}</p>
+      {/* 하단 disclaimer */}
+      <div className="px-4 py-1 text-center" style={{ backgroundColor: 'var(--color-surface-2)' }}>
+        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>{t('disclaimer')}</p>
       </div>
 
-      <div className="flex gap-2 px-4 py-3 border-t border-gray-100 bg-white">
+      {/* 입력창 */}
+      <div className="flex gap-2 px-4 py-3 border-t"
+        style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)' }}>
         <input type="text" value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && sendMessage()}
           placeholder={t('placeholder')}
-          className="flex-1 px-4 py-3 rounded-2xl border border-gray-200 text-sm focus:outline-none focus:border-green-400"
-          style={{ backgroundColor: '#f9fafb' }} />
+          className="flex-1 px-4 py-3 text-sm focus:outline-none"
+          style={{
+            backgroundColor: 'var(--color-surface-2)',
+            color: 'var(--color-text)',
+            border: '1px solid var(--color-border)',
+            borderRadius: '8px',
+          }} />
         <VoiceInput onTranscript={handleVoiceTranscript} disabled={loading} />
         <button onClick={sendMessage} disabled={!input.trim() || loading} aria-label="Send message"
-          className="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform active:scale-95 disabled:opacity-40"
-          style={{ backgroundColor: '#1a6b4a' }}>
+          className="w-12 h-12 flex items-center justify-center transition-transform active:scale-95 disabled:opacity-40"
+          style={{ backgroundColor: '#1a6b4a', borderRadius: '8px' }}>
           <Send size={18} color="white" />
         </button>
       </div>
+
+      {/* 영적위로 모달 */}
+      {showSpiritual && (
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 50,
+          backgroundColor: 'rgba(0,0,0,0.6)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: '1.5rem',
+        }}
+          onClick={() => setShowSpiritual(false)}
+        >
+          <div style={{
+            width: '100%', maxWidth: '400px',
+            backgroundColor: 'var(--color-surface)',
+            borderRadius: '16px',
+            padding: '1.5rem',
+            position: 'relative',
+          }}
+            onClick={e => e.stopPropagation()}
+          >
+            <button onClick={() => setShowSpiritual(false)}
+              style={{
+                position: 'absolute', top: '1rem', right: '1rem',
+                background: 'none', border: 'none', cursor: 'pointer',
+                color: 'var(--color-text-muted)',
+              }}>
+              <X size={20} />
+            </button>
+            <SpiritualComfort onClose={() => setShowSpiritual(false)} />
+          </div>
+        </div>
+      )}
 
     </main>
   )
