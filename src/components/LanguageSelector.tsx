@@ -16,11 +16,29 @@ export default function LanguageSelector() {
         <button
           key={lang.code}
           onClick={() => i18n.changeLanguage(lang.code)}
-          className="px-4 py-2 rounded-full text-sm font-medium transition-all"
           style={i18n.language === lang.code
-            ? { backgroundColor: '#1a6b4a', color: 'white' }
-            : { backgroundColor: 'white', color: '#1a6b4a',
-                border: '1px solid #1a6b4a' }}
+            ? {
+                backgroundColor: 'var(--color-primary)',
+                color: 'var(--color-text-inverse)',
+                border: '2px solid var(--color-primary)',
+                borderRadius: '10px',
+                padding: '0.5rem 1rem',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                transition: 'all 0.15s',
+              }
+            : {
+                backgroundColor: 'var(--color-surface)',
+                color: 'var(--color-primary)',
+                border: '2px solid var(--color-primary)',
+                borderRadius: '10px',
+                padding: '0.5rem 1rem',
+                fontSize: '0.875rem',
+                fontWeight: 500,
+                cursor: 'pointer',
+                transition: 'all 0.15s',
+              }}
         >
           {lang.label}
         </button>

@@ -51,5 +51,9 @@
   },
   "offline_banner": "Uko nje ya mtandao — majibu yanaweza kuwa machache."
 ,
-  "offline_queued": "Ujumbe wako umehifadhiwa na utatumwa unapounganishwa tena. 🕊️"
-}
+  "offline_queued": "Ujumbe wako umehifadhiwa na utatumwa unapounganishwa tena. 🕊️",
+  "theme": {
+    "switchToDark": "Badili hadi hali ya giza",
+    "switchToLight": "Badili hadi hali ya mwanga"
+  }
+} 

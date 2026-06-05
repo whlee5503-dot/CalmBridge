@@ -5,6 +5,8 @@ import { Send, ArrowLeft, AlertTriangle, Sparkles } from 'lucide-react'
 import VoiceInput from '../components/VoiceInput'
 import SpiritualComfort from '../components/SpiritualComfort'
 
+import ThemeToggle from '../components/ThemeToggle'
+
 interface Message {
   role: 'user' | 'assistant'
   content: string
@@ -198,6 +200,7 @@ export default function ChatPage() {
             className="text-white opacity-80 hover:opacity-100 ml-1 p-1">
             <AlertTriangle size={18} />
           </button>
+          <ThemeToggle />
         </div>
       </header>
 

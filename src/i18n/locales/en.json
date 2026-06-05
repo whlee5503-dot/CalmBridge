@@ -51,5 +51,9 @@
   },
   "offline_banner": "You are offline — responses may be limited."
 ,
-  "offline_queued": "Your message has been saved and will be sent when you reconnect. 🕊️"
+  "offline_queued": "Your message has been saved and will be sent when you reconnect. 🕊️",
+  "theme": {
+    "switchToDark": "Switch to dark mode",
+    "switchToLight": "Switch to light mode"
+  }
 }

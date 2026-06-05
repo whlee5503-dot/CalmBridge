@@ -272,3 +272,16 @@ MIT License — see [LICENSE](LICENSE).
 ---
 
 *CalmBridge — a calm presence when it matters most.*
+---
+
+## 📸 Screenshots
+
+| Light mode | Dark mode |
+|---|---|
+| ![Welcome light](screenshots/01-welcome-light.png) | ![Welcome dark](screenshots/02-welcome-dark.png) |
+| ![Chat light](screenshots/03-chat-light.png) | ![Chat dark](screenshots/04-chat-dark.png) |
+
+| Spiritual comfort | Crisis support |
+|---|---|
+| ![Spiritual](screenshots/05-spiritual.png) | ![Crisis](screenshots/06-crisis.png) |
+
