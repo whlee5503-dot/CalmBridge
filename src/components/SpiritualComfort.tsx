@@ -188,14 +188,15 @@ const TRADITIONS: TraditionOption[] = [
 // ── Component ─────────────────────────────────────────────────────────────────
 
 interface SpiritualComfortProps {
+  initialTradition?: string;
   /** Called when user closes/dismisses the module */
   onClose?: () => void;
 }
 
-export default function SpiritualComfort({ onClose }: SpiritualComfortProps) {
+export default function SpiritualComfort({ onClose, initialTradition }: SpiritualComfortProps) {
   const { t, i18n } = useTranslation();
-  const [selected, setSelected] = useState<Tradition>("none");
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [selected, setSelected] = useState<Tradition>((initialTradition as Tradition) ?? "none");
+  const [isExpanded, setIsExpanded] = useState(!!initialTradition && initialTradition !== "none");
 
   const currentLang = (i18n.language?.slice(0, 2) as Language) || "en";
   const validLang: Language = ["en", "ko", "fr", "sw"].includes(currentLang)

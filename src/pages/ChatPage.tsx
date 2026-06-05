@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Send, ArrowLeft, AlertTriangle, Sparkles, X } from 'lucide-react'
+import { Send, ArrowLeft, AlertTriangle, X } from 'lucide-react'
 import VoiceInput from '../components/VoiceInput'
 import SpiritualComfort from '../components/SpiritualComfort'
 import ThemeToggle from '../components/ThemeToggle'
@@ -14,7 +14,6 @@ interface Message {
 interface OnboardingState {
   situation?: string
   religion?: string
-  step?: number
 }
 
 const LANGUAGES = [
@@ -92,6 +91,7 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
   const [showSpiritual, setShowSpiritual] = useState(false)
+  const selectedReligion = religion ?? "none"
   const bottomRef = useRef<HTMLDivElement>(null)
   const [isOffline, setIsOffline] = useState(!navigator.onLine)
 
@@ -142,11 +142,7 @@ export default function ChatPage() {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: updated,
-          language: i18n.language,
-          situation,
-        }),
+        body: JSON.stringify({ messages: updated, language: i18n.language, situation }),
       })
       const data = await res.json() as { reply: string; offline?: boolean }
       if (data.offline) setIsOffline(true)
@@ -181,135 +177,126 @@ export default function ChatPage() {
     <main className="min-h-dvh flex flex-col" style={{ maxWidth: '480px', margin: '0 auto' }}>
 
       {/* Header */}
-      <header className="flex items-center gap-2 px-3 py-3 border-b border-gray-100"
-              style={{ backgroundColor: '#1a6b4a' }}>
-        <button onClick={handleBack} className="text-white p-1" aria-label="Go back">
-          <ArrowLeft size={20} />
-        </button>
-        <div className="flex items-center gap-1.5">
-          <span className="text-base">🕊</span>
-          <span className="text-white font-medium text-sm">CalmBridge</span>
-        </div>
-        <div className="ml-auto flex items-center gap-0.5">
-          {LANGUAGES.map(lang => (
-            <button key={lang.code} onClick={() => handleLanguageChange(lang.code)}
-              className="font-medium px-2 py-1.5 rounded-md transition-all"
-              style={{
-                fontSize: '0.8rem',
-                minWidth: '32px',
-                ...(i18n.language === lang.code
-                  ? { backgroundColor: 'white', color: '#1a6b4a' }
-                  : { backgroundColor: 'transparent', color: 'rgba(255,255,255,0.9)' })
-              }}>
-              {lang.label}
+      <header style={{ backgroundColor: '#1a6b4a', padding: '0.75rem 1rem' }}>
+        <div className="flex items-center gap-2">
+          <button onClick={handleBack} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '4px' }} aria-label="Go back">
+            <ArrowLeft size={20} />
+          </button>
+          <span style={{ fontSize: '1.1rem' }}>🕊</span>
+          <span style={{ color: 'white', fontWeight: 600, fontSize: '1rem' }}>CalmBridge</span>
+          <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '2px' }}>
+            {LANGUAGES.map(lang => (
+              <button key={lang.code} onClick={() => handleLanguageChange(lang.code)}
+                style={{
+                  fontSize: '0.875rem',
+                  fontWeight: 600,
+                  padding: '4px 8px',
+                  borderRadius: '6px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  minWidth: '36px',
+                  ...(i18n.language === lang.code
+                    ? { backgroundColor: 'white', color: '#1a6b4a' }
+                    : { backgroundColor: 'transparent', color: 'rgba(255,255,255,0.9)' })
+                }}>
+                {lang.label}
+              </button>
+            ))}
+            <button onClick={() => setShowAlert(true)} aria-label="Emergency help"
+              style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '4px', opacity: 0.85 }}>
+              <AlertTriangle size={18} />
             </button>
-          ))}
-          <button onClick={() => setShowSpiritual(true)} aria-label="Spiritual comfort"
-            className="text-white opacity-80 hover:opacity-100 p-1.5">
-            <Sparkles size={16} />
-          </button>
-          <button onClick={() => setShowAlert(true)} aria-label="Emergency help"
-            className="text-white opacity-80 hover:opacity-100 p-1.5">
-            <AlertTriangle size={16} />
-          </button>
-          <ThemeToggle />
+            <ThemeToggle />
+          </div>
         </div>
       </header>
 
       {/* 오프라인 배너 */}
       {isOffline && (
-        <div className="flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium"
-          style={{ backgroundColor: '#fef3c7', color: '#92400e' }}>
-          <span>⚠️</span>
-          <span>{t('offline_banner', 'You are offline — responses may be limited.')}</span>
+        <div style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '0.5rem 1rem', fontSize: '0.75rem', textAlign: 'center' }}>
+          ⚠️ {t('offline_banner', 'You are offline — responses may be limited.')}
         </div>
       )}
 
       {/* 긴급 배너 */}
       {showAlert && (
-        <div className="mx-4 mt-4 p-4 rounded-2xl border-2 border-red-400 bg-red-50">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-red-700 font-semibold text-sm">🆘 {t('emergency')}</p>
-            <button onClick={() => setShowAlert(false)} className="text-red-400 text-lg leading-none">✕</button>
+        <div style={{ margin: '1rem', padding: '1rem', borderRadius: '12px', border: '2px solid #f87171', backgroundColor: '#fef2f2' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+            <p style={{ color: '#b91c1c', fontWeight: 600, fontSize: '0.875rem' }}>🆘 {t('emergency')}</p>
+            <button onClick={() => setShowAlert(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#f87171', fontSize: '1.2rem' }}>✕</button>
           </div>
-          <p className="text-red-600 text-xs mb-3">{t('emergency_msg')}</p>
-          <div className="flex flex-col gap-2">
+          <p style={{ color: '#dc2626', fontSize: '0.75rem', marginBottom: '0.75rem' }}>{t('emergency_msg')}</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             {i18n.language === 'ko' && (
-              <a href="tel:1393"
-                className="flex items-center justify-between px-3 py-2 rounded-xl bg-red-600 text-white text-sm font-medium">
-                <span>🇰🇷 자살예방상담전화</span>
-                <span className="font-bold">1393</span>
+              <a href="tel:1393" style={{ display: 'flex', justifyContent: 'space-between', padding: '0.5rem 0.75rem', borderRadius: '10px', backgroundColor: '#dc2626', color: 'white', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none' }}>
+                <span>🇰🇷 자살예방상담전화</span><span>1393</span>
               </a>
             )}
             {i18n.language === 'fr' && (
-              <a href="tel:3114"
-                className="flex items-center justify-between px-3 py-2 rounded-xl bg-red-600 text-white text-sm font-medium">
-                <span>🇫🇷 Prévention Suicide</span>
-                <span className="font-bold">3114</span>
+              <a href="tel:3114" style={{ display: 'flex', justifyContent: 'space-between', padding: '0.5rem 0.75rem', borderRadius: '10px', backgroundColor: '#dc2626', color: 'white', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none' }}>
+                <span>🇫🇷 Prévention Suicide</span><span>3114</span>
               </a>
             )}
-            <a href="sms:741741&body=HOME"
-              className="flex items-center justify-between px-3 py-2 rounded-xl bg-red-500 text-white text-sm font-medium">
-              <span>💬 Crisis Text Line</span>
-              <span className="font-bold">Text HOME → 741741</span>
+            <a href="sms:741741&body=HOME" style={{ display: 'flex', justifyContent: 'space-between', padding: '0.5rem 0.75rem', borderRadius: '10px', backgroundColor: '#ef4444', color: 'white', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none' }}>
+              <span>💬 Crisis Text Line</span><span>Text HOME → 741741</span>
             </a>
-            <a href="https://www.iasp.info/resources/Crisis_Centres/"
-              target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-between px-3 py-2 rounded-xl bg-white border border-red-300 text-red-600 text-sm font-medium">
-              <span>🌐 International Resources</span>
-              <span>→</span>
+            <a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank" rel="noopener noreferrer"
+              style={{ display: 'flex', justifyContent: 'space-between', padding: '0.5rem 0.75rem', borderRadius: '10px', backgroundColor: 'white', border: '1px solid #fca5a5', color: '#dc2626', fontSize: '0.875rem', fontWeight: 600, textDecoration: 'none' }}>
+              <span>🌐 International Resources</span><span>→</span>
             </a>
           </div>
         </div>
       )}
 
       {/* 채팅 영역 */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3"
-        style={{ backgroundColor: 'var(--color-bg)' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', backgroundColor: 'var(--color-bg)' }}>
         {messages.map((msg, i) => (
-          <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className="max-w-xs px-4 py-3 text-sm leading-relaxed"
-              style={msg.role === 'user'
+          <div key={i} style={{ display: 'flex', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
+            <div style={{
+              maxWidth: '80%', padding: '0.75rem 1rem', fontSize: '0.9rem', lineHeight: 1.6,
+              ...(msg.role === 'user'
                 ? { backgroundColor: '#1a6b4a', color: 'white', borderRadius: '12px 12px 0 12px' }
-                : { backgroundColor: 'var(--color-surface)', color: 'var(--color-text)', border: '1px solid var(--color-border)', borderRadius: '12px 12px 12px 0' }}>
+                : { backgroundColor: 'var(--color-surface)', color: 'var(--color-text)', border: '1px solid var(--color-border)', borderRadius: '12px 12px 12px 0' })
+            }}>
               {msg.content}
             </div>
           </div>
         ))}
         {loading && (
-          <div className="flex justify-start">
-            <div className="px-4 py-3 text-sm"
-              style={{ backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: '12px 12px 12px 0', color: 'var(--color-text-muted)' }}>
-              ···
-            </div>
+          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <div style={{ padding: '0.75rem 1rem', backgroundColor: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: '12px 12px 12px 0', color: 'var(--color-text-muted)' }}>···</div>
           </div>
         )}
         <div ref={bottomRef} />
       </div>
 
-      {/* 하단 disclaimer */}
-      <div className="px-4 py-1 text-center" style={{ backgroundColor: 'var(--color-surface-2)' }}>
-        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>{t('disclaimer')}</p>
+      {/* disclaimer */}
+      <div style={{ padding: '0.375rem 1rem', textAlign: 'center', backgroundColor: 'var(--color-surface-2)' }}>
+        <p style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)' }}>{t('disclaimer')}</p>
       </div>
 
       {/* 입력창 */}
-      <div className="flex gap-2 px-4 py-3 border-t"
-        style={{ borderColor: 'var(--color-border)', backgroundColor: 'var(--color-surface)' }}>
+      <div style={{ display: 'flex', gap: '0.5rem', padding: '0.75rem 1rem', borderTop: '1px solid var(--color-border)', backgroundColor: 'var(--color-surface)' }}>
         <input type="text" value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && sendMessage()}
           placeholder={t('placeholder')}
-          className="flex-1 px-4 py-3 text-sm focus:outline-none"
           style={{
+            flex: 1, padding: '0.75rem 1rem', fontSize: '0.9rem',
             backgroundColor: 'var(--color-surface-2)',
             color: 'var(--color-text)',
             border: '1px solid var(--color-border)',
-            borderRadius: '8px',
+            borderRadius: '6px',
+            outline: 'none',
           }} />
         <VoiceInput onTranscript={handleVoiceTranscript} disabled={loading} />
         <button onClick={sendMessage} disabled={!input.trim() || loading} aria-label="Send message"
-          className="w-12 h-12 flex items-center justify-center transition-transform active:scale-95 disabled:opacity-40"
-          style={{ backgroundColor: '#1a6b4a', borderRadius: '8px' }}>
+          style={{
+            width: '48px', height: '48px', borderRadius: '6px',
+            backgroundColor: '#1a6b4a', border: 'none', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            opacity: !input.trim() || loading ? 0.4 : 1,
+          }}>
           <Send size={18} color="white" />
         </button>
       </div>
@@ -321,27 +308,21 @@ export default function ChatPage() {
           backgroundColor: 'rgba(0,0,0,0.6)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           padding: '1.5rem',
-        }}
-          onClick={() => setShowSpiritual(false)}
-        >
+        }} onClick={() => setShowSpiritual(false)}>
           <div style={{
             width: '100%', maxWidth: '400px',
             backgroundColor: 'var(--color-surface)',
-            borderRadius: '16px',
-            padding: '1.5rem',
+            borderRadius: '16px', padding: '1.5rem',
             position: 'relative',
-          }}
-            onClick={e => e.stopPropagation()}
-          >
+          }} onClick={e => e.stopPropagation()}>
             <button onClick={() => setShowSpiritual(false)}
-              style={{
-                position: 'absolute', top: '1rem', right: '1rem',
-                background: 'none', border: 'none', cursor: 'pointer',
-                color: 'var(--color-text-muted)',
-              }}>
+              style={{ position: 'absolute', top: '1rem', right: '1rem', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}>
               <X size={20} />
             </button>
-            <SpiritualComfort onClose={() => setShowSpiritual(false)} />
+            <SpiritualComfort
+              onClose={() => setShowSpiritual(false)}
+              initialTradition={selectedReligion}
+            />
           </div>
         </div>
       )}
