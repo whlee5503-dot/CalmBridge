@@ -9,6 +9,7 @@
 [![Languages](https://img.shields.io/badge/Languages-EN%20%7C%20KO%20%7C%20FR%20%7C%20SW-orange)](src/i18n)
 [![PWA](https://img.shields.io/badge/PWA-Ready-purple)](vite.config.ts)
 [![Live](https://img.shields.io/badge/Live-calmbridge.pages.dev-brightgreen)](https://calmbridge.pages.dev)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20564933.svg)](https://doi.org/10.5281/zenodo.20564933)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-97%2F95%2F100%2F100-green)](https://calmbridge.pages.dev)
 
 **[Live App →](https://calmbridge.pages.dev)**
