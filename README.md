@@ -278,10 +278,31 @@ MIT License — see [LICENSE](LICENSE).
 
 | Light mode | Dark mode |
 |---|---|
-| ![Welcome light](screenshots/01-welcome-light.png) | ![Welcome dark](screenshots/02-welcome-dark.png) |
-| ![Chat light](screenshots/03-chat-light.png) | ![Chat dark](screenshots/04-chat-dark.png) |
+| ![Welcome light](screenshots/01-welcome-light.jpg) | ![Welcome dark](screenshots/02-welcome-dark.jpg) |
+| ![Chat light](screenshots/03-chat-light.jpg) | ![Chat dark](screenshots/04-chat-dark.jpg) |
 
 | Spiritual comfort | Crisis support |
 |---|---|
-| ![Spiritual](screenshots/05-spiritual.png) | ![Crisis](screenshots/06-crisis.png) |
+| ![Spiritual](screenshots/05-spiritual.jpg) | ![Crisis](screenshots/06-crisis.jpg) |
+
+
+---
+
+## 📸 Screenshots
+
+| Dark mode — Welcome | Light mode — Welcome |
+|---|---|
+| ![Welcome dark](screenshots/01-welcome-dark.jpg) | ![Welcome light](screenshots/02-welcome-light.jpg) |
+
+| Onboarding — Situation | Onboarding — Spiritual |
+|---|---|
+| ![Situation](screenshots/03-situation.jpg) | ![Spiritual](screenshots/04-spiritual.jpg) |
+
+| Crisis banner | Chat — PFA response |
+|---|---|
+| ![Crisis](screenshots/05-crisis.jpg) | ![Chat](screenshots/06-chat.jpg) |
+
+| Spiritual quote in chat | Home screen icon |
+|---|---|
+| ![Spiritual chat](screenshots/07-spiritual-chat.jpg) | ![Icon](screenshots/08-homescreen.jpg) |
 
