@@ -49,11 +49,75 @@
     "situation_other": "Kingine",
     "religion_prompt": "Hiari. Inasaidia kutoa faraja inayofaa."
   },
-  "offline_banner": "Uko nje ya mtandao — majibu yanaweza kuwa machache."
-,
+  "offline_banner": "Uko nje ya mtandao — majibu yanaweza kuwa machache.",
   "offline_queued": "Ujumbe wako umehifadhiwa na utatumwa unapounganishwa tena. 🕊️",
   "theme": {
     "switchToDark": "Badili hadi hali ya giza",
     "switchToLight": "Badili hadi hali ya mwanga"
+  },
+  "help": {
+    "modalTitle": "Jinsi ya kutumia CalmBridge",
+    "pageTitle": "Mwongozo wa Mtumiaji",
+    "pageSubtitle": "Kila kitu unachohitaji kutumia CalmBridge",
+    "flow": "Jinsi Programu Inavyofanya Kazi",
+    "flowSteps": [
+      "Hatua 1 — Lugha: Chagua Kiswahili, Kiingereza, Kifaransa, au Kikorea",
+      "Hatua 2 — Hali: Chagua unachopitia (maafa, migogoro, upotezaji, kutengwa, au kingine)",
+      "Hatua 3 — Faraja ya kiroho: Hiari, chagua mila ya imani kwa msaada zaidi",
+      "Mazungumzo: Zungumza na CalmBridge — inasikia, inathibitisha, na inakusaidia kupata msaada"
+    ],
+    "features": "Vipengele Vikuu",
+    "featureList": [
+      "Chatbot ya PFA ya WHO — Majibu ya AI yanafuata mfumo wa Angalia-Sikiliza-Unganisha",
+      "Faraja ya Kiroho — Maandishi kutoka mila 6 (Ukristo, Uislamu, Ubudha, Uhindu, Uyahudi, Bila dini)",
+      "Ingizo la Sauti — Sema badala ya kuandika ukitumia kipaza sauti chako",
+      "Bendera ya Dharura — Gonga 🆘 wakati wowote kwa nambari za dharura",
+      "Inafanya kazi bila mtandao — Inafanya kazi bila muunganisho wa intaneti",
+      "Hali ya giza/mwanga — Badili kichwani"
+    ],
+    "pfaFramework": "Mfumo wa PFA wa WHO",
+    "pfaDesc": "CalmBridge inafuata mfumo wa Msaada wa Kwanza wa Kisaikolojia (PFA) wa WHO — mbinu inayotegemea ushahidi kusaidia watu wanaosumbuka.",
+    "pfa_look_title": "Angalia — Chunguza na Tathmini",
+    "pfa_look_desc": "AI inasoma hali yako kimya kimya na kurekebisha sauti yake — utulivu kwa dharura kali, joto kwa huzuni, muundo kwa mzigo.",
+    "pfa_listen_title": "Sikiliza — Kusikiliza kwa Huruma",
+    "pfa_listen_desc": "CalmBridge inatambua hisia zako kabla ya kutoa suluhisho. Haikusumbui kushiriki zaidi ya unavyotaka.",
+    "pfa_link_title": "Unganisha — Unganika na Msaada",
+    "pfa_link_desc": "Inapofaa, CalmBridge inakuongoza kwa upole kwa msaada wa kitaalamu, mistari ya dharura, au rasilimali za ndani.",
+    "terms": "Maneno Muhimu",
+    "termList": [
+      {
+        "term": "PFA ya WHO",
+        "desc": "Msaada wa Kwanza wa Kisaikolojia wa WHO — mbinu inayotegemea ushahidi kusaidia watu baada ya migogoro."
+      },
+      {
+        "term": "Angalia-Sikiliza-Unganisha",
+        "desc": "Mfumo wa PFA wa hatua tatu: tathmini hali, sikiliza kwa huruma, kisha unganisha na msaada unaofaa."
+      },
+      {
+        "term": "Faraja ya Kiroho",
+        "desc": "Maandishi ya kimila (maandiko, hekima, tafakari za kilimwengu) kutoa utulivu wa ziada wa kihisia."
+      },
+      {
+        "term": "Ingizo la Sauti",
+        "desc": "Gonga ikoni ya kipaza sauti kuzungumza badala ya kuandika. Inafaa wakati mikono imeshughulika."
+      },
+      {
+        "term": "Hali ya Dharura",
+        "desc": "Inawasha moja kwa moja ishara za msongo zinapogunduliwa. Inatoa mawasiliano ya dharura na msaada wa haraka."
+      },
+      {
+        "term": "Hali ya Nje ya Mtandao",
+        "desc": "CalmBridge inafanya kazi bila intaneti. Ujumbe umehifadhiwa na unatumwa moja kwa moja unapounganishwa tena."
+      }
+    ],
+    "accessibility": "Upatikanaji na Lugha",
+    "voiceTitle": "Ingizo la Sauti",
+    "voiceDesc": "Sema ujumbe wako — SW, EN, KO, FR",
+    "langTitle": "Lugha 4",
+    "langDesc": "English · 한국어 · Français · Kiswahili",
+    "privacy": "Faragha",
+    "privacyDesc": "Hakuna data ya kibinafsi inayohifadhiwa. Mazungumzo hayahifadhiwi kwenye seva zetu. Kipindi chako ni cha siri.",
+    "close": "Funga",
+    "openGuide": "Fungua mwongozo kamili"
   }
-} 
+}

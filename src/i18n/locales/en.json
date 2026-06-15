@@ -49,11 +49,75 @@
     "situation_other": "Something else",
     "religion_prompt": "This is optional and helps us offer relevant comfort."
   },
-  "offline_banner": "You are offline — responses may be limited."
-,
+  "offline_banner": "You are offline — responses may be limited.",
   "offline_queued": "Your message has been saved and will be sent when you reconnect. 🕊️",
   "theme": {
     "switchToDark": "Switch to dark mode",
     "switchToLight": "Switch to light mode"
+  },
+  "help": {
+    "modalTitle": "How to use CalmBridge",
+    "pageTitle": "User Guide",
+    "pageSubtitle": "Everything you need to use CalmBridge",
+    "flow": "How the App Works",
+    "flowSteps": [
+      "Step 1 — Language: Choose English, Korean, French, or Swahili",
+      "Step 2 — Situation: Select what you are going through (disaster, conflict, loss, isolation, or other)",
+      "Step 3 — Spiritual comfort: Optionally choose a faith tradition for extra support",
+      "Chat: Talk with CalmBridge — it listens, validates, and gently helps you find support"
+    ],
+    "features": "Key Features",
+    "featureList": [
+      "WHO PFA Chatbot — AI responses follow the Look-Listen-Link framework",
+      "Spiritual Comfort — Optional texts from 6 traditions (Christianity, Islam, Buddhism, Hinduism, Judaism, Secular)",
+      "Voice Input — Speak instead of type using your microphone",
+      "Crisis Banner — Tap 🆘 anytime for emergency hotlines",
+      "Offline Ready — Works with limited or no internet connection",
+      "Dark / Light Mode — Toggle in the header"
+    ],
+    "pfaFramework": "WHO PFA Framework",
+    "pfaDesc": "CalmBridge follows the World Health Organization's Psychological First Aid framework — an evidence-based approach to support people in distress.",
+    "pfa_look_title": "Look — Observe & Assess",
+    "pfa_look_desc": "The AI silently reads your situation and adapts its tone — calm for acute crisis, warm for grief, structured for overwhelm.",
+    "pfa_listen_title": "Listen — Active Compassionate Listening",
+    "pfa_listen_desc": "CalmBridge acknowledges your feelings before offering solutions. It never pressures you to share more than you want.",
+    "pfa_link_title": "Link — Connect to Support",
+    "pfa_link_desc": "When appropriate, CalmBridge gently connects you to professional help, crisis lines, or local support resources.",
+    "terms": "Key Terms",
+    "termList": [
+      {
+        "term": "WHO PFA",
+        "desc": "World Health Organization Psychological First Aid — an evidence-based approach to support people in distress after crises."
+      },
+      {
+        "term": "Look-Listen-Link",
+        "desc": "The three-step PFA framework: assess the situation, listen compassionately, then connect to appropriate support."
+      },
+      {
+        "term": "Spiritual Comfort",
+        "desc": "Optional tradition-specific texts (scripture, wisdom, secular reflections) to offer additional emotional grounding."
+      },
+      {
+        "term": "Voice Input",
+        "desc": "Tap the microphone icon to speak your message instead of typing. Useful when hands are occupied or typing feels hard."
+      },
+      {
+        "term": "Crisis Mode",
+        "desc": "Automatically activates when distress signals are detected. Provides emergency contacts and immediate support."
+      },
+      {
+        "term": "Offline Mode",
+        "desc": "CalmBridge works without internet. Messages are queued and sent automatically when connectivity is restored."
+      }
+    ],
+    "accessibility": "Accessibility & Languages",
+    "voiceTitle": "Voice Input",
+    "voiceDesc": "Speak your message — EN, KO, FR, SW",
+    "langTitle": "4 Languages",
+    "langDesc": "English · 한국어 · Français · Kiswahili",
+    "privacy": "Privacy",
+    "privacyDesc": "No personal data is stored. Conversations are not saved on our servers. Your session is private.",
+    "close": "Close",
+    "openGuide": "Open full guide"
   }
 }

@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Send, ArrowLeft, AlertTriangle, X } from 'lucide-react'
+import { Send, ArrowLeft, AlertTriangle, X, HelpCircle } from 'lucide-react'
 import VoiceInput from '../components/VoiceInput'
 import SpiritualComfort from '../components/SpiritualComfort'
 import ThemeToggle from '../components/ThemeToggle'
+import HelpModal from '../components/HelpModal'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -91,6 +92,7 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
   const [showSpiritual, setShowSpiritual] = useState(false)
+  const [showHelp, setShowHelp] = useState(false)
   const selectedReligion = religion ?? "none"
   const bottomRef = useRef<HTMLDivElement>(null)
   const [isOffline, setIsOffline] = useState(!navigator.onLine)
@@ -202,6 +204,12 @@ export default function ChatPage() {
                 {lang.label}
               </button>
             ))}
+            <button
+              onClick={() => setShowHelp(true)}
+              aria-label="Help"
+              style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '4px', opacity: 0.9 }}>
+              <HelpCircle size={18} />
+            </button>
             <button onClick={() => setShowAlert(true)} aria-label="Emergency help"
               style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '4px', opacity: 0.85 }}>
               <AlertTriangle size={18} />
@@ -300,6 +308,9 @@ export default function ChatPage() {
           <Send size={18} color="white" />
         </button>
       </div>
+
+      {/* Help 모달 */}
+      {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
 
       {/* 영적위로 모달 */}
       {showSpiritual && (

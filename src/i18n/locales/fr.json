@@ -49,11 +49,75 @@
     "situation_other": "Autre chose",
     "religion_prompt": "Optionnel. Cela nous aide à offrir un réconfort adapté."
   },
-  "offline_banner": "Vous êtes hors ligne — les réponses peuvent être limitées."
-,
+  "offline_banner": "Vous êtes hors ligne — les réponses peuvent être limitées.",
   "offline_queued": "Votre message a été sauvegardé et sera envoyé à la reconnexion. 🕊️",
   "theme": {
     "switchToDark": "Passer en mode sombre",
     "switchToLight": "Passer en mode clair"
+  },
+  "help": {
+    "modalTitle": "Comment utiliser CalmBridge",
+    "pageTitle": "Guide d'utilisation",
+    "pageSubtitle": "Tout ce dont vous avez besoin pour utiliser CalmBridge",
+    "flow": "Comment fonctionne l'application",
+    "flowSteps": [
+      "Étape 1 — Langue: Choisissez français, anglais, coréen ou swahili",
+      "Étape 2 — Situation: Sélectionnez ce que vous traversez (catastrophe, conflit, perte, isolement ou autre)",
+      "Étape 3 — Réconfort spirituel: Optionnellement, choisissez une tradition religieuse",
+      "Discussion: Parlez avec CalmBridge — il écoute, valide et vous aide à trouver du soutien"
+    ],
+    "features": "Fonctionnalités principales",
+    "featureList": [
+      "Chatbot PFA OMS — Réponses IA selon le cadre Regarder-Écouter-Relier",
+      "Réconfort spirituel — Textes de 6 traditions (Christianisme, Islam, Bouddhisme, Hindouisme, Judaïsme, Laïque)",
+      "Saisie vocale — Parlez au lieu de taper avec votre microphone",
+      "Bannière de crise — Appuyez sur 🆘 à tout moment pour les numéros d'urgence",
+      "Mode hors ligne — Fonctionne avec une connexion limitée ou sans internet",
+      "Mode sombre/clair — Basculez dans l'en-tête"
+    ],
+    "pfaFramework": "Cadre PFA de l'OMS",
+    "pfaDesc": "CalmBridge suit le cadre de Premiers Secours Psychologiques (PFA) de l'OMS — une approche fondée sur des preuves pour soutenir les personnes en détresse.",
+    "pfa_look_title": "Regarder — Observer et évaluer",
+    "pfa_look_desc": "L'IA lit silencieusement votre situation et adapte son ton — calme pour les crises aiguës, chaleureux pour le deuil, structuré pour l'accablement.",
+    "pfa_listen_title": "Écouter — Écoute active et compassionnelle",
+    "pfa_listen_desc": "CalmBridge reconnaît vos sentiments avant de proposer des solutions. Il ne vous pousse jamais à partager plus que vous ne le souhaitez.",
+    "pfa_link_title": "Relier — Connecter au soutien",
+    "pfa_link_desc": "Le moment venu, CalmBridge vous guide doucement vers une aide professionnelle, des lignes de crise ou des ressources locales.",
+    "terms": "Termes clés",
+    "termList": [
+      {
+        "term": "PFA OMS",
+        "desc": "Premiers Secours Psychologiques de l'OMS — une approche fondée sur des preuves pour soutenir les personnes après une crise."
+      },
+      {
+        "term": "Regarder-Écouter-Relier",
+        "desc": "Le cadre PFA en trois étapes: évaluer la situation, écouter avec compassion, puis connecter au soutien approprié."
+      },
+      {
+        "term": "Réconfort spirituel",
+        "desc": "Textes spécifiques à la tradition (Écriture, sagesse, réflexions laïques) pour offrir un ancrage émotionnel supplémentaire."
+      },
+      {
+        "term": "Saisie vocale",
+        "desc": "Appuyez sur l'icône microphone pour parler au lieu de taper. Utile quand les mains sont occupées."
+      },
+      {
+        "term": "Mode crise",
+        "desc": "S'active automatiquement quand des signaux de détresse sont détectés. Fournit des contacts d'urgence."
+      },
+      {
+        "term": "Mode hors ligne",
+        "desc": "CalmBridge fonctionne sans internet. Les messages sont mis en file d'attente et envoyés automatiquement à la reconnexion."
+      }
+    ],
+    "accessibility": "Accessibilité et langues",
+    "voiceTitle": "Saisie vocale",
+    "voiceDesc": "Parlez votre message — FR, EN, KO, SW",
+    "langTitle": "4 langues",
+    "langDesc": "English · 한국어 · Français · Kiswahili",
+    "privacy": "Confidentialité",
+    "privacyDesc": "Aucune donnée personnelle n'est stockée. Les conversations ne sont pas sauvegardées sur nos serveurs. Votre session est privée.",
+    "close": "Fermer",
+    "openGuide": "Ouvrir le guide complet"
   }
 }
