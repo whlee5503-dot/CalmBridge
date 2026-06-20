@@ -5,7 +5,6 @@ import { Send, ArrowLeft, AlertTriangle, X, HelpCircle } from 'lucide-react'
 import VoiceInput from '../components/VoiceInput'
 import SpiritualComfort from '../components/SpiritualComfort'
 import ThemeToggle from '../components/ThemeToggle'
-import HelpModal from '../components/HelpModal'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -92,7 +91,6 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
   const [showSpiritual, setShowSpiritual] = useState(false)
-  const [showHelp, setShowHelp] = useState(false)
   const selectedReligion = religion ?? "none"
   const bottomRef = useRef<HTMLDivElement>(null)
   const [isOffline, setIsOffline] = useState(!navigator.onLine)
@@ -205,14 +203,18 @@ export default function ChatPage() {
               </button>
             ))}
             <button
-              onClick={() => setShowHelp(true)}
-              aria-label="Help"
-              style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '4px', opacity: 0.9 }}>
-              <HelpCircle size={18} />
+              onClick={() => navigate('/help')}
+              aria-label="사용 가이드"
+              title="사용 가이드"
+              style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '4px 6px', opacity: 0.9, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1px' }}>
+              <HelpCircle size={15} />
+              <span style={{ fontSize: '0.5rem', lineHeight: 1 }}>가이드</span>
             </button>
-            <button onClick={() => setShowAlert(true)} aria-label="Emergency help"
-              style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '4px', opacity: 0.85 }}>
-              <AlertTriangle size={18} />
+            <button onClick={() => setShowAlert(true)} aria-label="긴급 도움"
+              title="긴급 도움"
+              style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '4px 6px', opacity: 0.85, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1px' }}>
+              <AlertTriangle size={15} />
+              <span style={{ fontSize: '0.5rem', lineHeight: 1 }}>긴급</span>
             </button>
             <ThemeToggle />
           </div>
@@ -309,8 +311,6 @@ export default function ChatPage() {
         </button>
       </div>
 
-      {/* Help 모달 */}
-      {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
 
       {/* 영적위로 모달 */}
       {showSpiritual && (
