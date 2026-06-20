@@ -118,6 +118,8 @@
     "privacy": "Privacy",
     "privacyDesc": "No personal data is stored. Conversations are not saved on our servers. Your session is private.",
     "close": "Close",
-    "openGuide": "Open full guide"
+    "openGuide": "Open full guide",
+    "btnGuide": "Guide",
+    "btnEmergency": "SOS"
   }
 }

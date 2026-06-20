@@ -208,13 +208,13 @@ export default function ChatPage() {
               title="사용 가이드"
               style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '4px 6px', opacity: 0.9, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1px' }}>
               <HelpCircle size={15} />
-              <span style={{ fontSize: '0.5rem', lineHeight: 1 }}>가이드</span>
+              <span style={{ fontSize: '0.5rem', lineHeight: 1 }}>{t('help.btnGuide')}</span>
             </button>
             <button onClick={() => setShowAlert(true)} aria-label="긴급 도움"
               title="긴급 도움"
               style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '4px 6px', opacity: 0.85, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1px' }}>
               <AlertTriangle size={15} />
-              <span style={{ fontSize: '0.5rem', lineHeight: 1 }}>긴급</span>
+              <span style={{ fontSize: '0.5rem', lineHeight: 1 }}>{t('help.btnEmergency')}</span>
             </button>
             <ThemeToggle />
           </div>

@@ -118,6 +118,8 @@
     "privacy": "개인정보 보호",
     "privacyDesc": "개인 정보는 저장되지 않습니다. 대화 내용은 서버에 보관되지 않으며 세션은 비공개입니다.",
     "close": "닫기",
-    "openGuide": "전체 가이드 보기"
+    "openGuide": "전체 가이드 보기",
+    "btnGuide": "가이드",
+    "btnEmergency": "긴급"
   }
 }

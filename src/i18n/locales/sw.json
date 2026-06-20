@@ -118,6 +118,8 @@
     "privacy": "Faragha",
     "privacyDesc": "Hakuna data ya kibinafsi inayohifadhiwa. Mazungumzo hayahifadhiwi kwenye seva zetu. Kipindi chako ni cha siri.",
     "close": "Funga",
-    "openGuide": "Fungua mwongozo kamili"
+    "openGuide": "Fungua mwongozo kamili",
+    "btnGuide": "Mwongozo",
+    "btnEmergency": "Dharura"
   }
 }

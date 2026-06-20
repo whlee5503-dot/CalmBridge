@@ -11,6 +11,12 @@ export default function HelpPage() {
   const featureList: string[] = t('help.featureList', { returnObjects: true }) as string[]
   const termList: { term: string; desc: string }[] = t('help.termList', { returnObjects: true }) as { term: string; desc: string }[]
 
+  const pfaItems = [
+    { icon: <Eye size={20} />,   key: 'look' },
+    { icon: <Ear size={20} />,   key: 'listen' },
+    { icon: <Link2 size={20} />, key: 'link' },
+  ]
+
   return (
     <div style={{ minHeight: '100dvh', backgroundColor: 'var(--color-bg)', paddingBottom: '4rem' }}>
 
@@ -74,9 +80,9 @@ export default function HelpPage() {
         <section>
           <h2 style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-primary)', marginBottom: '0.75rem' }}>{t('help.pfaFramework')}</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            {[{ emoji: '��️', key: 'look' }, { icon: <Ear size={20} />, key: 'listen' }, { icon: <Link2 size={20} />, key: 'link' }].map(({ icon, key }) => (
+            {pfaItems.map(({ icon, key }) => (
               <div key={key} style={{ backgroundColor: 'var(--color-surface)', borderRadius: '12px', border: '1px solid var(--color-border)', padding: '0.75rem 1rem', display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                <span style={{ color: 'var(--color-primary)', flexShrink: 0 }}>{icon}</span>
+                <span style={{ color: 'var(--color-primary)', flexShrink: 0, marginTop: '0.125rem' }}>{icon}</span>
                 <div>
                   <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text)', margin: '0 0 0.2rem' }}>{t(`help.pfa_${key}_title`)}</p>
                   <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', margin: 0, lineHeight: 1.5 }}>{t(`help.pfa_${key}_desc`)}</p>
@@ -103,8 +109,10 @@ export default function HelpPage() {
         <section>
           <h2 style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-primary)', marginBottom: '0.75rem' }}>{t('help.accessibility')}</h2>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-            {[{ icon: <Mic size={18} />, titleKey: 'help.voiceTitle', descKey: 'help.voiceDesc' },
-              { icon: <Globe size={18} />, titleKey: 'help.langTitle', descKey: 'help.langDesc' }].map(({ icon, titleKey, descKey }) => (
+            {[
+              { icon: <Mic size={18} />, titleKey: 'help.voiceTitle', descKey: 'help.voiceDesc' },
+              { icon: <Globe size={18} />, titleKey: 'help.langTitle', descKey: 'help.langDesc' },
+            ].map(({ icon, titleKey, descKey }) => (
               <div key={titleKey} style={{ backgroundColor: 'var(--color-surface)', borderRadius: '12px', border: '1px solid var(--color-border)', padding: '0.875rem' }}>
                 <div style={{ color: 'var(--color-primary)', marginBottom: '0.4rem' }}>{icon}</div>
                 <p style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--color-text)', margin: '0 0 0.2rem' }}>{t(titleKey)}</p>
