@@ -1,7 +1,7 @@
 // src/pages/HelpPage.tsx
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, Shield, Mic, Globe, Heart } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Shield, Mic, Globe, Heart, Eye, Ear, Link2 } from 'lucide-react'
 
 export default function HelpPage() {
   const { t } = useTranslation()
@@ -74,9 +74,9 @@ export default function HelpPage() {
         <section>
           <h2 style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-primary)', marginBottom: '0.75rem' }}>{t('help.pfaFramework')}</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            {[{ emoji: '��️', key: 'look' }, { emoji: '👂', key: 'listen' }, { emoji: '🔗', key: 'link' }].map(({ emoji, key }) => (
+            {[{ emoji: '��️', key: 'look' }, { icon: <Ear size={20} />, key: 'listen' }, { icon: <Link2 size={20} />, key: 'link' }].map(({ icon, key }) => (
               <div key={key} style={{ backgroundColor: 'var(--color-surface)', borderRadius: '12px', border: '1px solid var(--color-border)', padding: '0.75rem 1rem', display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                <span style={{ fontSize: '1.25rem', flexShrink: 0 }}>{emoji}</span>
+                <span style={{ color: 'var(--color-primary)', flexShrink: 0 }}>{icon}</span>
                 <div>
                   <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text)', margin: '0 0 0.2rem' }}>{t(`help.pfa_${key}_title`)}</p>
                   <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', margin: 0, lineHeight: 1.5 }}>{t(`help.pfa_${key}_desc`)}</p>
