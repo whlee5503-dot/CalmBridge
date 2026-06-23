@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { ArrowLeft, MessageCircle, RotateCcw } from 'lucide-react'
 import { RESPONSES } from '../data/responses'
-import { SITUATIONS, Situation } from '../data/situations'
+import type { Situation } from '../data/situations'
 import SpiritualComfort from '../components/SpiritualComfort'
 import { useState } from 'react'
 
@@ -17,7 +17,7 @@ interface LocationState {
 }
 
 export default function ResponsePage() {
-  const { i18n, t } = useTranslation()
+  const { i18n } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
   const { situation, emotionId, emotionText, religion } = (location.state as LocationState) ?? {}

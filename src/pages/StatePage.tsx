@@ -4,7 +4,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
-import { Situation } from '../data/situations'
+import type { Situation } from '../data/situations'
 
 interface LocationState {
   situation: Situation
