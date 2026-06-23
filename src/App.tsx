@@ -4,6 +4,9 @@ import ChatPage from './pages/ChatPage'
 import TestPage from './pages/TestPage'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import HelpPage from './pages/HelpPage'
+import SituationPage from './pages/SituationPage'
+import StatePage from './pages/StatePage'
+import ResponsePage from './pages/ResponsePage'
 import ThemeToggle from './components/ThemeToggle'
 
 function GlobalThemeToggle() {
@@ -26,6 +29,9 @@ export default function App() {
         <Route path="/test"    element={<TestPage />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/help"    element={<HelpPage />} />
+        <Route path="/situation" element={<SituationPage />} />
+        <Route path="/state"     element={<StatePage />} />
+        <Route path="/response"  element={<ResponsePage />} />
       </Routes>
     </BrowserRouter>
   )
