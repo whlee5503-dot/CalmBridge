@@ -3,16 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate, useLocation } from 'react-router-dom'
 import LanguageSelector from '../components/LanguageSelector'
 
-type Situation = 'disaster' | 'conflict' | 'loss' | 'isolation' | 'other'
 type Religion = 'christianity' | 'islam' | 'buddhism' | 'hinduism' | 'judaism' | 'secular' | 'none'
-
-const SITUATIONS: { id: Situation; emoji: string }[] = [
-  { id: 'disaster',  emoji: '🌊' },
-  { id: 'conflict',  emoji: '🕊️' },
-  { id: 'loss',      emoji: '💔' },
-  { id: 'isolation', emoji: '🌑' },
-  { id: 'other',     emoji: '💬' },
-]
 
 const RELIGIONS: { id: Religion; emoji: string; key: string }[] = [
   { id: 'christianity', emoji: '✝️', key: 'spiritual.christianity' },
@@ -28,12 +19,11 @@ export default function WelcomePage() {
   const navigate = useNavigate()
   const location = useLocation()
   const initialStep = (location.state as { step?: number })?.step ?? 1
-  const [step, setStep] = useState<1 | 2 | 3>(initialStep as 1 | 2 | 3)
-  const [situation, setSituation] = useState<Situation | null>(null)
+  const [step, setStep] = useState<1 | 2>(initialStep as 1 | 2)
   const [religion, setReligion] = useState<Religion>('none')
 
-  function goToChat() {
-    navigate('/chat', { state: { situation, religion } })
+  function goToSituation() {
+    navigate('/situation', { state: { religion } })
   }
 
   return (
@@ -62,9 +52,9 @@ export default function WelcomePage() {
         <p style={{ color: 'var(--color-text-muted)', fontSize: '0.95rem' }}>{t('tagline')}</p>
       </div>
 
-      {/* Step indicator */}
+      {/* Step indicator — 2단계로 축소 */}
       <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
-        {[1, 2, 3].map(s => (
+        {[1, 2].map(s => (
           <div key={s} style={{
             width: s === step ? '24px' : '8px', height: '8px',
             borderRadius: '4px', transition: 'width 0.3s',
@@ -95,53 +85,14 @@ export default function WelcomePage() {
               width: '100%', marginTop: '1.25rem', padding: '0.875rem',
               borderRadius: '12px', backgroundColor: 'var(--color-primary)', color: 'var(--color-text-inverse)',
               fontSize: '1rem', fontWeight: 600, border: 'none', cursor: 'pointer',
-              transition: 'background-color 0.15s ease',
             }}>
               {t('onboarding.next')} →
             </button>
           </>
         )}
 
-        {/* Step 2: Situation */}
+        {/* Step 2: Religion */}
         {step === 2 && (
-          <>
-            <p style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--color-text-muted)',
-              textTransform: 'uppercase', letterSpacing: '0.08em',
-              marginBottom: '1rem', textAlign: 'center' }}>
-              {t('onboarding.step_situation')}
-            </p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-              {SITUATIONS.map(s => (
-                <button key={s.id} onClick={() => setSituation(s.id)} style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  gap: '0.4rem', padding: '0.75rem 0.5rem', borderRadius: '12px', cursor: 'pointer',
-                  border: situation === s.id ? '2px solid var(--color-primary)' : '2px solid var(--color-border)',
-                  backgroundColor: situation === s.id ? 'var(--color-primary-light)' : 'var(--color-surface)',
-                  fontSize: '0.85rem', fontWeight: 500,
-                  color: situation === s.id ? 'var(--color-primary)' : 'var(--color-text)',
-                  transition: 'all 0.15s',
-                  gridColumn: s.id === 'other' ? 'span 2' : 'span 1',
-                }}>
-                  <span style={{ fontSize: '1.1rem' }}>{s.emoji}</span>
-                  <span>{t(`onboarding.situation_${s.id}`)}</span>
-                </button>
-              ))}
-            </div>
-            <button onClick={() => setStep(3)} disabled={!situation} style={{
-              width: '100%', marginTop: '1.25rem', padding: '0.875rem',
-              borderRadius: '12px', border: 'none',
-              cursor: situation ? 'pointer' : 'not-allowed',
-              backgroundColor: situation ? 'var(--color-primary)' : 'var(--color-border)',
-              color: situation ? 'var(--color-text-inverse)' : 'var(--color-text-muted)',
-              fontSize: '1rem', fontWeight: 600, transition: 'all 0.15s',
-            }}>
-              {t('onboarding.next')} →
-            </button>
-          </>
-        )}
-
-        {/* Step 3: Religion */}
-        {step === 3 && (
           <>
             <p style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--color-text-muted)',
               textTransform: 'uppercase', letterSpacing: '0.08em',
@@ -166,14 +117,14 @@ export default function WelcomePage() {
                 </button>
               ))}
             </div>
-            <button onClick={goToChat} style={{
+            <button onClick={goToSituation} style={{
               width: '100%', marginTop: '1.25rem', padding: '0.875rem',
               borderRadius: '12px', backgroundColor: 'var(--color-primary)', color: 'var(--color-text-inverse)',
               fontSize: '1rem', fontWeight: 600, border: 'none', cursor: 'pointer',
             }}>
               {t('start')} →
             </button>
-            <button onClick={goToChat} style={{
+            <button onClick={goToSituation} style={{
               width: '100%', marginTop: '0.5rem', padding: '0.625rem',
               borderRadius: '12px', backgroundColor: 'transparent', color: 'var(--color-text-muted)',
               fontSize: '0.85rem', border: 'none', cursor: 'pointer',
@@ -193,7 +144,7 @@ export default function WelcomePage() {
           border: '1.5px solid var(--color-danger)', cursor: 'pointer',
           opacity: 0.85,
         }}>
-          🆘 {t('emergency')}
+          �� {t('emergency')}
         </button>
       </div>
 
@@ -201,8 +152,8 @@ export default function WelcomePage() {
         color: 'var(--color-text-muted)', maxWidth: '300px', lineHeight: 1.6 }}>
         {t('disclaimer')}
       </p>
-        <a href="/privacy" style={{ color: 'var(--color-text-muted)', fontSize: '0.68rem', textDecoration: 'underline', marginBottom: '0.25rem', display: 'block', textAlign: 'center' }}>Privacy Policy</a>
-        <p style={{ marginTop: '0.75rem', fontSize: '0.68rem', color: 'var(--color-border)' }}>
+      <a href="/privacy" style={{ color: 'var(--color-text-muted)', fontSize: '0.68rem', textDecoration: 'underline', marginBottom: '0.25rem', display: 'block', textAlign: 'center' }}>Privacy Policy</a>
+      <p style={{ marginTop: '0.75rem', fontSize: '0.68rem', color: 'var(--color-border)' }}>
         SoulCare Suite · Module 1
       </p>
     </div>
