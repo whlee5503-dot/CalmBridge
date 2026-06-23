@@ -99,7 +99,7 @@ export const SITUATIONS: Record<string, Situation[]> = {
       id: 'panic',
       icon: '😰',
       label: 'Panic or Shock',
-      sub: 'can't breathe · shaking · mind blank',
+      sub: "can't breathe · shaking · mind blank",
       states: [
         { id: 'breath',  text: "I can't breathe properly" },
         { id: 'shaking', text: "My hands and body won't stop shaking" },
