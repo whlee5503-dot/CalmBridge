@@ -5,12 +5,11 @@ import LanguageSelector from '../components/LanguageSelector'
 
 type Religion = 'christianity' | 'islam' | 'buddhism' | 'hinduism' | 'judaism' | 'secular' | 'none'
 
+// 현재는 기독교(개발자 전문 영역)와 비종교만 제공합니다.
+// 다른 전통은 해당 분야 협력자가 합류하면 추가될 예정입니다.
+// (자세한 내용: README.md "Spiritual Comfort" 섹션 / 앱 내 사용자 가이드)
 const RELIGIONS: { id: Religion; emoji: string; key: string }[] = [
   { id: 'christianity', emoji: '✝️', key: 'spiritual.christianity' },
-  { id: 'islam',        emoji: '☪️', key: 'spiritual.islam' },
-  { id: 'buddhism',     emoji: '☸️', key: 'spiritual.buddhism' },
-  { id: 'hinduism',     emoji: '🕉️', key: 'spiritual.hinduism' },
-  { id: 'judaism',      emoji: '✡️', key: 'spiritual.judaism' },
   { id: 'secular',      emoji: '🌿', key: 'spiritual.secular' },
 ]
 

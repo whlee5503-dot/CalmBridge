@@ -52,7 +52,7 @@ According to the WHO, **1 in 4 people** will experience a mental health conditio
 | 🧠 **WHO PFA Chatbot** | AI responses structured around Look-Listen-Link framework |
 | 🔒 **Safety Filter** | Separates mental health crisis vs. disaster keywords; triggers appropriate protocols |
 | 🌐 **4 Languages** | English, Korean, French, Swahili |
-| 🕊️ **Spiritual Comfort** | Optional module with tradition-specific comforting texts (6 traditions) |
+| 🕊️ **Spiritual Comfort** | Optional module with comforting texts (Christianity + Secular; more traditions planned) |
 | 🎤 **Voice Input** | Web Speech API for hands-free input |
 | 📴 **Offline Queue** | Messages saved to IndexedDB and auto-sent on reconnect |
 | 📱 **PWA / Offline** | Installable, works with limited connectivity |
@@ -142,16 +142,18 @@ Detects suicidal ideation, self-harm, and disaster keywords in all 4 languages.
 
 ## 🕊️ Spiritual Comfort Module
 
-Opt-in tradition-specific comfort texts in all 4 languages:
+Opt-in tradition-specific comfort texts in all 4 languages.
+
+**Current scope (v1.0.x):** This module currently offers **Christianity** and a **Secular/Non-religious** option.
 
 | Tradition | Symbol |
 |---|---|
 | Christianity | ✝️ |
-| Islam | ☪️ |
-| Buddhism | ☸️ |
-| Hinduism | 🕉️ |
-| Judaism | ✡️ |
 | Secular / Non-religious | 🌿 |
+
+**Why only two traditions for now?** The developer's theological background (M.Div.) covers Christian texts with confidence. Rather than offering shallow or potentially inaccurate content for traditions outside that expertise (Islam, Buddhism, Hinduism, Judaism), CalmBridge intentionally limits this opt-in module until qualified collaborators — ideally practitioners or scholars within each tradition — can review and contribute culturally and theologically accurate comfort texts.
+
+**Roadmap:** Additional traditions will be added as subject-matter collaborators join the project. Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). This module is entirely optional and does not affect the core WHO PFA chatbot, which remains available to all users regardless of religious background.
 
 ---
 
@@ -198,6 +200,12 @@ Built-in automated test suite (src/lib/testRunner.ts) evaluates AI response qual
 | Languages tested | EN · KO · FR · SW |
 
 ### Spiritual Comfort Results
+
+> Note: This table reflects the **AI chatbot's** ability to recognize and respond
+> sensitively to faith-related context in conversation (`functions/api/chat.ts`),
+> not the static **Spiritual Comfort module** (`SpiritualComfort.tsx`), which
+> currently offers Christianity and Secular content only — see
+> [Spiritual Comfort Module](#-spiritual-comfort-module) above.
 
 | Tradition | Status |
 |---|---|
