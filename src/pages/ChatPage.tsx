@@ -331,7 +331,6 @@ export default function ChatPage() {
               <X size={20} />
             </button>
             <SpiritualComfort
-              onClose={() => setShowSpiritual(false)}
               initialTradition={selectedReligion}
             />
           </div>

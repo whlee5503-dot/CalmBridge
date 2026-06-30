@@ -7,7 +7,6 @@ import { ArrowLeft, MessageCircle, RotateCcw } from 'lucide-react'
 import { RESPONSES } from '../data/responses'
 import type { Situation } from '../data/situations'
 import SpiritualComfort from '../components/SpiritualComfort'
-import { useState } from 'react'
 
 interface LocationState {
   situation: Situation
@@ -21,7 +20,6 @@ export default function ResponsePage() {
   const navigate = useNavigate()
   const location = useLocation()
   const { situation, emotionId, emotionText, religion } = (location.state as LocationState) ?? {}
-  const [showSpiritual, setShowSpiritual] = useState(false)
 
   if (!situation || !emotionId) {
     navigate('/')
@@ -45,12 +43,6 @@ export default function ResponsePage() {
     lang === 'fr' ? 'Recommencer' :
     lang === 'sw' ? 'Anza upya' :
     'Start over'
-
-  const spiritualLabel =
-    lang === 'ko' ? '영적 위로 받기' :
-    lang === 'fr' ? 'Réconfort spirituel' :
-    lang === 'sw' ? 'Faraja ya kiroho' :
-    'Spiritual comfort'
 
   const groundingLabel =
     lang === 'ko' ? '🌿 그라운딩 기법' :
@@ -134,23 +126,8 @@ export default function ResponsePage() {
               </div>
             )}
 
-            {/* 영적 위로 (토글) */}
-            {!showSpiritual ? (
-              <button
-                onClick={() => setShowSpiritual(true)}
-                style={{
-                  backgroundColor: 'transparent',
-                  border: '1px dashed var(--color-border)',
-                  borderRadius: '12px', padding: '0.75rem',
-                  cursor: 'pointer', width: '100%',
-                  fontSize: '0.8rem', color: 'var(--color-text-muted)',
-                }}
-              >
-                🕊️ {spiritualLabel}
-              </button>
-            ) : (
-              <SpiritualComfort onClose={() => setShowSpiritual(false)} initialTradition={religion} />
-            )}
+            {/* 영적 위로 — 온보딩에서 선택한 전통이 있을 때만 표시 */}
+            <SpiritualComfort initialTradition={religion} />
           </>
         ) : (
           <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--color-text-muted)' }}>

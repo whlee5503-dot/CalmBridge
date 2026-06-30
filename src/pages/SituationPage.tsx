@@ -3,6 +3,7 @@
 
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 import { SITUATIONS } from '../data/situations'
 
 export default function SituationPage() {
@@ -18,15 +19,24 @@ export default function SituationPage() {
     <div style={{ minHeight: '100dvh', backgroundColor: 'var(--color-bg)', display: 'flex', flexDirection: 'column' }}>
 
       {/* 헤더 */}
-      <div style={{ backgroundColor: '#1a6b4a', padding: '1rem', textAlign: 'center' }}>
-        <div style={{ fontSize: '1.5rem', marginBottom: '0.25rem' }}>🕊</div>
-        <h1 style={{ color: 'white', fontSize: '1.1rem', fontWeight: 700, margin: 0 }}>CalmBridge</h1>
-        <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.75rem', margin: '0.25rem 0 0' }}>
-          {validLang === 'ko' ? '지금 어떤 상황인가요?' :
-           validLang === 'fr' ? 'Que traversez-vous en ce moment?' :
-           validLang === 'sw' ? 'Unakabiliwa na nini sasa hivi?' :
-           'What are you facing right now?'}
-        </p>
+      <div style={{ backgroundColor: '#1a6b4a', padding: '0.75rem 1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <button
+          onClick={() => navigate('/', { state: { step: 2 } })}
+          style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer', padding: '4px', display: 'flex' }}
+          aria-label="Back"
+        >
+          <ArrowLeft size={20} />
+        </button>
+        <div style={{ flex: 1, textAlign: 'center', marginRight: '28px' }}>
+          <div style={{ fontSize: '1.3rem', marginBottom: '0.1rem' }}>🕊</div>
+          <h1 style={{ color: 'white', fontSize: '1rem', fontWeight: 700, margin: 0 }}>CalmBridge</h1>
+          <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.7rem', margin: '0.15rem 0 0' }}>
+            {validLang === 'ko' ? '지금 어떤 상황인가요?' :
+             validLang === 'fr' ? 'Que traversez-vous en ce moment?' :
+             validLang === 'sw' ? 'Unakabiliwa na nini sasa hivi?' :
+             'What are you facing right now?'}
+          </p>
+        </div>
       </div>
 
       {/* 상황 카드 그리드 */}

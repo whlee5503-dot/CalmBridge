@@ -1,9 +1,12 @@
 // src/components/SpiritualComfort.tsx
-// Spiritual comfort module: user selects their tradition → receives a comforting text
+// Static spiritual comfort card — shows the comforting text for the religion
+// the user already chose during onboarding (no re-selection here).
+// To choose a different tradition, the user is sent back to onboarding's
+// religion step (WelcomePage step 2).
 // Supports EN / KO / FR / SW via i18next
 
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -168,130 +171,113 @@ const COMFORT_TEXTS: Record<Tradition, Record<Language, ComfortText>> = {
   },
 };
 
-// ── Tradition Config ──────────────────────────────────────────────────────────
+// ── Tradition Emoji Map ───────────────────────────────────────────────────────
 
-interface TraditionOption {
-  id: Tradition;
-  emoji: string;
-  labelKey: string; // i18n key
-}
+const TRADITION_EMOJI: Record<Tradition, string> = {
+  none: "",
+  christianity: "✝️",
+  islam: "☪️",
+  buddhism: "☸️",
+  hinduism: "🕉️",
+  judaism: "✡️",
+  secular: "🌿",
+};
 
-const TRADITIONS: TraditionOption[] = [
-  { id: "christianity", emoji: "✝️", labelKey: "spiritual.christianity" },
-  { id: "islam",        emoji: "☪️", labelKey: "spiritual.islam" },
-  { id: "buddhism",     emoji: "☸️", labelKey: "spiritual.buddhism" },
-  { id: "hinduism",     emoji: "🕉️", labelKey: "spiritual.hinduism" },
-  { id: "judaism",      emoji: "✡️", labelKey: "spiritual.judaism" },
-  { id: "secular",      emoji: "🌿", labelKey: "spiritual.secular" },
-];
+const TRADITION_LABEL_KEY: Record<Tradition, string> = {
+  none: "",
+  christianity: "spiritual.christianity",
+  islam: "spiritual.islam",
+  buddhism: "spiritual.buddhism",
+  hinduism: "spiritual.hinduism",
+  judaism: "spiritual.judaism",
+  secular: "spiritual.secular",
+};
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
 interface SpiritualComfortProps {
+  /** The tradition chosen during onboarding ('none' or undefined = not selected) */
   initialTradition?: string;
-  /** Called when user closes/dismisses the module */
-  onClose?: () => void;
 }
 
-export default function SpiritualComfort({ onClose, initialTradition }: SpiritualComfortProps) {
+export default function SpiritualComfort({ initialTradition }: SpiritualComfortProps) {
   const { t, i18n } = useTranslation();
-  const [selected, setSelected] = useState<Tradition>((initialTradition as Tradition) ?? "none");
-  const [isExpanded, setIsExpanded] = useState(!!initialTradition && initialTradition !== "none");
+  const navigate = useNavigate();
+
+  const tradition = (initialTradition as Tradition) ?? "none";
+
+  // 종교를 선택하지 않았다면 아무것도 렌더링하지 않음
+  if (tradition === "none") return null;
 
   const currentLang = (i18n.language?.slice(0, 2) as Language) || "en";
   const validLang: Language = ["en", "ko", "fr", "sw"].includes(currentLang)
     ? currentLang
     : "en";
 
-  const comfort =
-    selected !== "none"
-      ? COMFORT_TEXTS[selected][validLang]
-      : null;
+  const comfort = COMFORT_TEXTS[tradition][validLang];
+  const emoji = TRADITION_EMOJI[tradition];
+  const labelKey = TRADITION_LABEL_KEY[tradition];
 
-  const handleSelect = (tradition: Tradition) => {
-    setSelected(tradition);
-    setIsExpanded(true);
-  };
+  const changeLabel =
+    validLang === "ko" ? "다른 전통 선택하기" :
+    validLang === "fr" ? "Choisir une autre tradition" :
+    validLang === "sw" ? "Chagua mila nyingine" :
+    "Choose a different tradition";
 
   return (
-    <div className="rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50 to-indigo-50 p-5 shadow-sm dark:border-blue-900/30 dark:from-blue-950/20 dark:to-indigo-950/20">
+    <div style={{
+      borderRadius: "16px",
+      border: "1px solid var(--color-border)",
+      backgroundColor: "var(--color-surface)",
+      padding: "1.25rem",
+    }}>
       {/* Header */}
-      <div className="mb-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <span className="text-xl">🕊️</span>
-          <h3 className="text-sm font-semibold text-blue-900 dark:text-blue-200">
-            {t("spiritual.title", "Spiritual & Reflective Comfort")}
-          </h3>
-        </div>
-        {onClose && (
-          <button
-            onClick={onClose}
-            aria-label="Close spiritual comfort"
-            className="rounded-full p-1 text-blue-400 transition hover:bg-blue-100 hover:text-blue-600 dark:hover:bg-blue-900/40"
-          >
-            ✕
-          </button>
-        )}
+      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.875rem" }}>
+        <span style={{ fontSize: "1.1rem" }}>{emoji}</span>
+        <h3 style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-text)", margin: 0 }}>
+          {t(labelKey)}
+        </h3>
       </div>
 
-      {/* Subtitle */}
-      <p className="mb-4 text-xs text-blue-600/80 dark:text-blue-300/70">
-        {t("spiritual.subtitle", "Choose a tradition that resonates with you for a moment of comfort.")}
+      {/* Quote */}
+      <blockquote style={{
+        margin: "0 0 0.5rem",
+        paddingLeft: "0.75rem",
+        borderLeft: "3px solid var(--color-primary)",
+        fontSize: "0.875rem",
+        fontStyle: "italic",
+        color: "var(--color-text)",
+        lineHeight: 1.6,
+      }}>
+        "{comfort.quote}"
+      </blockquote>
+
+      {/* Source */}
+      <p style={{ margin: "0 0 0.875rem", textAlign: "right", fontSize: "0.75rem", color: "var(--color-text-muted)" }}>
+        — {comfort.source}
       </p>
 
-      {/* Tradition Selector */}
-      <div className="mb-4 flex flex-wrap gap-2">
-        {TRADITIONS.map((trad) => (
-          <button
-            key={trad.id}
-            onClick={() => handleSelect(trad.id)}
-            aria-pressed={selected === trad.id}
-            className={`
-              flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium
-              transition-all duration-200
-              ${
-                selected === trad.id
-                  ? "bg-blue-600 text-white shadow-md"
-                  : "bg-white text-blue-700 hover:bg-blue-50 dark:bg-blue-900/30 dark:text-blue-200 dark:hover:bg-blue-800/40"
-              }
-            `}
-          >
-            <span>{trad.emoji}</span>
-            <span>{t(trad.labelKey, trad.id)}</span>
-          </button>
-        ))}
-      </div>
+      {/* Reflection */}
+      <p style={{ margin: 0, fontSize: "0.85rem", lineHeight: 1.7, color: "var(--color-text-muted)" }}>
+        {comfort.reflection}
+      </p>
 
-      {/* Comfort Display */}
-      {comfort && isExpanded && (
-        <div className="animate-fade-in rounded-xl bg-white/70 p-4 dark:bg-white/5">
-          {/* Quote */}
-          <blockquote className="mb-2 border-l-2 border-blue-400 pl-3 text-sm italic text-gray-700 dark:text-gray-300">
-            "{comfort.quote}"
-          </blockquote>
-
-          {/* Source */}
-          <p className="mb-3 text-right text-xs text-blue-500 dark:text-blue-400">
-            — {comfort.source}
-          </p>
-
-          {/* Reflection */}
-          <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            {comfort.reflection}
-          </p>
-
-          {/* Dismiss */}
-          <button
-            onClick={() => {
-              setSelected("none");
-              setIsExpanded(false);
-            }}
-            className="mt-3 text-xs text-blue-400 underline-offset-2 hover:underline dark:text-blue-500"
-          >
-            {t("spiritual.clear", "Choose another")}
-          </button>
-        </div>
-      )}
+      {/* Change tradition → back to onboarding step 2 */}
+      <button
+        onClick={() => navigate("/", { state: { step: 2 } })}
+        style={{
+          marginTop: "0.875rem",
+          background: "none",
+          border: "none",
+          padding: 0,
+          fontSize: "0.72rem",
+          color: "var(--color-text-muted)",
+          textDecoration: "underline",
+          cursor: "pointer",
+        }}
+      >
+        {changeLabel}
+      </button>
     </div>
   );
 }
