@@ -121,5 +121,39 @@
     "openGuide": "전체 가이드 보기",
     "btnGuide": "가이드",
     "btnEmergency": "긴급"
+  },
+  "privacy": {
+    "title": "개인정보 보호정책",
+    "lastUpdated": "최종 수정일: 2025-06-05",
+    "back": "← 뒤로",
+    "sections": [
+      {
+        "title": "개요",
+        "body": "CalmBridge는 상태를 저장하지 않는(stateless) 애플리케이션입니다. 개인을 식별할 수 있는 정보(PII)를 수집, 저장, 공유하지 않습니다. 계정 가입이 필요하지 않습니다."
+      },
+      {
+        "title": "기기 내 로컬 저장",
+        "body": "CalmBridge는 언어 설정과 테마 설정만 브라우저의 localStorage에 저장합니다. 이 데이터는 사용자의 기기를 벗어나지 않습니다."
+      },
+      {
+        "title": "AI 메시지 처리",
+        "body": "보내신 메시지는 OpenAI API를 통해 처리되어 응답을 생성합니다. API 호출이 완료된 후에는 메시지를 보관하지 않습니다."
+      },
+      {
+        "title": "음성 입력",
+        "body": "음성 입력은 브라우저에 내장된 Web Speech API를 사용합니다. CalmBridge는 원본 음성 데이터를 수신하거나 저장하지 않습니다."
+      }
+    ],
+    "notCollectedTitle": "수집하지 않는 정보",
+    "notCollectedList": [
+      "이름 또는 연락처 정보",
+      "IP 주소 또는 기기 식별자",
+      "대화 기록 (서버에 저장되지 않음)",
+      "위치 정보",
+      "추적 쿠키 또는 분석 도구"
+    ],
+    "contactTitle": "문의",
+    "contactBody": "질문이 있으시면 GitHub 이슈를 등록해 주세요:",
+    "openaiPolicy": "OpenAI 개인정보 보호정책:"
   }
 }

@@ -121,5 +121,39 @@
     "openGuide": "Ouvrir le guide complet",
     "btnGuide": "Guide",
     "btnEmergency": "SOS"
+  },
+  "privacy": {
+    "title": "Politique de confidentialité",
+    "lastUpdated": "Dernière mise à jour : 2025-06-05",
+    "back": "← Retour",
+    "sections": [
+      {
+        "title": "Aperçu",
+        "body": "CalmBridge est une application sans état (stateless). Nous ne collectons, ne stockons ni ne partageons aucune information personnelle identifiable (PII). Aucune inscription de compte n'est requise."
+      },
+      {
+        "title": "Stockage local sur l'appareil",
+        "body": "CalmBridge stocke uniquement votre préférence de langue et votre paramètre de thème dans le localStorage de votre navigateur. Ces données ne quittent jamais votre appareil."
+      },
+      {
+        "title": "Traitement des messages par l'IA",
+        "body": "Les messages que vous envoyez sont traités par l'API d'OpenAI pour générer des réponses. Nous ne conservons pas les messages après la fin de l'appel API."
+      },
+      {
+        "title": "Saisie vocale",
+        "body": "La saisie vocale utilise l'API Web Speech intégrée à votre navigateur. CalmBridge ne reçoit ni ne stocke l'audio brut."
+      }
+    ],
+    "notCollectedTitle": "Données que nous NE collectons PAS",
+    "notCollectedList": [
+      "Noms ou coordonnées",
+      "Adresses IP ou identifiants d'appareil",
+      "Historique des conversations (non stocké côté serveur)",
+      "Données de localisation",
+      "Cookies de suivi ou analytiques"
+    ],
+    "contactTitle": "Contact",
+    "contactBody": "Des questions ? Ouvrez un ticket sur :",
+    "openaiPolicy": "Politique de confidentialité d'OpenAI :"
   }
 }

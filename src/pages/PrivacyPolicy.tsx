@@ -1,10 +1,18 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
+interface PrivacySection {
+  title: string
+  body: string
+}
+
 export default function PrivacyPolicy() {
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const lang = i18n.language?.slice(0, 2) ?? 'en'
+
+  const sections: PrivacySection[] = t('privacy.sections', { returnObjects: true }) as PrivacySection[]
+  const notCollectedList: string[] = t('privacy.notCollectedList', { returnObjects: true }) as string[]
 
   return (
     <div style={{
@@ -21,34 +29,17 @@ export default function PrivacyPolicy() {
           color: 'var(--color-primary)', fontSize: '0.875rem',
           cursor: 'pointer', marginBottom: '2rem', padding: 0,
         }}>
-          ← Back
+          {t('privacy.back')}
         </button>
 
         <h1 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '0.25rem' }}>
-          Privacy Policy
+          {t('privacy.title')}
         </h1>
         <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '2rem' }}>
-          Last updated: 2025-06-05
+          {t('privacy.lastUpdated')}
         </p>
 
-        {[
-          {
-            title: 'Overview',
-            body: 'CalmBridge is a stateless application. We do not collect, store, or share any personally identifiable information (PII). No account registration is required.',
-          },
-          {
-            title: 'Local device storage',
-            body: "CalmBridge stores only your language preference and theme setting in your browser's localStorage. This data never leaves your device.",
-          },
-          {
-            title: 'AI message processing',
-            body: "Messages you send are processed by OpenAI's API to generate responses. We do not retain messages after the API call completes.",
-          },
-          {
-            title: 'Voice input',
-            body: "Voice input uses your browser's built-in Web Speech API. CalmBridge does not receive or store raw audio.",
-          },
-        ].map((section, i) => (
+        {sections.map((section, i) => (
           <div key={i} style={{
             marginBottom: '1rem',
             padding: '1.25rem',
@@ -73,15 +64,9 @@ export default function PrivacyPolicy() {
           borderRadius: '12px',
         }}>
           <h2 style={{ fontSize: '0.95rem', fontWeight: 600, marginBottom: '0.75rem' }}>
-            Data we do NOT collect
+            {t('privacy.notCollectedTitle')}
           </h2>
-          {[
-            'Names or contact information',
-            'IP addresses or device identifiers',
-            'Conversation history (not stored server-side)',
-            'Location data',
-            'Tracking cookies or analytics',
-          ].map((item, i) => (
+          {notCollectedList.map((item, i) => (
             <div key={i} style={{
               display: 'flex', alignItems: 'center', gap: '0.5rem',
               fontSize: '0.875rem', color: 'var(--color-text-muted)',
@@ -100,10 +85,10 @@ export default function PrivacyPolicy() {
           borderRadius: '12px',
         }}>
           <h2 style={{ fontSize: '0.95rem', fontWeight: 600, marginBottom: '0.5rem' }}>
-            Contact
+            {t('privacy.contactTitle')}
           </h2>
           <p style={{ fontSize: '0.875rem', lineHeight: 1.7, color: 'var(--color-text-muted)' }}>
-            Questions? Open an issue at{' '}
+            {t('privacy.contactBody')}{' '}
             <a href="https://github.com/whlee5503-dot/CalmBridge/issues"
               target="_blank" rel="noopener noreferrer"
               style={{ color: 'var(--color-primary)' }}>
@@ -111,7 +96,7 @@ export default function PrivacyPolicy() {
             </a>
           </p>
           <p style={{ fontSize: '0.8rem', marginTop: '0.5rem', color: 'var(--color-text-muted)' }}>
-            OpenAI Privacy Policy:{' '}
+            {t('privacy.openaiPolicy')}{' '}
             <a href="https://openai.com/policies/privacy-policy"
               target="_blank" rel="noopener noreferrer"
               style={{ color: 'var(--color-primary)' }}>

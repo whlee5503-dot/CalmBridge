@@ -152,7 +152,8 @@ export default function WelcomePage() {
         color: 'var(--color-text-muted)', maxWidth: '300px', lineHeight: 1.6 }}>
         {t('disclaimer')}
       </p>
-      <a href="/privacy" style={{ color: 'var(--color-text-muted)', fontSize: '0.68rem', textDecoration: 'underline', marginBottom: '0.25rem', display: 'block', textAlign: 'center' }}>Privacy Policy</a>
+      <a href="/privacy" style={{ color: 'var(--color-text-muted)', fontSize: '0.68rem', textDecoration: 'underline', marginBottom: '0.25rem', display: 'block', textAlign: 'center' }}>{t('privacy.title')}</a>
+      <a href="/help" style={{ color: 'var(--color-text-muted)', fontSize: '0.68rem', textDecoration: 'underline', marginBottom: '0.25rem', display: 'block', textAlign: 'center' }}>{t('help.pageTitle')}</a>
       <p style={{ marginTop: '0.75rem', fontSize: '0.68rem', color: 'var(--color-border)' }}>
         SoulCare Suite · Module 1
       </p>

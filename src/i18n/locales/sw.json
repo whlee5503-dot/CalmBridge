@@ -121,5 +121,39 @@
     "openGuide": "Fungua mwongozo kamili",
     "btnGuide": "Mwongozo",
     "btnEmergency": "Dharura"
+  },
+  "privacy": {
+    "title": "Sera ya Faragha",
+    "lastUpdated": "Imesasishwa: 2025-06-05",
+    "back": "← Rudi",
+    "sections": [
+      {
+        "title": "Muhtasari",
+        "body": "CalmBridge ni programu isiyohifadhi data (stateless). Hatukusanyi, kuhifadhi, au kushiriki taarifa zozote zinazoweza kumtambulisha mtu (PII). Hakuna usajili wa akaunti unaohitajika."
+      },
+      {
+        "title": "Hifadhi ya ndani kwenye kifaa",
+        "body": "CalmBridge huhifadhi tu lugha unayopendelea na mpangilio wa mandhari katika localStorage ya kivinjari chako. Data hii haitoki kwenye kifaa chako."
+      },
+      {
+        "title": "Usindikaji wa ujumbe wa AI",
+        "body": "Ujumbe unaotuma huchakatwa na API ya OpenAI kutoa majibu. Hatuhifadhi ujumbe baada ya wito wa API kukamilika."
+      },
+      {
+        "title": "Ingizo la sauti",
+        "body": "Ingizo la sauti hutumia Web Speech API iliyojengwa ndani ya kivinjari chako. CalmBridge haipokei wala kuhifadhi sauti ghafi."
+      }
+    ],
+    "notCollectedTitle": "Data Hatuzikusanyi",
+    "notCollectedList": [
+      "Majina au taarifa za mawasiliano",
+      "Anwani za IP au vitambulisho vya kifaa",
+      "Historia ya mazungumzo (haihifadhiwi kwenye seva)",
+      "Data ya eneo",
+      "Vidakuzi vya ufuatiliaji au uchanganuzi"
+    ],
+    "contactTitle": "Mawasiliano",
+    "contactBody": "Maswali? Fungua suala kwenye:",
+    "openaiPolicy": "Sera ya Faragha ya OpenAI:"
   }
 }
