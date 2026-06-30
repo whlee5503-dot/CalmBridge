@@ -144,7 +144,7 @@ export default function WelcomePage() {
           border: '1.5px solid var(--color-danger)', cursor: 'pointer',
           opacity: 0.85,
         }}>
-          �� {t('emergency')}
+          🆘 {t('emergency')}
         </button>
       </div>
 
