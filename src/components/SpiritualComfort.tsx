@@ -4,7 +4,7 @@
 // Scripture: 성경전서 개역한글판 (저작재산권 보호기간 만료, 대한성서공회)
 // Conditions: 동일성유지권 + 성명표시권 준수 (원문 그대로, 출처 표기)
 
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -324,28 +324,41 @@ export default function SpiritualComfort({ initialTradition, situationId }: Spir
   const meta = TRADITION_META[tradition];
   if (!meta) return null;
 
-  const { quote, source, reflection } = useMemo(() => {
+  const getPool = () => {
     if (tradition === "christianity") {
-      const poolMap = validLang === "ko" ? CHRISTIANITY_KO
-                 : validLang === "en" ? CHRISTIANITY_EN
-                 : validLang === "fr" ? CHRISTIANITY_FR
-                 : validLang === "sw" ? CHRISTIANITY_SW
-                 : null;
-      if (poolMap) {
-        const pool = poolMap[situationId ?? ""] ?? poolMap["disaster"];
-        const picked = pool.quotes[Math.floor(Math.random() * pool.quotes.length)];
-        return { quote: picked.text, source: picked.source, reflection: pool.reflection };
-      }
+      const map = validLang === "ko" ? CHRISTIANITY_KO
+                : validLang === "en" ? CHRISTIANITY_EN
+                : validLang === "fr" ? CHRISTIANITY_FR
+                : validLang === "sw" ? CHRISTIANITY_SW
+                : null;
+      if (map) return map[situationId ?? ""] ?? map["disaster"];
     }
-    const fallback = SECULAR_CONTENT[validLang];
-    return { quote: fallback.quote, source: fallback.source, reflection: fallback.reflection };
-  }, [tradition, validLang, situationId]);
+    return null;
+  };
+  const pool = getPool();
+  const [verseIndex, setVerseIndex] = React.useState(
+    () => pool ? Math.floor(Math.random() * pool.quotes.length) : 0
+  );
+  const { quote, source, reflection } = useMemo(() => {
+    if (pool) {
+      const idx = verseIndex % pool.quotes.length;
+      return { quote: pool.quotes[idx].text, source: pool.quotes[idx].source, reflection: pool.reflection };
+    }
+    const s = SECULAR_CONTENT[validLang];
+    return { quote: s.quote, source: s.source, reflection: s.reflection };
+  }, [tradition, validLang, situationId, verseIndex]);
 
   const changeLabel =
     validLang === "ko" ? "다른 전통 선택하기" :
     validLang === "fr" ? "Choisir une autre tradition" :
     validLang === "sw" ? "Chagua mila nyingine" :
     "Choose a different tradition";
+  const nextVerseLabel =
+    validLang === "ko" ? "다른 말씀 보기" :
+    validLang === "fr" ? "Voir un autre verset" :
+    validLang === "sw" ? "Ona aya nyingine" :
+    "See another verse";
+  const hasMultipleVerses = pool && pool.quotes.length > 1;
 
   return (
     <div style={{
@@ -377,10 +390,30 @@ export default function SpiritualComfort({ initialTradition, situationId }: Spir
       <p style={{ margin: 0, fontSize: "0.85rem", lineHeight: 1.7, color: "var(--color-text-muted)" }}>
         {reflection}
       </p>
+      {hasMultipleVerses && (
+        <button
+          onClick={() => setVerseIndex(i => i + 1)}
+          style={{
+            marginTop: "0.875rem",
+            display: "block",
+            width: "100%",
+            padding: "0.5rem",
+            borderRadius: "8px",
+            border: "1px solid var(--color-border)",
+            backgroundColor: "transparent",
+            fontSize: "0.78rem",
+            color: "var(--color-primary)",
+            cursor: "pointer",
+            fontWeight: 500,
+          }}
+        >
+          🔄 {nextVerseLabel}
+        </button>
+      )}
       <button
         onClick={() => navigate("/", { state: { step: 2 } })}
         style={{
-          marginTop: "0.875rem",
+          marginTop: "0.5rem",
           background: "none",
           border: "none",
           padding: 0,
