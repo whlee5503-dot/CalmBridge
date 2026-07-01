@@ -146,6 +146,138 @@ const CHRISTIANITY_EN: Record<string, VerseSet> = {
   },
 };
 
+
+const CHRISTIANITY_FR: Record<string, VerseSet> = {
+  disaster: {
+    quotes: [
+      { text: "Dieu est pour nous un refuge et un appui, Un secours qui ne manque jamais dans la détresse.", source: "Psaume 46:1 (LSG 1910)" },
+      { text: "Je lève mes yeux vers les montagnes... D'où me viendra le secours ? Le secours me vient de l'Éternel, Qui a fait les cieux et la terre.", source: "Psaume 121:1-2 (LSG 1910)" },
+      { text: "Ne crains rien, car je suis avec toi ; ne promène pas des regards inquiets, car je suis ton Dieu ; je te fortifie, je viens à ton secours.", source: "Ésaïe 41:10 (LSG 1910)" },
+      { text: "Je vous laisse la paix, je vous donne ma paix. Je ne vous donne pas comme le monde donne. Que votre cœur ne se trouble point, et ne s'alarme point.", source: "Jean 14:27 (LSG 1910)" },
+      { text: "Il change la tempête en calme, Et les flots s'apaisent. On se réjouit de la tranquillité, Et l'Éternel les conduit au port désiré.", source: "Psaume 107:29-30 (LSG 1910)" },
+    ],
+    reflection: "Vous vous sentez peut-être dépassé, incapable de faire quoi que ce soit. Mais souvenez-vous : celui qui vous tient dans ses bras ne vacille pas, même au cœur de la tempête la plus violente. Confiez-lui votre souffle. Vous êtes en sécurité.",
+  },
+  conflict: {
+    quotes: [
+      { text: "Quand je marche dans la vallée de l'ombre de la mort, Je ne crains aucun mal, car tu es avec moi : Ta houlette et ton bâton me rassurent.", source: "Psaume 23:4 (LSG 1910)" },
+      { text: "L'Éternel te gardera de tout mal, Il gardera ton âme.", source: "Psaume 121:7 (LSG 1910)" },
+      { text: "L'Éternel est mon rocher, ma forteresse, mon libérateur ; Mon Dieu, mon rocher, où je me réfugie, Mon bouclier, la force qui me sauve, ma haute retraite.", source: "Psaume 18:2 (LSG 1910)" },
+      { text: "Tu ne craindras ni les terreurs de la nuit, Ni la flèche qui vole de jour, Ni la peste qui marche dans les ténèbres, Ni la contagion qui frappe en plein midi. Qu'il en tombe mille à ton côté, Et dix mille à ta droite, Tu n'en seras pas atteint.", source: "Psaume 91:5-7 (LSG 1910)" },
+    ],
+    reflection: "Même dans l'obscurité la plus profonde, vous n'êtes pas seul. Dieu entend chacune de vos larmes et de vos respirations, et vous tient dans les bras les plus sûrs qui soient. Vous n'avez pas été oublié. Reposez-vous sous sa protection.",
+  },
+  accident: {
+    quotes: [
+      { text: "Il guérit ceux qui ont le cœur brisé, Et il panse leurs blessures.", source: "Psaume 147:3 (LSG 1910)" },
+      { text: "Fortifiez-vous et ayez du courage ! Ne craignez point et ne soyez point effrayés devant eux, car l'Éternel, ton Dieu, marchera avec toi ; il ne te délaissera point et ne t'abandonnera point.", source: "Deutéronome 31:6 (LSG 1910)" },
+      { text: "Il ne brisera pas le roseau froissé, Et il n'éteindra pas le lumignon qui fume encore.", source: "Ésaïe 42:3 (LSG 1910)" },
+      { text: "Je me couche et je m'endors en paix, Car toi seul, ô Éternel ! tu me donnes la sécurité dans ma demeure.", source: "Psaume 4:9 (LSG 1910)" },
+    ],
+    reflection: "L'engourdissement et la confusion que vous ressentez maintenant sont la façon naturelle de votre cœur de se protéger du choc. Vous n'avez rien fait de mal. Appuyez-vous sur la main douce du Seigneur qui panse ce qui est déchiré. Respirez lentement. Vous n'êtes pas seul.",
+  },
+  loss: {
+    quotes: [
+      { text: "Venez à moi, vous tous qui êtes fatigués et chargés, et je vous donnerai du repos.", source: "Matthieu 11:28 (LSG 1910)" },
+      { text: "L'Éternel est près de ceux qui ont le cœur brisé, Et il sauve ceux qui ont l'esprit dans l'abattement.", source: "Psaume 34:18 (LSG 1910)" },
+      { text: "Je suis épuisé à force de gémir ; chaque nuit j'inonde ma couche de larmes, j'arrose ma couche de mes pleurs... L'Éternel a entendu mes supplications, L'Éternel a agréé ma prière.", source: "Psaume 6:7, 9 (LSG 1910)" },
+      { text: "Il essuiera toute larme de leurs yeux, et la mort ne sera plus, et il n'y aura plus ni deuil, ni cri, ni douleur, car les premières choses ont disparu.", source: "Apocalypse 21:4 (LSG 1910)" },
+    ],
+    reflection: "Vos larmes et votre chagrin sont la marque naturelle de l'amour que vous portiez à celui qui est parti. Vous n'avez pas besoin de vous retenir. Le Seigneur pleure avec vous en ce moment, vous tenant silencieusement dans ses bras. Vous n'avez pas à porter ce fardeau seul.",
+  },
+  refugee: {
+    quotes: [
+      { text: "L'Éternel protège les étrangers, Il soutient l'orphelin et la veuve.", source: "Psaume 146:9 (LSG 1910)" },
+      { text: "Je suis avec toi, et je te garderai partout où tu iras, et je te ramènerai dans ce pays ; car je ne t'abandonnerai point que je n'aie exécuté ce que je t'ai dit.", source: "Genèse 28:15 (LSG 1910)" },
+      { text: "Car je connais les projets que j'ai formés sur vous, dit l'Éternel, projets de paix et non de malheur, afin de vous donner un avenir et de l'espérance.", source: "Jérémie 29:11 (LSG 1910)" },
+    ],
+    reflection: "Sur ce chemin inconnu, l'avenir incertain et solitaire — souvenez-vous : Dieu n'est pas lié à un lieu ou à un bâtiment. Il marche à chacun de vos pas. Il sera votre refuge où que vous posiez le pied, et il a préparé paix et espoir au bout de ce chemin. Vous n'êtes pas seul.",
+  },
+  isolation: {
+    quotes: [
+      { text: "Où irais-je loin de ton esprit ? Où fuirais-je loin de ta face ? Si je monte aux cieux, tu y es ; si je me couche au séjour des morts, t'y voilà.", source: "Psaume 139:7-8 (LSG 1910)" },
+      { text: "L'Éternel est près de tous ceux qui l'invoquent, De tous ceux qui l'invoquent avec sincérité.", source: "Psaume 145:18 (LSG 1910)" },
+      { text: "Déchargez-vous sur lui de tous vos soucis, car il prend soin de vous.", source: "1 Pierre 5:7 (LSG 1910)" },
+      { text: "L'Éternel a entendu mes supplications, L'Éternel a agréé ma prière.", source: "Psaume 6:9 (LSG 1910)" },
+    ],
+    reflection: "Dans le silence le plus profond, quand tout lien semble rompu — son Esprit est déjà là, respirant avec vous. Même votre plus petit soupir, inaudible aux oreilles humaines, il l'entend de tout près. Vous n'êtes jamais seul, et vous n'avez pas été oublié.",
+  },
+  panic: {
+    quotes: [
+      { text: "Il change la tempête en calme, Et les flots s'apaisent.", source: "Psaume 107:29 (LSG 1910)" },
+      { text: "Mais j'ai calmé et apaisé mon âme, Comme un enfant sevré qui est avec sa mère : Mon âme est en moi comme un enfant sevré.", source: "Psaume 131:2 (LSG 1910)" },
+      { text: "Du bout de la terre j'invoque l'Éternel, quand mon cœur est abattu. Conduis-moi sur un rocher plus élevé que moi.", source: "Psaume 61:2 (LSG 1910)" },
+    ],
+    reflection: "La peur qui vous submerge en ce moment passera — elle ne durera pas éternellement. Fermez les yeux. Dans les bras du Rocher qui est plus haut que vous, respirez lentement... inspirez... expirez... Le Seigneur tient votre souffle même maintenant.",
+  },
+};
+
+
+const CHRISTIANITY_SW: Record<string, VerseSet> = {
+  disaster: {
+    quotes: [
+      { text: "Mungu ni kimbilio letu na nguvu zetu, msaada wa karibu wakati wa dhiki.", source: "Zaburi 46:1 (ref.)" },
+      { text: "Ninainua macho yangu kuelekea milima — msaada wangu unatoka wapi? Msaada wangu unatoka kwa BWANA, aliyeumba mbingu na nchi.", source: "Zaburi 121:1-2 (ref.)" },
+      { text: "Usiogope, kwa maana mimi ni nawe; usifadhaike, kwa maana mimi ni Mungu wako. Nitakuimarisha, naam, nitakusaidia.", source: "Isaya 41:10 (ref.)" },
+      { text: "Amani nawachia ninyi, amani yangu nawapa ninyi. Moyo wenu usifadhaike, wala usiogope.", source: "Yohana 14:27 (ref.)" },
+      { text: "Akafanya dhoruba kutulia, na mawimbi yakanyamaza. Wakafurahi kwa sababu mawimbi yalitulia; naye akawaongoza hadi bandarini walipoitamani.", source: "Zaburi 107:29-30 (ref.)" },
+    ],
+    reflection: "Unaweza kuhisi umezidiwa, huwezi kufanya chochote. Lakini kumbuka: yeye anayekushikilia hakutikisiki hata katikati ya dhoruba kali zaidi. Pumzika katika upendo huo. Uko salama.",
+  },
+  conflict: {
+    quotes: [
+      { text: "Hata nikipita katika bonde la kivuli cha mauti, sitaogopa mabaya, kwa maana wewe u pamoja nami; fimbo yako na mkongojo wako vyanituliza.", source: "Zaburi 23:4 (ref.)" },
+      { text: "BWANA atakuhifadhi na kila uovu; atalihifadhi nafsi yako.", source: "Zaburi 121:7 (ref.)" },
+      { text: "BWANA ni mwamba wangu, ngome yangu, na mkombozi wangu; Mungu wangu, mwamba wangu, ninaomkimbilia, ngao yangu, na pembe ya wokovu wangu.", source: "Zaburi 18:2 (ref.)" },
+      { text: "Hutaogopa hofu ya usiku, wala mshale urukao mchana, wala tauni ienendayo gizani, wala maangamizo yaleteao ukiwa adhuhuri. Watu elfu watapigwa upande wako wa kushoto, na elfu kumi upande wako wa kuume, lakini haitakujia wewe.", source: "Zaburi 91:5-7 (ref.)" },
+    ],
+    reflection: "Hata katika giza kubwa, huko peke yako. Mungu anasikia kila machozi na pumzi yako, na anakushika mikononi salama zaidi. Hukusahauliwa. Pumzika chini ya ulinzi wake.",
+  },
+  accident: {
+    quotes: [
+      { text: "Yeye huwaponya wale waliomvunjika moyo na kufunga vidonda vyao.", source: "Zaburi 147:3 (ref.)" },
+      { text: "Uwe hodari na ushujaa; usiogope wala usifadhaike mbele yao, kwa maana BWANA, Mungu wako, ndiye aendaye nawe; hatakuacha wala hatakupoteza.", source: "Kumbukumbu 31:6 (ref.)" },
+      { text: "Utepe uliopondeka hatautavunja, na kitambaa kinachofuka hatakizimisha.", source: "Isaya 42:3 (ref.)" },
+      { text: "Nitalala na kulala kwa amani; kwa maana wewe peke yako, Ee BWANA, unaniwezesha kukaa salama.", source: "Zaburi 4:8 (ref.)" },
+    ],
+    reflection: "Ganzi na mkanganyiko unaohisi sasa ni jibu la asili la moyo wako kulindwa dhidi ya msongo wa mshtuko. Hukufanya kosa lolote. Tegemea mkono wa upole wa Bwana unaofunga majeraha. Pumua polepole. Huko peke yako.",
+  },
+  loss: {
+    quotes: [
+      { text: "Njooni kwangu, ninyi nyote mnaochoka na mzigo mzito, nami nitawapumzisha.", source: "Mathayo 11:28 (ref.)" },
+      { text: "BWANA yuko karibu na wale waliomvunjika moyo, na huwaokoa wenye roho zilizovunjika.", source: "Zaburi 34:18 (ref.)" },
+      { text: "Nimechoka kwa kuugua; kila usiku ninafurika machozi kitandani mwangu... BWANA amesikia sauti ya kulia kwangu.", source: "Zaburi 6:6, 8 (ref.)" },
+      { text: "Naye atafuta kila chozi kutoka macho yao, na mauti hayatakuwepo tena, wala huzuni, wala kilio, wala maumivu hayatakuwepo tena.", source: "Ufunuo 21:4 (ref.)" },
+    ],
+    reflection: "Machozi yako na huzuni ni alama ya kawaida ya upendo kwa aliyeondoka. Huhitaji kuzuia. Bwana analia nawe sasa hivi, akikushika kwa kimya. Huhitaji kubeba mzigo huu peke yako.",
+  },
+  refugee: {
+    quotes: [
+      { text: "BWANA hulinda wageni; huwasaidia yatima na wajane.", source: "Zaburi 146:9 (ref.)" },
+      { text: "Mimi niko pamoja nawe, na nitakulinda kila mahali uendapo, wala sitakuacha mpaka nitakapokutimizea niliyokuahidi.", source: "Mwanzo 28:15 (ref.)" },
+      { text: "Kwa maana ninajua mawazo ninayowafikiria, asema BWANA, mawazo ya amani, wala si ya mabaya, kuwapa ninyi tumaini siku zijazo.", source: "Yeremia 29:11 (ref.)" },
+    ],
+    reflection: "Ukiwa barabarani isiyojulikana, mustakabali ni wa kutokuwa na uhakika — kumbuka: Mungu hafungwi mahali. Anatembea na kila hatua yako. Atakuwa kimbilio lako popote utakapoweka mguu wako, na ameandaa amani na matumaini mwishoni mwa safari hiyo. Huko peke yako.",
+  },
+  isolation: {
+    quotes: [
+      { text: "Nikienda wapi mbali na Roho wako? Au nikikimbia wapi mbali na uso wako? Nikipaa mbinguni, uko huko; nikilala kuzimu, uko huko.", source: "Zaburi 139:7-8 (ref.)" },
+      { text: "BWANA yuko karibu na wote wamwitao, wote wamwitao kwa kweli.", source: "Zaburi 145:18 (ref.)" },
+      { text: "Mtwike yeye makusudio yenu yote, kwa sababu yeye hujishughulisha na ninyi.", source: "1 Petro 5:7 (ref.)" },
+      { text: "BWANA amesikia dua yangu; BWANA amepokea maombi yangu.", source: "Zaburi 6:9 (ref.)" },
+    ],
+    reflection: "Katika ukimya wa kina zaidi, wakati kila uhusiano unaonekana kukatika — Roho wake tayari yuko hapo, akipumua nawe. Hata hija yako ndogo, isiyosikika na masikio ya binadamu, anaisikia karibu sana. Huko peke yako kamwe, na hukusahauliwa.",
+  },
+  panic: {
+    quotes: [
+      { text: "Akafanya dhoruba kutulia, na mawimbi yakanyamaza.", source: "Zaburi 107:29 (ref.)" },
+      { text: "Hakika nilikuwa nimetuliza na kutuliza nafsi yangu, kama mtoto aliyeachishwa maziwa kwa mama yake; nafsi yangu ilikuwa kama mtoto aliyeachishwa maziwa.", source: "Zaburi 131:2 (ref.)" },
+      { text: "Kutoka miisho ya nchi nitamlilia, moyo wangu ukizidiwa nguvu. Niongoze kwenye mwamba mrefu zaidi kuliko mimi.", source: "Zaburi 61:2 (ref.)" },
+    ],
+    reflection: "Hofu inayokupigilia sasa itapita — haitadumu milele. Funga macho yako. Mikononi mwa Mwamba aliye juu zaidi kuliko wewe, pumua polepole... pumua ndani... pumua nje... Bwana anashika pumzi yako hata sasa.",
+  },
+};
+
 const SECULAR_CONTENT: Record<Language, { quote: string; source: string; reflection: string }> = {
   ko: {
     quote: "나아가기 위해 모든 것을 이해할 필요는 없습니다.",
@@ -194,7 +326,11 @@ export default function SpiritualComfort({ initialTradition, situationId }: Spir
 
   const { quote, source, reflection } = useMemo(() => {
     if (tradition === "christianity") {
-      const poolMap = validLang === "ko" ? CHRISTIANITY_KO : validLang === "en" ? CHRISTIANITY_EN : null;
+      const poolMap = validLang === "ko" ? CHRISTIANITY_KO
+                 : validLang === "en" ? CHRISTIANITY_EN
+                 : validLang === "fr" ? CHRISTIANITY_FR
+                 : validLang === "sw" ? CHRISTIANITY_SW
+                 : null;
       if (poolMap) {
         const pool = poolMap[situationId ?? ""] ?? poolMap["disaster"];
         const picked = pool.quotes[Math.floor(Math.random() * pool.quotes.length)];
