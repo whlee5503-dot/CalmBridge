@@ -127,7 +127,7 @@ export default function ResponsePage() {
             )}
 
             {/* 영적 위로 — 온보딩에서 선택한 전통이 있을 때만 표시 */}
-            <SpiritualComfort initialTradition={religion} />
+            <SpiritualComfort initialTradition={religion} situationId={situation.id} />
           </>
         ) : (
           <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--color-text-muted)' }}>
