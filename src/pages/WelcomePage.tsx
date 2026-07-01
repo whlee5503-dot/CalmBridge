@@ -62,6 +62,21 @@ export default function WelcomePage() {
         ))}
       </div>
 
+      {/* Step 2 뒤로가기 — 카드 위 독립 영역 */}
+      {step === 2 && (
+        <button
+          onClick={() => setStep(1)}
+          style={{
+            alignSelf: 'flex-start',
+            background: 'none', border: 'none', cursor: 'pointer',
+            color: 'var(--color-text-muted)', fontSize: '0.85rem',
+            padding: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.25rem',
+          }}
+        >
+          ← {t('privacy.back') || '뒤로'}
+        </button>
+      )}
+
       {/* Card */}
       <div style={{
         width: '100%', maxWidth: '360px',
@@ -93,19 +108,11 @@ export default function WelcomePage() {
         {/* Step 2: Religion */}
         {step === 2 && (
           <>
-            <div style={{ position: 'relative', marginBottom: '0.75rem' }}>
-              <button onClick={() => setStep(1)} style={{
-                position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)',
-                background: 'none', border: 'none', cursor: 'pointer',
-                color: 'var(--color-text-muted)', fontSize: '1.1rem', padding: '4px 8px',
-                lineHeight: 1,
-              }}>←</button>
-              <p style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--color-text-muted)',
-                textTransform: 'uppercase', letterSpacing: '0.08em',
-                margin: 0, textAlign: 'center' }}>
-                {t('onboarding.step_religion')}
-              </p>
-            </div>
+            <p style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--color-text-muted)',
+              textTransform: 'uppercase', letterSpacing: '0.08em',
+              marginBottom: '0.5rem', textAlign: 'center' }}>
+              {t('onboarding.step_religion')}
+            </p>
             <p style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', textAlign: 'center', marginBottom: '1rem' }}>
               {t('onboarding.religion_prompt')}
             </p>
