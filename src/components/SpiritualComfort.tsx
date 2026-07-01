@@ -278,26 +278,46 @@ const CHRISTIANITY_SW: Record<string, VerseSet> = {
   },
 };
 
-const SECULAR_CONTENT: Record<Language, { quote: string; source: string; reflection: string }> = {
+const SECULAR_CONTENT: Record<Language, VerseSet> = {
   ko: {
-    quote: "나아가기 위해 모든 것을 이해할 필요는 없습니다.",
-    source: "힘든 날을 위한 위로",
-    reflection: "당신은 지금까지의 모든 힘든 날을 헤쳐왔습니다. 그것이 진짜 강인함입니다.",
+    quotes: [
+      { text: "나아가기 위해 모든 것을 이해할 필요는 없습니다.", source: "보편적 위로" },
+      { text: "지금 이 순간을 버텨내는 것만으로 충분합니다.", source: "보편적 위로" },
+      { text: "감정은 파도처럼 옵니다. 파도는 반드시 지나갑니다.", source: "보편적 위로" },
+      { text: "당신은 지금까지의 모든 힘든 날을 헤쳐왔습니다.", source: "보편적 위로" },
+      { text: "천천히 숨을 쉬세요. 이 순간은 영원하지 않습니다.", source: "보편적 위로" },
+    ],
+    reflection: "당신이 느끼는 감정은 모두 자연스럽습니다. 지금 이대로도 괜찮습니다.",
   },
   en: {
-    quote: "You don't have to have it all figured out to move forward.",
-    source: "A reminder for hard days",
-    reflection: "You've made it through every hard day so far. That is real strength.",
+    quotes: [
+      { text: "You don't have to have it all figured out to move forward.", source: "Universal Comfort" },
+      { text: "It's okay to not be okay right now.", source: "Universal Comfort" },
+      { text: "Feelings are like waves — they come, and they pass.", source: "Universal Comfort" },
+      { text: "You've made it through every hard day so far. That is real strength.", source: "Universal Comfort" },
+      { text: "Breathe slowly. This moment will pass.", source: "Universal Comfort" },
+    ],
+    reflection: "Whatever you are feeling right now is valid. You don't have to be strong every moment.",
   },
   fr: {
-    quote: "Vous n'avez pas besoin d'avoir tout compris pour avancer.",
-    source: "Un rappel pour les jours difficiles",
-    reflection: "Vous avez traversé chaque jour difficile jusqu'à présent. C'est une vraie force.",
+    quotes: [
+      { text: "Vous n'avez pas besoin d'avoir tout compris pour avancer.", source: "Réconfort universel" },
+      { text: "Il est normal de ne pas aller bien parfois.", source: "Réconfort universel" },
+      { text: "Les émotions sont comme des vagues — elles arrivent, et elles passent.", source: "Réconfort universel" },
+      { text: "Vous avez traversé chaque jour difficile jusqu'à présent. C'est une vraie force.", source: "Réconfort universel" },
+      { text: "Respirez lentement. Ce moment passera.", source: "Réconfort universel" },
+    ],
+    reflection: "Tout ce que vous ressentez en ce moment est valide. Vous n'avez pas à être fort à chaque instant.",
   },
   sw: {
-    quote: "Huhitaji kuelewa kila kitu ili kusonga mbele.",
-    source: "Ukumbusho kwa siku ngumu",
-    reflection: "Umepita kila siku ngumu hadi sasa. Hiyo ni nguvu ya kweli.",
+    quotes: [
+      { text: "Huhitaji kuelewa kila kitu ili kusonga mbele.", source: "Faraja ya Ulimwengu" },
+      { text: "Ni sawa kutokuwa sawa wakati huu.", source: "Faraja ya Ulimwengu" },
+      { text: "Hisia ni kama mawimbi — zinakuja, nazo zinapita.", source: "Faraja ya Ulimwengu" },
+      { text: "Umepita kila siku ngumu hadi sasa. Hiyo ni nguvu ya kweli.", source: "Faraja ya Ulimwengu" },
+      { text: "Pumua polepole. Wakati huu utapita.", source: "Faraja ya Ulimwengu" },
+    ],
+    reflection: "Chochote unachohisi sasa hivi ni halali. Huhitaji kuwa hodari kila wakati.",
   },
 };
 
@@ -345,7 +365,8 @@ export default function SpiritualComfort({ initialTradition, situationId }: Spir
       return { quote: pool.quotes[idx].text, source: pool.quotes[idx].source, reflection: pool.reflection };
     }
     const s = SECULAR_CONTENT[validLang];
-    return { quote: s.quote, source: s.source, reflection: s.reflection };
+    const idx = verseIndex % s.quotes.length;
+    return { quote: s.quotes[idx].text, source: s.quotes[idx].source, reflection: s.reflection };
   }, [tradition, validLang, situationId, verseIndex]);
 
   const changeLabel =
@@ -358,7 +379,8 @@ export default function SpiritualComfort({ initialTradition, situationId }: Spir
     validLang === "fr" ? "Voir un autre verset" :
     validLang === "sw" ? "Ona aya nyingine" :
     "See another verse";
-  const hasMultipleVerses = pool && pool.quotes.length > 1;
+  const secularPool = tradition === "secular" ? SECULAR_CONTENT[validLang] : null;
+  const hasMultipleVerses = (pool && pool.quotes.length > 1) || (secularPool && secularPool.quotes.length > 1);
 
   return (
     <div style={{
