@@ -73,7 +73,7 @@ export default function WelcomePage() {
             padding: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.25rem',
           }}
         >
-          ← {t('privacy.back') || '뒤로'}
+          ← 뒤로
         </button>
       )}
 
