@@ -93,11 +93,17 @@ export default function WelcomePage() {
         {/* Step 2: Religion */}
         {step === 2 && (
           <>
-            <p style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--color-text-muted)',
-              textTransform: 'uppercase', letterSpacing: '0.08em',
-              marginBottom: '0.5rem', textAlign: 'center' }}>
-              {t('onboarding.step_religion')}
-            </p>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+              <button onClick={() => setStep(1)} style={{
+                background: 'none', border: 'none', cursor: 'pointer',
+                color: 'var(--color-text-muted)', fontSize: '1rem', padding: '0 0.5rem 0 0',
+              }}>←</button>
+              <p style={{ fontSize: '0.75rem', fontWeight: 500, color: 'var(--color-text-muted)',
+                textTransform: 'uppercase', letterSpacing: '0.08em',
+                margin: 0, flex: 1, textAlign: 'center', marginRight: '1.5rem' }}>
+                {t('onboarding.step_religion')}
+              </p>
+            </div>
             <p style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', textAlign: 'center', marginBottom: '1rem' }}>
               {t('onboarding.religion_prompt')}
             </p>
